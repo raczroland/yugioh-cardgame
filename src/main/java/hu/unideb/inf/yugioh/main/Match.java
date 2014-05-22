@@ -1,0 +1,156 @@
+package hu.unideb.inf.yugioh.main;
+
+import java.util.Random;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Match {
+
+	/**
+	 * Naplózáshoz szükséges logger.
+	 */
+	protected static Logger logger = LoggerFactory.getLogger(Card.class);
+	
+	/**
+	 * Véletlen számokat előállító objektum.
+	 */
+	private static Random rand = new Random();
+
+	/**
+	 * Az első játékos.
+	 */
+	private Player player1;
+	
+	/**
+	 * A második játékos.
+	 */
+	private Player player2;
+	
+	/**
+	 * A következő játékos.
+	 */
+	private Player nextPlayer;
+	
+	/**
+	 * A győztes játékos.
+	 */
+	private Player winner;
+
+	/**
+	 * Visszaadja az első játékost.
+	 * 
+	 * @return az első játékos
+	 */
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	/**
+	 * Visszaadja a második játékost.
+	 * 
+	 * @return a második játékos
+	 */
+	public Player getPlayer2() {
+		return player2;
+	}
+
+	/**
+	 * Visszaadja a következő játékost.
+	 * 
+	 * @return a következő játékos
+	 */
+	public Player getNextPlayer() {
+		return nextPlayer;
+	}
+
+	/**
+	 * Átváltja a következő játékost, és visszatér a következő játékossal.
+	 * 
+	 * @return a következő játékos
+	 */
+	public Player switchNextPlayer() {
+		nextPlayer = nextPlayer==player1 ? player2 : player1;
+		return nextPlayer;
+	}
+
+	/**
+	 * Visszatér a győztes játékossal.
+	 * 
+	 * @return a győztes játékos
+	 */
+	public Player getWinner() {
+		return winner;
+	}
+
+	/**
+	 * Beállítja a győztes játékost.
+	 * 
+	 * @param winner a győztes játékos
+	 */
+	public void setWinner(Player winner) {
+		this.winner = winner;
+	}
+	
+	/**
+	 * Visszatér a paraméterként átadott játékos ellenfelével.
+	 * 
+	 * @param player az adott játékos
+	 * @return az ellenfél
+	 */
+	public Player getEnemy(Player player) {
+		return player==player1 ? player2 : player1;
+	}
+
+	/**
+	 * Konstruktor az osztályhoz. Létrehoz egy új meccset.
+	 * 
+	 * @param player1 az első játékos
+	 * @param player2 a második játékos
+	 */
+	public Match(Player player1, Player player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+		if (rand.nextInt(2)==0) {
+			this.nextPlayer = player1;
+		} else {
+			this.nextPlayer = player2;
+		}
+		this.winner = null;
+		logger.info("Meccs létrehozva. [" + this + "]");
+	}
+	
+	/**
+	 * Elindítja és működteti a meccset.
+	 */
+	public void run() {
+
+		logger.info("A játék elkezdődött.");
+		Game.showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
+		
+		getPlayer1().getDeck().draw(5);
+		getPlayer2().getDeck().draw(5);
+		
+		while ( winner == null ) {
+			
+			getNextPlayer().drawPhase();
+			getNextPlayer().mainPhase1();
+			getNextPlayer().battlePhase();
+			getNextPlayer().mainPhase2();
+			getNextPlayer().endPhase();
+			
+			switchNextPlayer();
+			
+		}
+		
+		Game.showMessage("Játék vége. A győztes játékos: " + getWinner());
+		logger.info("Játék vége. Győztes: " + winner);
+		
+	}
+
+	@Override
+	public String toString() {
+		return player1 + " vs " + player2;
+	}
+	
+}

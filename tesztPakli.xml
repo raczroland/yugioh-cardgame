@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deck>
+	<dateCreated>2014-05-20 18:27:42</dateCreated>
+	<card type="monster">
+		<name>Sindir</name>
+		<description></description>
+		<atk>700</atk>
+		<def>600</def>
+		<type>levegő</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Lusan</name>
+		<description></description>
+		<atk>900</atk>
+		<def>700</def>
+		<type>víz</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Lugpe</name>
+		<description></description>
+		<atk>1900</atk>
+		<def>1300</def>
+		<type>fény</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Womedir</name>
+		<description></description>
+		<atk>500</atk>
+		<def>1400</def>
+		<type>levegő</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Sanpat</name>
+		<description></description>
+		<atk>1400</atk>
+		<def>600</def>
+		<type>tűz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Ravetul</name>
+		<description></description>
+		<atk>600</atk>
+		<def>800</def>
+		<type>sötét</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Dazital</name>
+		<description></description>
+		<atk>1300</atk>
+		<def>600</def>
+		<type>sötét</type>
+		<level>3</level>
+	</card>
+	<card type="spell">
+		<name>Givuo</name>
+		<description>Megnöveli egy szörny védelmi pontjait 500-zal.</description>
+		<effectType>incDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>500</effectVal1>
+		<effectVal2>0</effectVal2>
+		<uneffectType>decDef</uneffectType>
+		<uneffectTargetClass>MonsterCard</uneffectTargetClass>
+		<uneffectVal1>500</uneffectVal1>
+		<uneffectVal2>0</uneffectVal2>
+	</card>
+	<card type="spell">
+		<name>Neaza</name>
+		<description>Megnöveli egy szörny támadó- és védelmi pontjait 200-zal.</description>
+		<effectType>incAtkDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>200</effectVal1>
+		<effectVal2>200</effectVal2>
+		<uneffectType>decAtkDef</uneffectType>
+		<uneffectTargetClass>MonsterCard</uneffectTargetClass>
+		<uneffectVal1>200</uneffectVal1>
+		<uneffectVal2>200</uneffectVal2>
+	</card>
+	<card type="spell">
+		<name>Kento</name>
+		<description>Megnöveli egy szörny támadópontjait 400-zal.</description>
+		<effectType>incAtk</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>400</effectVal1>
+		<effectVal2>0</effectVal2>
+		<uneffectType>decAtk</uneffectType>
+		<uneffectTargetClass>MonsterCard</uneffectTargetClass>
+		<uneffectVal1>400</uneffectVal1>
+		<uneffectVal2>0</uneffectVal2>
+	</card>
+</deck>
