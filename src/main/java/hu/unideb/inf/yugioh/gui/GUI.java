@@ -34,12 +34,20 @@ import javax.swing.Box;
 import javax.swing.JSeparator;
 import javax.swing.border.BevelBorder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A játék grafikus interfészét megvalósító osztálya.
  * 
  * @author Rácz Roland
  */
 public class GUI extends JFrame {
+
+	/**
+	 * Naplózáshoz szükséges logger.
+	 */
+	protected static Logger logger = LoggerFactory.getLogger(Card.class);
 
 	/**
 	 * SerialVersionUID.
@@ -76,13 +84,21 @@ public class GUI extends JFrame {
 	private Vector<JPanel> player2MonsterCards;
 	private Vector<JPanel> player2SpellCards;*/
 	
-	private JPanel player2SpellCardZonePanel;
-	private JPanel player2MonsterCardZonePanel;
-	private JPanel player1MonsterCardZonePanel;
-	private JPanel player1SpellCardZonePanel;
+	private JPanel P2SpellCardZonePanel;
+	private JPanel P2MonsterCardZonePanel;
+	private JPanel P1MonsterCardZonePanel;
+	private JPanel P1SpellCardZonePanel;
 	
 	private JLabel P1Lifepoints;
+	private JPanel P1GraveyardZone;
+	private ImagePanel P1Graveyard;
+	private JPanel P1DeckZone;
+	private ImagePanel P1Deck;
 	private JLabel P2Lifepoints;
+	private JPanel P2GraveyardZone;
+	private ImagePanel P2Graveyard;
+	private JPanel P2DeckZone;
+	private ImagePanel P2Deck;
 	
 	private JLabel viewCardTop;
 	private JLabel viewCardBottom;
@@ -133,40 +149,69 @@ public class GUI extends JFrame {
 		btnExit.addActionListener(gameListener);
 		menu1Panel.add(btnExit);
 		
-		player2Panel = new JPanel();
-		player2Panel.setBackground(Color.LIGHT_GRAY);
-		player2Panel.setBounds(124, 82, 566, 190);
-		contentPane.add(player2Panel);
-		player2Panel.setLayout(null);
-		
-		player2SpellCardZonePanel = new JPanel();
-		player2SpellCardZonePanel.setBounds(10, 11, 546, 78);
-		player2Panel.add(player2SpellCardZonePanel);
-		player2SpellCardZonePanel.setLayout(new GridLayout(1, 4, 0, 0));
-		
-		player2MonsterCardZonePanel = new JPanel();
-		player2MonsterCardZonePanel.setBounds(10, 100, 546, 79);
-		player2Panel.add(player2MonsterCardZonePanel);
-		player2MonsterCardZonePanel.setLayout(null);
-		
-		/*ImagePanel testImage = new ImagePanel("monstercard_small");
-		testImage.setBounds(10, 11, 100, 100);
-		testImage.addMouseListener(gameListener);
-		player2MonsterCardZonePanel.add(testImage);*/
-		
 		player1Panel = new JPanel();
 		player1Panel.setBackground(Color.LIGHT_GRAY);
 		player1Panel.setBounds(124, 319, 566, 190);
 		contentPane.add(player1Panel);
 		player1Panel.setLayout(null);
 		
-		player1MonsterCardZonePanel = new JPanel();
-		player1MonsterCardZonePanel.setBounds(10, 11, 546, 78);
-		player1Panel.add(player1MonsterCardZonePanel);
+		player2Panel = new JPanel();
+		player2Panel.setBackground(Color.LIGHT_GRAY);
+		player2Panel.setBounds(124, 82, 566, 190);
+		contentPane.add(player2Panel);
+		player2Panel.setLayout(null);
 		
-		player1SpellCardZonePanel = new JPanel();
-		player1SpellCardZonePanel.setBounds(10, 100, 546, 79);
-		player1Panel.add(player1SpellCardZonePanel);
+		P2SpellCardZonePanel = new JPanel();
+		P2SpellCardZonePanel.setBounds(83, 11, 473, 78);
+		player2Panel.add(P2SpellCardZonePanel);
+		P2SpellCardZonePanel.setLayout(new GridLayout(1, 4, 0, 0));
+		
+		P2MonsterCardZonePanel = new JPanel();
+		P2MonsterCardZonePanel.setBounds(83, 100, 473, 79);
+		player2Panel.add(P2MonsterCardZonePanel);
+		P2MonsterCardZonePanel.setLayout(null);
+		
+		P1DeckZone = new JPanel();
+		P1DeckZone.setBounds(494, 101, 62, 78);
+		player1Panel.add(P1DeckZone);
+		P1DeckZone.setLayout(null);
+		
+		P1Deck = new ImagePanel("cardbackground_small", null);
+		P1Deck.setBounds(10, 11, 42, 59);
+		P1DeckZone.add(P1Deck);
+		
+		P2DeckZone = new JPanel();
+		P2DeckZone.setBounds(10, 11, 63, 78);
+		player2Panel.add(P2DeckZone);
+		P2DeckZone.setLayout(null);
+		
+		P2Deck = new ImagePanel("cardbackground_small", null);
+		P2Deck.setBounds(10, 10, 42, 59);
+		P2DeckZone.add(P2Deck);
+		P2Deck.setLayout(null);
+		
+		P2GraveyardZone = new JPanel();
+		P2GraveyardZone.setBounds(10, 100, 63, 78);
+		player2Panel.add(P2GraveyardZone);
+		P2GraveyardZone.setLayout(null);
+		
+		/*ImagePanel testImage = new ImagePanel("monstercard_small");
+		testImage.setBounds(10, 11, 100, 100);
+		testImage.addMouseListener(gameListener);
+		player2MonsterCardZonePanel.add(testImage);*/
+		
+		P1MonsterCardZonePanel = new JPanel();
+		P1MonsterCardZonePanel.setBounds(10, 11, 474, 78);
+		player1Panel.add(P1MonsterCardZonePanel);
+		
+		P1SpellCardZonePanel = new JPanel();
+		P1SpellCardZonePanel.setBounds(10, 100, 474, 79);
+		player1Panel.add(P1SpellCardZonePanel);
+		
+		P1GraveyardZone = new JPanel();
+		P1GraveyardZone.setBounds(494, 11, 62, 78);
+		player1Panel.add(P1GraveyardZone);
+		P1GraveyardZone.setLayout(null);
 		
 		infoLabel = new JLabel("Yu-Gi-Oh! kártyajáték");
 		infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -296,20 +341,130 @@ public class GUI extends JFrame {
 	}
 	
 	/**
-	 * Megjeleníti a grafikus felületen az adott kártya adatait.
+	 * Megjeleníti a grafikus felületen az adott kártyalap adatait.
 	 * 
-	 * @param card a megjelenítendő kártya
+	 * @param card a megjelenítendő kártyalap
+	 * @return sikeres volt-e a megjelenítés
 	 */
-	public void showCard(Card card) {
+	public boolean showCard(Card card) {
 		if (card instanceof MonsterCard) {
 			MonsterCard mc = (MonsterCard) card;
 			viewCardTop.setText( mc.getName() + " (" + mc.getType() + ", " + mc.getLevel() + ". szintű)" );
 			viewCardBottom.setText( "ATK: " + mc.getAtk() + ", DEF: " + mc.getDef() );
+			return true;
 		} else if (card instanceof SpellCard) {
 			SpellCard sc = (SpellCard) card;
 			viewCardTop.setText( sc.getName() );
 			viewCardBottom.setText( sc.getDescription() );
+			return true;
 		}
+		logger.error("A megadott kártya se nem szörny-, se nem varázslap.");
+		return false;
+	}
+	
+	/**
+	 * Hozzáad egy adott kártyalapot reprezentáló képet az adott játékos kártya típusának megfelelő felületéhez.
+	 * 
+	 * @param card a reprezentálandó kártyalap
+	 * @param player a kártyalap tulajdonosa
+	 * @return sikeres volt-e a hozzáadás
+	 */
+	public boolean addCardToField(Card card, Player player) {
+		if (card instanceof MonsterCard) {
+			ImagePanel ip = new ImagePanel("monstercard_small", card);
+			if (player == p1) {
+				P1MonsterCardZonePanel.add(ip);
+			} else if (player == p2) {
+				P2MonsterCardZonePanel.add(ip);
+			} else {
+				logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
+				return false;
+			}
+			logger.info("Kép hozzáadva.");
+			return true;
+		} else if (card instanceof SpellCard) {
+			ImagePanel ip = new ImagePanel("spellcard_small", card);
+			if (player == p1) {
+				P1SpellCardZonePanel.add(ip);
+			} else if (player == p2) {
+				P2SpellCardZonePanel.add(ip);
+			} else {
+				logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
+				return false;
+			}
+			logger.info("Kép hozzáadva.");
+			return true;
+		}
+		logger.error("A megadott kártya se nem szörny-, se nem varázslap.");
+		return false;
+	}
+	
+	/**
+	 * Törli az adott játékos temetőjét.
+	 * Létrehoz egy, az adott kártyalapot reprezentáló képet és hozzáadja az adott játékos temetőjéhez.
+	 * 
+	 * @param card a reprezentálandó kártyalap
+	 * @param player a kártyalap tulajdonosa
+	 * @return
+	 */
+	public boolean addCardToGraveyard(Card card, Player player) {
+		JPanel graveyard;
+		if (player == p1) {
+			graveyard = P1GraveyardZone;
+		} else if (player == p2) {
+			graveyard = P2GraveyardZone;
+		} else {
+			logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
+			return false;
+		}
+		graveyard.removeAll();
+		if (card instanceof MonsterCard) {
+			ImagePanel ip = new ImagePanel("monstercard_small", card);
+			ip.setBounds(10, 11, 42, 59);
+			graveyard.add(ip);
+			logger.info("Kép hozzáadva.");
+			return true;
+		} else if (card instanceof SpellCard) {
+			ImagePanel ip = new ImagePanel("spellcard_small", card);
+			ip.setBounds(10, 11, 42, 59);
+			graveyard.add(ip);
+			logger.info("Kép hozzáadva.");
+			return true;
+		}
+		logger.error("A megadott kártya se nem szörny-, se nem varázslap.");
+		return false;
+	}
+	
+	/**
+	 * Eltávolítja az adott kártyalapot reprezentáló képet az adott játékos felületéről.
+	 * 
+	 * @param card az adott kártyalap, melynek reprezentáló képét el kell távolítani
+	 * @param player a kártyalap tulajdonosa
+	 * @return sikeres volt-e az eltávolítás
+	 */
+	public boolean removeCardFromField(Card card, Player player) {
+		JPanel panel;
+		if (player == p1 && card instanceof MonsterCard) {
+			panel = P1MonsterCardZonePanel;
+		} else if (player == p1 && card instanceof SpellCard) {
+			panel = P1SpellCardZonePanel;
+		} else if (player == p2 && card instanceof MonsterCard) {
+			panel = P2MonsterCardZonePanel;
+		} else if (player == p2 && card instanceof SpellCard) {
+			panel = P2SpellCardZonePanel;
+		} else {
+			logger.error("Nem megfelelő paraméter.");
+			return false;
+		}
+		for (Component component : panel.getComponents()) {
+			if (component instanceof ImagePanel && ((ImagePanel)component).getLinkedObject()==card) {
+				panel.remove(component);
+				logger.info("Kép eltávolítva.");
+				return true;
+			}
+		}
+		logger.error("Nem sikerült az eltávolítás.");
+		return false;
 	}
 	
 }
