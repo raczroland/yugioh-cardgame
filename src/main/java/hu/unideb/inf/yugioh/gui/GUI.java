@@ -1,6 +1,10 @@
-package hu.unideb.ing.yugioh.gui;
+package hu.unideb.inf.yugioh.gui;
 
+import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Game;
+import hu.unideb.inf.yugioh.main.MonsterCard;
+import hu.unideb.inf.yugioh.main.Player;
+import hu.unideb.inf.yugioh.main.SpellCard;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -23,9 +27,12 @@ import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 import javax.swing.JSeparator;
+import javax.swing.border.BevelBorder;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
@@ -43,6 +50,9 @@ public class GUI extends JFrame {
 	 * A felhasználói felület behatásait kezelő objektum.
 	 */
 	private GameListener gameListener;
+	
+	private Player p1;
+	private Player p2;
 	
 	private JPanel contentPane;
 	private JPanel menu1Panel;
@@ -70,12 +80,22 @@ public class GUI extends JFrame {
 	private JPanel player2MonsterCardZonePanel;
 	private JPanel player1MonsterCardZonePanel;
 	private JPanel player1SpellCardZonePanel;
+	
+	private JLabel P1Lifepoints;
+	private JLabel P2Lifepoints;
+	
+	private JLabel viewCardTop;
+	private JLabel viewCardBottom;
+	
 
 	/**
 	 * Konstruktor az osztályhoz.
 	 * Létrehozza az ablak grafikus elemeit.
 	 */
 	public GUI() {
+		
+		p1 = null;
+		p2 = null;
 		
 		setTitle("Yu-Gi-Oh! kártyajáték");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,9 +149,10 @@ public class GUI extends JFrame {
 		player2Panel.add(player2MonsterCardZonePanel);
 		player2MonsterCardZonePanel.setLayout(null);
 		
-		ImagePanel testImage = new ImagePanel("monstercard");
+		/*ImagePanel testImage = new ImagePanel("monstercard_small");
 		testImage.setBounds(10, 11, 100, 100);
-		player2MonsterCardZonePanel.add(testImage);
+		testImage.addMouseListener(gameListener);
+		player2MonsterCardZonePanel.add(testImage);*/
 		
 		player1Panel = new JPanel();
 		player1Panel.setBackground(Color.LIGHT_GRAY);
@@ -194,23 +215,23 @@ public class GUI extends JFrame {
 		panel_5.setBounds(340, 520, 350, 60);
 		contentPane.add(panel_5);
 		
-		JLabel P1Lifepoints = new JLabel("Életpontok száma: -");
+		P1Lifepoints = new JLabel("Életpontok száma: -");
 		P1Lifepoints.setBounds(124, 520, 206, 14);
 		contentPane.add(P1Lifepoints);
 		
-		JLabel P2Lifepoints = new JLabel("Életpontok száma: -");
+		P2Lifepoints = new JLabel("Életpontok száma: -");
 		P2Lifepoints.setBounds(484, 11, 206, 14);
 		contentPane.add(P2Lifepoints);
 		
-		JLabel lblSttVarzslstt = new JLabel("Sötét varázsló (sötét, *******) ");
-		lblSttVarzslstt.setForeground(Color.GRAY);
-		lblSttVarzslstt.setBounds(124, 543, 206, 14);
-		contentPane.add(lblSttVarzslstt);
+		viewCardTop = new JLabel("Sötét varázsló (sötét, *******) ");
+		viewCardTop.setForeground(Color.GRAY);
+		viewCardTop.setBounds(124, 543, 206, 14);
+		contentPane.add(viewCardTop);
 		
-		JLabel lblAtkDef = new JLabel("ATK: 2500 DEF: 2100");
-		lblAtkDef.setForeground(Color.GRAY);
-		lblAtkDef.setBounds(124, 566, 206, 14);
-		contentPane.add(lblAtkDef);
+		viewCardBottom = new JLabel("ATK: 2500 DEF: 2100");
+		viewCardBottom.setForeground(Color.GRAY);
+		viewCardBottom.setBounds(124, 566, 206, 14);
+		contentPane.add(viewCardBottom);
 		
 		JPanel menu3panel = new JPanel();
 		menu3panel.setLayout(null);
@@ -242,6 +263,17 @@ public class GUI extends JFrame {
 	}
 	
 	/**
+	 * Beállítja a felhasználóifelülethez rendelt két játékost.
+	 * 
+	 * @param p1 az első játékos
+	 * @param p2 a második játékos
+	 */
+	public void setPlayers(Player p1, Player p2) {
+		this.p1 = p1;
+		this.p2 = p2;
+	}
+	
+	/**
 	 * Adott üzenet megjelenítése a grafikus felületen.
 	 * 
 	 * @param msg a megjelenítendő üzenet
@@ -249,4 +281,35 @@ public class GUI extends JFrame {
 	public void showMessage(String msg) {
 		infoLabel.setText(msg);
 	}
+	
+	/**
+	 * Megjeleníti az adott játékos életpontjait a saját felületén.
+	 * 
+	 * @param player a játékos
+	 */
+	public void showLifepoints(Player player) {
+		if (player == p1) {
+			P1Lifepoints.setText("Életpontok száma: " + player.getLifepoints());
+		} else if (player == p2) {
+			P2Lifepoints.setText("Életpontok száma: " + player.getLifepoints());
+		}
+	}
+	
+	/**
+	 * Megjeleníti a grafikus felületen az adott kártya adatait.
+	 * 
+	 * @param card a megjelenítendő kártya
+	 */
+	public void showCard(Card card) {
+		if (card instanceof MonsterCard) {
+			MonsterCard mc = (MonsterCard) card;
+			viewCardTop.setText( mc.getName() + " (" + mc.getType() + ", " + mc.getLevel() + ". szintű)" );
+			viewCardBottom.setText( "ATK: " + mc.getAtk() + ", DEF: " + mc.getDef() );
+		} else if (card instanceof SpellCard) {
+			SpellCard sc = (SpellCard) card;
+			viewCardTop.setText( sc.getName() );
+			viewCardBottom.setText( sc.getDescription() );
+		}
+	}
+	
 }

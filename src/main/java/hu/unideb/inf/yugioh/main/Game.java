@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import hu.unideb.ing.yugioh.gui.GUI;
+import hu.unideb.inf.yugioh.gui.GUI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +95,10 @@ public class Game {
 		Player human = new Player("Felhasználó");
 		Player computer = new AIPlayer("Számítógép");
 		match = new Match( human, computer );
+		
+		visualizator.setPlayers(human, computer);
+		visualizator.showLifepoints(human);
+		visualizator.showLifepoints(computer);
 		
 		worker.execute();
 		

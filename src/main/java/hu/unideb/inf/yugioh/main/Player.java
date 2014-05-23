@@ -29,7 +29,7 @@ public class Player {
 	/**
 	 * A játékos életpontjainak száma.
 	 */
-	private int lifepoint;
+	private int lifepoints;
 	
 	/**
 	 * A játékos paklija.
@@ -70,8 +70,8 @@ public class Player {
 	 * 
 	 * @return a játékos életpontjainak száma 
 	 */
-	public int getLifepoint() {
-		return lifepoint;
+	public int getLifepoints() {
+		return lifepoints;
 	}
 	
 	/**
@@ -79,8 +79,8 @@ public class Player {
 	 * 
 	 * @param lp a hozzáadandó életpontok száma
 	 */
-	public void addLifepoint(int lp) {
-		lifepoint += lp;
+	public void addLifepoints(int lp) {
+		lifepoints += lp;
 	}
 	
 	/**
@@ -89,12 +89,12 @@ public class Player {
 	 * 
 	 * @param lp a kivonandó életpontok száma
 	 */
-	public void subLifepoint(int lp) {
-		lifepoint -= lp;
-		if (lifepoint<0) {
-			lifepoint = 0;
+	public void subLifepoints(int lp) {
+		lifepoints -= lp;
+		if (lifepoints<0) {
+			lifepoints = 0;
 		}
-		if (lifepoint==0) {
+		if (lifepoints==0) {
 			Game.getMatch().setWinner( this==Game.getMatch().getPlayer1() ? Game.getMatch().getPlayer2() : Game.getMatch().getPlayer1() );
 		}
 	}
@@ -152,7 +152,7 @@ public class Player {
 	 */
 	public Player(String name) {
 		this.name = name;
-		this.lifepoint = 8000;
+		this.lifepoints = 8000;
 		this.deck = Generator.generateRandomDeck(this, 40);
 		this.graveyard = new Deck(new Vector<Card>());
 		this.hand = new Hand(new Vector<Card>());
@@ -171,7 +171,7 @@ public class Player {
 	 */
 	public Player(String name, Deck deck) {
 		this.name = name;
-		this.lifepoint = 8000;
+		this.lifepoints = 8000;
 		this.deck = deck;
 		this.graveyard = new Deck(new Vector<Card>());
 		this.hand = new Hand(new Vector<Card>());

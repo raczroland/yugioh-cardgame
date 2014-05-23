@@ -118,10 +118,10 @@ public class Effect {
 				((Player)obj).getHand().addTop(((Player)obj).getDeck().draw(val1));
 				break;
 			case "dmg":
-				((Player)obj).subLifepoint(val1);
+				((Player)obj).subLifepoints(val1);
 				break;
 			case "heal":
-				((Player)obj).addLifepoint(val1);
+				((Player)obj).addLifepoints(val1);
 				break;
 		}
 		

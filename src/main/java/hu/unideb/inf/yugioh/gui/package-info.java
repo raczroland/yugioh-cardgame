@@ -3,4 +3,4 @@
  * 
  * @author Rácz Roland
  */
-package hu.unideb.ing.yugioh.gui;
+package hu.unideb.inf.yugioh.gui;

@@ -182,16 +182,16 @@ public class MonsterCard extends Card {
 		}
 		if (enemy.isDefensePosition()) {
 			if (enemy.getDef() > this.getAtk()) {
-				this.getOwner().subLifepoint(enemy.getDef()-this.getAtk());
+				this.getOwner().subLifepoints(enemy.getDef()-this.getAtk());
 			} else if (enemy.getDef() < this.getAtk()) {
 				enemy.destroy();
 			}
 		} else {
 			if (enemy.getAtk() > this.getAtk()) {
-				this.getOwner().subLifepoint(enemy.getAtk()-this.getAtk());
+				this.getOwner().subLifepoints(enemy.getAtk()-this.getAtk());
 				this.destroy();
 			} else if(enemy.getAtk() < this.getAtk()) {
-				enemy.getOwner().subLifepoint(this.getAtk()-enemy.getAtk());
+				enemy.getOwner().subLifepoints(this.getAtk()-enemy.getAtk());
 				enemy.destroy();
 			} else {
 				enemy.destroy();
@@ -206,7 +206,7 @@ public class MonsterCard extends Card {
 	 * @param player a megtámadott játékos
 	 */
 	public void attack(Player player) {
-		player.subLifepoint(getAtk());
+		player.subLifepoints(getAtk());
 	}
 
 	@Override
