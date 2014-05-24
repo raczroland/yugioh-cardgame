@@ -196,7 +196,9 @@ public class Player {
 	public void drawPhase() {
 		logger.info(this + ": húzási fázis");
 		Game.showMessage(getName() + ": húzási fázis");
-		getHand().addTop(getDeck().draw());
+		Card card = getDeck().draw();
+		card.setFaceup(true);
+		getHand().addTop(card);
 	}
 	
 	/**

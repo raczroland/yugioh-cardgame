@@ -151,6 +151,9 @@ public class Game {
 		visualizator.showLifepoints(human);
 		visualizator.showLifepoints(computer);
 		
+		human.getDeck().shuffle();
+		computer.getDeck().shuffle();
+		
 		worker = new GameWorker();
 		worker.execute();
 		

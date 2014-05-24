@@ -1,6 +1,8 @@
 package hu.unideb.inf.yugioh.gui;
 
+import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.MonsterCard;
+import hu.unideb.inf.yugioh.main.SpellCard;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -38,7 +40,7 @@ public class CardPanel extends JPanel {
 	/**
 	 * A panelhez rendelt objektum.
 	 */
-	private Object linkedObject;
+	private Card linkedCard;
 	
 	/**
 	 * Támadópontokat megjelenítő címke.
@@ -56,26 +58,45 @@ public class CardPanel extends JPanel {
 	 * @return a panelhez rendelt objektum
 	 */
 	public Object getLinkedObject() {
-		return linkedObject;
+		return linkedCard;
 	}
 
 	/**
 	 * Konstruktor az osztályhoz.
-	 * Beállítja a paraméterként átadott nevű képet és hozzácsatolja a panelhez az adott objektumot.
+	 * Létrehoz egy panelt és egy képet a paraméterként átadott kártyalap számára.
 	 * 
-	 * @param imageName a beállítandó kép neve
-	 * @param linkedObject a panelhez rendelt objektum
+	 * @param card a panelhez rendelt kártyalap
 	 */
-	public CardPanel(String imageName, Object linkedObject) {
+	public CardPanel(Card card) {
 		try {
+			String imageName = "";
+			if (card instanceof MonsterCard) {
+				MonsterCard mc = (MonsterCard) card;
+				if (mc.isFaceup() && !mc.isDefensePosition()) {
+					imageName = "monstercard_small";
+				} else if (!mc.isFaceup() && !mc.isDefensePosition()) {
+					imageName = "cardbackground_small";
+				} else if (mc.isFaceup() && mc.isDefensePosition()) {
+					imageName = "monstercard2_small";
+				} else if (!mc.isFaceup() && mc.isDefensePosition()) {
+					imageName = "cardbackground2_small";
+				}
+			} else if (card instanceof SpellCard) {
+				SpellCard sc = (SpellCard) card;
+				if (sc.isFaceup()) {
+					imageName = "spellcard_small";
+				} else {
+					imageName = "cardbackground_small";
+				}
+			}
 			this.image = ImageIO.read(CardPanel.class.getClassLoader().getResourceAsStream(imageName + ".jpg"));
-			this.linkedObject = linkedObject;
+			this.linkedCard = card;
 			setLayout(null);
-			if (linkedObject instanceof MonsterCard) {
-				atkLabel = new JLabel(""+((MonsterCard)linkedObject).getAtk());
+			if (linkedCard instanceof MonsterCard && ((MonsterCard)linkedCard).isFaceup()) {
+				atkLabel = new JLabel(""+((MonsterCard)linkedCard).getAtk());
 				atkLabel.setBounds(5, 2, 60, 20);
 				add(atkLabel);
-				defLabel = new JLabel(""+((MonsterCard)linkedObject).getDef());
+				defLabel = new JLabel(""+((MonsterCard)linkedCard).getDef());
 				defLabel.setBounds(5, 20, 60, 20);
 				add(defLabel);
 			}

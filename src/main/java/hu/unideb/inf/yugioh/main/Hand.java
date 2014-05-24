@@ -27,6 +27,7 @@ public class Hand extends Deck {
 				card.setDefensePosition(false);
 			}
 			card.getOwner().getMonsterCardZone().addTop(card);
+			Game.getGUI().removeCardFromHand(card, card.getOwner());
 			Game.getGUI().addCardToField(card, card.getOwner());
 			logger.info("Szörny megidézve " + (defensePosition?"védelmi":"támadó") + " módban. [" + card + "]");
 			return true;
@@ -87,6 +88,20 @@ public class Hand extends Deck {
 		card.getOwner().getSpellCardZone().addTop(card);
 		// TODO kijavítani:
 		//card.getEffect().run();
+	}
+
+	@Override
+	public void addTop(Card card) {
+		super.addTop(card);
+		Game.getGUI().addCardToHand(card, card.getOwner());
+	}
+
+	@Override
+	public void addTop(Card[] cards) {
+		super.addTop(cards);
+		for (Card card : cards) {
+			Game.getGUI().addCardToHand(card, card.getOwner());
+		}
 	}
 
 }

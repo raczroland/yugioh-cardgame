@@ -18,7 +18,19 @@ public class AIPlayer extends Player {
 	public AIPlayer(String name) {
 		super(name);
 	}
-	
+
+	/**
+	 * A húzási fázist végrehajtó metódus.
+	 * A mesterséges intelligencia lapját lefordítva húzza fel.
+	 */
+	@Override
+	public void drawPhase() {
+		logger.info(this + ": húzási fázis");
+		Game.showMessage(getName() + ": húzási fázis");
+		Card card = getDeck().draw();
+		getHand().addTop(card);
+	}
+
 	/**
 	 * Az első fő fázist végrehajtó metódus.
 	 * A mesterséges intelligencia megpróbál megidézni egy szörnykártyát.

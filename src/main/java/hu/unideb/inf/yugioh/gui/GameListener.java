@@ -54,7 +54,9 @@ public class GameListener implements ActionListener, MouseListener {
 		
 		if (e.getSource() instanceof CardPanel) {
 			Card card = (Card) ((CardPanel)e.getSource()).getLinkedObject();
-			Game.getGUI().showCard( card );
+			if (card.isFaceup()) {
+				Game.getGUI().showCard( card );
+			}
 		}
 		
 	}
