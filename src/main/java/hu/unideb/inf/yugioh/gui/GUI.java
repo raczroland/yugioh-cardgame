@@ -7,10 +7,6 @@ import hu.unideb.inf.yugioh.main.MonsterCard;
 import hu.unideb.inf.yugioh.main.Player;
 import hu.unideb.inf.yugioh.main.SpellCard;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -18,40 +14,25 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import java.awt.Component;
 
-import javax.swing.Box;
-import javax.swing.JSeparator;
-import javax.swing.border.BevelBorder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.GridBagLayout;
-
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
+import java.awt.Font;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
  * 
  * @author Rácz Roland
- */
-/**
- * @author Roland
- *
  */
 public class GUI extends JFrame {
 
@@ -97,21 +78,21 @@ public class GUI extends JFrame {
 	
 	private JLabel P1Lifepoints;
 	private JPanel P1GraveyardZone;
-	private CardPanel P1Graveyard;
+	//private CardPanel P1Graveyard;
 	private JPanel P1DeckZone;
 	private CardPanel P1Deck;
 	private JLabel P2Lifepoints;
 	private JPanel P2GraveyardZone;
-	private CardPanel P2Graveyard;
+	//private CardPanel P2Graveyard;
 	private JPanel P2DeckZone;
 	private CardPanel P2Deck;
 	
 	private JLabel viewCardTop;
 	private JLabel viewCardBottom;
 	
-	private JList deckList;
+	private JList<String> deckList;
 
-	public JList getDeckList() {
+	public JList<String> getDeckList() {
 		return deckList;
 	}
 
@@ -142,12 +123,14 @@ public class GUI extends JFrame {
 		menu1Panel.setLayout(null);
 		
 		btnNew = new JButton("Új");
+		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNew.setBounds(9, 11, 87, 23);
 		btnNew.setActionCommand("new");
 		btnNew.addActionListener(gameListener);
 		menu1Panel.add(btnNew);
 		
 		btnGiveup = new JButton("Feladás");
+		btnGiveup.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnGiveup.setBounds(9, 45, 87, 23);
 		btnGiveup.setEnabled(false);
 		btnGiveup.setActionCommand("giveup");
@@ -155,6 +138,7 @@ public class GUI extends JFrame {
 		menu1Panel.add(btnGiveup);
 		
 		btnExit = new JButton("Kilépés");
+		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnExit.setBounds(9, 79, 87, 23);
 		btnExit.setActionCommand("exit");
 		btnExit.addActionListener(gameListener);
@@ -237,29 +221,33 @@ public class GUI extends JFrame {
 		menu2Panel.setLayout(null);
 		
 		btnDeckRandom = new JButton("Véletlen");
-		btnDeckRandom.setEnabled(false);
+		btnDeckRandom.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckRandom.setBounds(10, 11, 84, 23);
 		btnDeckRandom.setActionCommand("deckRandom");
 		menu2Panel.add(btnDeckRandom);
 		
 		btnDeckLoaded = new JButton("Betöltés");
+		btnDeckLoaded.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckLoaded.setBounds(10, 217, 84, 23);
 		btnDeckLoaded.setActionCommand("deckLoaded");
 		btnDeckLoaded.addActionListener(gameListener);
 		menu2Panel.add(btnDeckLoaded);
 		
 		btnDeckSave = new JButton("Mentés");
+		btnDeckSave.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckSave.setBounds(10, 251, 84, 23);
 		btnDeckSave.setActionCommand("deckSave");
 		btnDeckSave.addActionListener(gameListener);
 		menu2Panel.add(btnDeckSave);
 		
-		deckList = new JList(DataManager.getSavedDecks());
+		deckList = new JList<String>(DataManager.getSavedDecks());
+		deckList.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		deckList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		deckList.setBounds(10, 45, 84, 161);
 		menu2Panel.add(deckList);
 		
 		btnDeckDelete = new JButton("Törlés");
+		btnDeckDelete.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckDelete.setActionCommand("deckDelete");
 		btnDeckDelete.addActionListener(gameListener);
 		btnDeckDelete.setBounds(10, 285, 84, 23);
@@ -283,12 +271,12 @@ public class GUI extends JFrame {
 		P2Lifepoints.setBounds(484, 11, 206, 14);
 		contentPane.add(P2Lifepoints);
 		
-		viewCardTop = new JLabel("Sötét varázsló (sötét, *******) ");
+		viewCardTop = new JLabel("-");
 		viewCardTop.setForeground(Color.GRAY);
 		viewCardTop.setBounds(124, 543, 206, 14);
 		contentPane.add(viewCardTop);
 		
-		viewCardBottom = new JLabel("ATK: 2500 DEF: 2100");
+		viewCardBottom = new JLabel("-");
 		viewCardBottom.setForeground(Color.GRAY);
 		viewCardBottom.setBounds(124, 566, 206, 14);
 		contentPane.add(viewCardBottom);
@@ -300,16 +288,19 @@ public class GUI extends JFrame {
 		contentPane.add(menu3panel);
 		
 		JButton btnPhaseBattle = new JButton("Harci fázis");
+		btnPhaseBattle.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPhaseBattle.setEnabled(false);
 		btnPhaseBattle.setBounds(10, 11, 84, 23);
 		menu3panel.add(btnPhaseBattle);
 		
 		JButton btnPhaseMain2 = new JButton("Fő fázis 2.");
+		btnPhaseMain2.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPhaseMain2.setEnabled(false);
 		btnPhaseMain2.setBounds(10, 45, 84, 23);
 		menu3panel.add(btnPhaseMain2);
 		
 		JButton btnPhaseEnd = new JButton("Vég fázis");
+		btnPhaseEnd.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPhaseEnd.setEnabled(false);
 		btnPhaseEnd.setBounds(10, 79, 84, 23);
 		menu3panel.add(btnPhaseEnd);
@@ -390,7 +381,7 @@ public class GUI extends JFrame {
 	}
 	
 	/**
-	 * Eltávolíttja az adott panelből az adott komponenst.
+	 * Eltávolítja az adott panelből az adott komponenst.
 	 * 
 	 * @param panel a cél panel
 	 * @param component az eltávolítandó komponens
@@ -398,6 +389,20 @@ public class GUI extends JFrame {
 	public void removeComponentFromPanel(JPanel panel, Component component) {
 		panel.remove(component);
 		Game.getWorker().refreshGUI();
+	}
+	
+	/**
+	 * Létrehoz egy CardPanelt, beállítja a méreteit és beállítja hozzá a MouseListenert.
+	 * 
+	 * @param name a beállítandó kép neve
+	 * @param object a panelhezr endelt objektum
+	 * @return a létrehozott CardPanel objektum
+	 */
+	public CardPanel createCardPanel (String name, Object object) {
+		CardPanel cp = new CardPanel(name, object);
+		cp.setBounds(10, 11, 42, 59);
+		cp.addMouseListener(gameListener);
+		return cp;
 	}
 	
 	/**
@@ -409,8 +414,7 @@ public class GUI extends JFrame {
 	 */
 	public boolean addCardToField(Card card, Player player) {
 		if (card instanceof MonsterCard) {
-			CardPanel ip = new CardPanel("monstercard_small", card);
-			ip.setBounds(10, 11, 42, 59);
+			CardPanel ip = createCardPanel("monstercard_small", card);
 			if (player == p1) {
 				addComponentToPanel(P1MonsterCardZonePanel, ip);
 			} else if (player == p2) {
@@ -422,8 +426,7 @@ public class GUI extends JFrame {
 			logger.info("Kép hozzáadva mezőhöz. (Szörnylap)");
 			return true;
 		} else if (card instanceof SpellCard) {
-			CardPanel ip = new CardPanel("spellcard_small", card);
-			ip.setBounds(10, 11, 42, 59);
+			CardPanel ip = createCardPanel("spellcard_small", card);
 			if (player == p1) {
 				addComponentToPanel(P1SpellCardZonePanel, ip);
 			} else if (player == p2) {
@@ -459,14 +462,12 @@ public class GUI extends JFrame {
 		}
 		graveyard.removeAll();
 		if (card instanceof MonsterCard) {
-			CardPanel ip = new CardPanel("monstercard_small", card);
-			ip.setBounds(10, 11, 42, 59);
+			CardPanel ip = createCardPanel("monstercard_small", card);
 			addComponentToPanel(graveyard, ip);
 			logger.info("Kép hozzáadva.");
 			return true;
 		} else if (card instanceof SpellCard) {
-			CardPanel ip = new CardPanel("spellcard_small", card);
-			ip.setBounds(10, 11, 42, 59);
+			CardPanel ip = createCardPanel("spellcard_small", card);
 			addComponentToPanel(graveyard, ip);
 			logger.info("Kép hozzáadva.");
 			return true;

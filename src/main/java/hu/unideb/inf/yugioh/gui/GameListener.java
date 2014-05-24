@@ -1,6 +1,7 @@
 package hu.unideb.inf.yugioh.gui;
 
 import hu.unideb.inf.yugioh.data.DataManager;
+import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Game;
 
 import java.awt.event.ActionEvent;
@@ -52,7 +53,8 @@ public class GameListener implements ActionListener, MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		
 		if (e.getSource() instanceof CardPanel) {
-			//((ImagePanel)e.getSource()).set
+			Card card = (Card) ((CardPanel)e.getSource()).getLinkedObject();
+			Game.getGUI().showCard( card );
 		}
 		
 	}

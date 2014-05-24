@@ -21,6 +21,11 @@ import org.slf4j.LoggerFactory;
 public class CardPanel extends JPanel {
 
 	/**
+	 * SerialVersionUID.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * Naplózáshoz szükséges logger.
 	 */
 	protected static Logger logger = LoggerFactory.getLogger(CardPanel.class);

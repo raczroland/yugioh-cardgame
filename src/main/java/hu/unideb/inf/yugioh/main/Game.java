@@ -1,11 +1,5 @@
 package hu.unideb.inf.yugioh.main;
 
-import java.awt.EventQueue;
-import java.util.List;
-
-import javax.swing.SwingWorker;
-
-import hu.unideb.inf.yugioh.data.DataManager;
 import hu.unideb.inf.yugioh.gui.GUI;
 
 import org.slf4j.Logger;
@@ -186,6 +180,9 @@ public class Game {
 		//System.out.println(deck);
 		
 		//Game game = Game.getInstance();
+		
+		//System.out.println( System.getProperty("user.home") );
+		
 		Game.init();
 		
 		/*Player player = new Player("tesztJátékos");
