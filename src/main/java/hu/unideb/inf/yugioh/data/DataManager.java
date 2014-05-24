@@ -162,6 +162,15 @@ public class DataManager {
 		
 	}
 	
+	/**
+	 * Létrehoz egy csomópontot.
+	 * 
+	 * @param eventFactory felhasználandó eventFactory
+	 * @param eventWriter felhasználandó eventWriter
+	 * @param elementName az elem neve
+	 * @param value az elem értéke
+	 * @param numberOfTabs az elem elé rakandó tabok száma
+	 */
 	private static void createNode(XMLEventFactory eventFactory, XMLEventWriter eventWriter, String elementName, String value, int numberOfTabs) {
 
 		try {

@@ -204,11 +204,24 @@ public class Player {
 	
 	/**
 	 * Az első fő fázist végrehajtó metódus.
+	 * Várakozik a játékos lépésére.
 	 */
 	public void mainPhase1() {
 		logger.info(this + ": első fő fázis");
 		Game.showMessage(getName() + ": 1. fő fázis");
 		
+		Game.getGUI().setMPEventEnabled(true);
+		while (Game.getGUI().getEventObject()==null) {
+			Game._wait();
+		}
+		Card card = (Card) Game.getGUI().getEventObject();
+		Game.getGUI().setEventObject(null);
+		
+		if (hand.getCards().contains(card) && card instanceof MonsterCard) {
+			hand.summonMonsterCard((MonsterCard)card, false);
+		}
+		// TODO varázslaphoz is!!!
+		//System.out.println(card);
 	}
 	
 	/**

@@ -52,6 +52,21 @@ public class GUI extends JFrame {
 	 */
 	private GameListener gameListener;
 	
+	/**
+	 * Engedélyezve van-e a MainPhaseEvent.
+	 */
+	private boolean MPEventEnabled;
+	
+	/**
+	 * Engedélyezve van-e a BattlesPhaseEvent.
+	 */
+	private boolean BPEventEnabled;
+	
+	/**
+	 * Ebbe a változóba töltődik egy PhaseEvent objektuma.
+	 */
+	private Card eventObject;
+	
 	private Player p1;
 	private Player p2;
 	
@@ -116,6 +131,9 @@ public class GUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		gameListener = new GameListener();
+		MPEventEnabled = false;
+		BPEventEnabled = false;
+		eventObject = null;
 		
 		menu1Panel = new JPanel();
 		menu1Panel.setBackground(Color.GRAY);
@@ -333,6 +351,60 @@ public class GUI extends JFrame {
 	}
 	
 	/**
+	 * Visszaadja, hogy engedélyezve van-e a MainPhaseEvent.
+	 * 
+	 * @return engedélyezve van-e a MainPhaseEvent
+	 */
+	public boolean isMPEventEnabled() {
+		return MPEventEnabled;
+	}
+
+	/**
+	 * Beállítja a MainPhaseEventet.
+	 * 
+	 * @param mPEventEnabled beállítandó érték
+	 */
+	public void setMPEventEnabled(boolean mPEventEnabled) {
+		MPEventEnabled = mPEventEnabled;
+	}
+	
+	/**
+	 * Visszaadja, hogy engedélyezve van-e a BattlePhaseEvent.
+	 * 
+	 * @return engedélyezve van-e a BattlePhaseEvent
+	 */
+	public boolean isBPEventEnabled() {
+		return BPEventEnabled;
+	}
+
+	/**
+	 * Beállítja a BattlePhaseEventet.
+	 * 
+	 * @param bPEventEnabled beállítandó érték
+	 */
+	public void setBPEventEnabled(boolean bPEventEnabled) {
+		BPEventEnabled = bPEventEnabled;
+	}
+
+	/**
+	 * Visszaadja az aktuális PhaseEvent objektumot.
+	 * 
+	 * @return az aktuális PhaseEvent objektum
+	 */
+	public Card getEventObject() {
+		return eventObject;
+	}
+
+	/**
+	 * Beállítja a PhaseEvent objektumot.
+	 * 
+	 * @param eventObject a beállítandó PhaseEvent objektum
+	 */
+	public void setEventObject(Card eventObject) {
+		this.eventObject = eventObject;
+	}
+
+	/**
 	 * Adott üzenet megjelenítése a grafikus felületen.
 	 * 
 	 * @param msg a megjelenítendő üzenet
@@ -401,8 +473,7 @@ public class GUI extends JFrame {
 	/**
 	 * Létrehoz egy CardPanelt, beállítja a méreteit és beállítja hozzá a MouseListenert.
 	 * 
-	 * @param name a beállítandó kép neve
-	 * @param object a panelhezr endelt objektum
+	 * @param card a panelhez rendelt kártyalap
 	 * @return a létrehozott CardPanel objektum
 	 */
 	public CardPanel createCardPanel (Card card) {
@@ -485,9 +556,9 @@ public class GUI extends JFrame {
 	/**
 	 * Hozzáad egy adott kártyalapot reprezentáló képet az adott játékos kezébe.
 	 *
-	 * @param card
-	 * @param player
-	 * @return
+	 * @param card hozzáadandó kártyalap
+	 * @param player a kártyalap tulajdonosa
+	 * @return sikeres volt-e a hozzáadás
 	 */
 	public boolean addCardToHand(Card card, Player player) {
 		JPanel handPanel;

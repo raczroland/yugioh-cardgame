@@ -35,6 +35,16 @@ public class SpellCard extends Card {
 		return uneffect;
 	}
 
+	/**
+	 * Konstruktor az osztályhoz.
+	 * 
+	 * @param name a varázslap neve
+	 * @param description a varázslap leírása
+	 * @param faceup felfordítva van-e a kártya
+	 * @param owner a varázslap tulajdonosa
+	 * @param effect a varázslap hatása
+	 * @param uneffect a varázslap megszűnésének hatása
+	 */
 	public SpellCard(String name, String description, boolean faceup, Player owner, Effect effect, Effect uneffect) {
 		super(name, description, faceup, owner);
 		this.effect = effect;

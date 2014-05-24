@@ -2,11 +2,20 @@ package hu.unideb.inf.yugioh.main;
 
 import java.util.Vector;
 
+/**
+ * Egy játékos kezében lévő lapokat reprezentáló osztály.
+ * 
+ * @author Rácz Roland
+ */
 public class Hand extends Deck {
 
+	/**
+	 * Konstruktor az osztályhoz.
+	 * 
+	 * @param cards a kézben lévő lapok llétrehozás után
+	 */
 	public Hand(Vector<Card> cards) {
 		super(cards);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

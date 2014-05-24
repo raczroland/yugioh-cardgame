@@ -90,6 +90,8 @@ public class Effect {
 
 	/**
 	 * A hatás érvényesítése a célobjektumon a hatás típusának megfelelően.
+	 * 
+	 * @param obj a célobjektum
 	 */
 	public void run(Object obj) {
 		

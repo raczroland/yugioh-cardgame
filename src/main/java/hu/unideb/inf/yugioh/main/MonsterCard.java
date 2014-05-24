@@ -201,7 +201,7 @@ public class MonsterCard extends Card {
 	}
 	
 	/**
-	 * Egy támadást hajt végre a szörnnyel a paraméterként átadott játékos életpontjain
+	 * Egy támadást hajt végre a szörnnyel a paraméterként átadott játékos életpontjain.
 	 * 
 	 * @param player a megtámadott játékos
 	 */

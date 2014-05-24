@@ -96,6 +96,7 @@ public abstract class Card implements Comparable<Card> {
 	 * @param name a kártyalap neve
 	 * @param description a kártyalap leírása
 	 * @param faceup a kártyalap felfordítva van-e
+	 * @param owner a kártyalap tulajdonosa
 	 */
 	public Card(String name, String description, boolean faceup, Player owner) {
 		super();

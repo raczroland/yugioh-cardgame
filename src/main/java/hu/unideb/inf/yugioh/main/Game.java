@@ -42,7 +42,7 @@ public class Game {
 	private static Game instance = null;
 
 	/**
-	 * A program grafikus felülete
+	 * A program grafikus felülete.
 	 */
 	private static GUI visualizator;
 	
@@ -89,9 +89,9 @@ public class Game {
 	}
 	
 	/**
-	 * Visszaadja a program grafikus felületét
+	 * Visszaadja a program grafikus felületét.
 	 * 
-	 * @returna program grafikus felülete
+	 * @return program grafikus felülete
 	 */
 	public static GUI getGUI() {
 		return visualizator;
@@ -190,6 +190,10 @@ public class Game {
 		visualizator.showMessage(msg);
 	}
 	
+	/**
+	 * Várakoztató metódus.
+	 * 800 milliszekundumig várakoztatja a program futását. 
+	 */
 	public static void _wait() {
 		try {
 		    Thread.sleep(800);
@@ -198,6 +202,11 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * A játék főmetódusa.
+	 * 
+	 * @param args parancssori argumentumok
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

@@ -37,7 +37,8 @@ public class AIPlayer extends Player {
 	 */
 	@Override
 	public void mainPhase1() {
-		super.mainPhase1();
+		logger.info(this + ": első fő fázis");
+		Game.showMessage(getName() + ": 1. fő fázis");
 		Game._wait();
 		Hand hand = getHand();
 		Collections.sort(hand.getCards());

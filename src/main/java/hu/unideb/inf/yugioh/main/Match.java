@@ -5,6 +5,11 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Egy meccset reprezentáló osztály.
+ * 
+ * @author Rácz Roland
+ */
 public class Match {
 
 	/**

@@ -10,6 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * A játék felhasználói interakcióit kezelő osztálya.
+ * 
+ * @author Rácz Roland
+ */
 public class GameListener implements ActionListener, MouseListener {
 
 	@Override
@@ -52,7 +57,27 @@ public class GameListener implements ActionListener, MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) { }
+	public void mouseClicked(MouseEvent e) {
+	
+		if (e.getSource() instanceof CardPanel) {
+			
+			CardPanel cp = (CardPanel) e.getSource();
+			
+			if (Game.getGUI().isMPEventEnabled()) {
+				
+				if (Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
+					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
+					Game.getGUI().setMPEventEnabled(false);
+				} else if (Game.getHuman().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
+					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
+					Game.getGUI().setMPEventEnabled(false);
+				}
+				
+			}
+			
+		}
+	
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
