@@ -2,7 +2,7 @@ package hu.unideb.inf.yugioh.data;
 
 import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Deck;
-import hu.unideb.inf.yugioh.main.Effect;
+import hu.unideb.inf.yugioh.main.Game;
 import hu.unideb.inf.yugioh.main.Generator;
 import hu.unideb.inf.yugioh.main.MonsterCard;
 import hu.unideb.inf.yugioh.main.SpellCard;
@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,7 +26,6 @@ import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndDocument;
@@ -35,7 +33,6 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartDocument;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.Result;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +62,8 @@ public class DataManager {
 		try {
 			
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			File dir =  new File(System.getProperty("user.home") + "\\yugiohcg");
-			InputStream in = new FileInputStream( dir.getPath() + "\\" + filename);
+			File dir =  new File(System.getProperty("user.home") + "/yugiohcg");
+			InputStream in = new FileInputStream( dir.getPath() + "/" + filename);
 			
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 			
@@ -81,9 +78,9 @@ public class DataManager {
 					StartElement startElement = event.asStartElement();
 					
 					if (startElement.getName().getLocalPart().equals("card")) {
-						Iterator<Attribute> attributes = startElement.getAttributes();
+						Iterator<?> attributes = startElement.getAttributes();
 						while (attributes.hasNext()) {
-							Attribute attribute = attributes.next();
+							Attribute attribute = (Attribute) attributes.next();
 							if (attribute.getName().toString().equals("type")) {
 								if (attribute.getValue().equals("monster")) {
 									item = new MonsterCardItem();
@@ -159,6 +156,8 @@ public class DataManager {
 			logger.error("A fájl nem található.");
 		}
 		
+		Game.getGUI().showMessage("Pakli betöltve: " + filename);
+		logger.info("Pakli betöltve.");
 		return new Deck(cards);
 		
 	}
@@ -200,12 +199,12 @@ public class DataManager {
 			
 			XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
 			
-			File dir =  new File(System.getProperty("user.home") + "\\yugiohcg");
+			File dir =  new File(System.getProperty("user.home") + "/yugiohcg");
 			dir.mkdir();
 			//DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmm");
 			//String filename = dateFormat.format(calendar.getTime());
 			String filename = Generator.randomName();
-			OutputStream out = new FileOutputStream( dir.getPath() + "\\" + filename + ".xml" );
+			OutputStream out = new FileOutputStream( dir.getPath() + "/" + filename + ".xml" );
 			
 			XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(out);
 			
@@ -276,6 +275,9 @@ public class DataManager {
 			
 			out.close();
 			
+			Game.getGUI().showMessage("Pakli elmentve: " + filename + ".xml");
+			logger.info("Pakli elmentve.");
+			
 		} catch (FileNotFoundException e) {
 			logger.error("A fájl nem található.");
 		} catch (XMLStreamException e) {
@@ -293,11 +295,13 @@ public class DataManager {
 	 */
 	public static Vector<String> getSavedDecks() {
 		Vector<String> savedDecks = new Vector<String>();
-		File dir = new File(System.getProperty("user.home") + "\\yugiohcg");
+		File dir = new File(System.getProperty("user.home") + "/yugiohcg");
 		File[] files = dir.listFiles();
-		for (File file : files) {
-			if (file.isFile() && file.getName().endsWith(".xml")) {
-				savedDecks.add(file.getName());
+		if (files != null) {
+			for (File file : files) {
+				if (file.isFile() && file.getName().endsWith(".xml")) {
+					savedDecks.add(file.getName());
+				}
 			}
 		}
 		return savedDecks;
@@ -310,12 +314,13 @@ public class DataManager {
 	 * @return sikeres volt-e a törlés
 	 */
 	public static boolean deleteXML(String filename) {
-		File file = new File(System.getProperty("user.home") + "\\yugiohcg\\" + filename);
+		File file = new File(System.getProperty("user.home") + "/yugiohcg/" + filename);
 		if (file.delete()) {
-			logger.info("A törlés sikeres.");
+			Game.getGUI().showMessage("Pakli törölve: " + filename);
+			logger.info("A törlés sikeres: " + filename);
 			return true;
 		} else {
-			logger.error("A törlés sikertelen.");
+			logger.error("A törlés sikertelen: " + filename);
 			return false;
 		}
 	}
