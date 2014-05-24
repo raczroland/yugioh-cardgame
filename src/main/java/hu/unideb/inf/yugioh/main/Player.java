@@ -94,6 +94,7 @@ public class Player {
 		if (lifepoints<0) {
 			lifepoints = 0;
 		}
+		Game.getGUI().showLifepoints(this);
 		if (lifepoints==0) {
 			Game.getMatch().setWinner( this==Game.getMatch().getPlayer1() ? Game.getMatch().getPlayer2() : Game.getMatch().getPlayer1() );
 		}

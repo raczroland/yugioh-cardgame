@@ -190,6 +190,15 @@ public class Deck implements Cloneable {
 			card.setOwner(player);
 		}
 	}
+	
+	/**
+	 * Beállítja a pakli összes lapjának faceup attribútumát igazra.
+	 */
+	public void setAllCardToFaceUp() {
+		for (Card card : cards) {
+			card.setFaceup(true);
+		}
+	}
 
 	@Override
 	public String toString() {

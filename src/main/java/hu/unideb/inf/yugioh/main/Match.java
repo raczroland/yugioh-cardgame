@@ -128,8 +128,9 @@ public class Match {
 		logger.info("A játék elkezdődött.");
 		Game.showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
 		
-		getPlayer1().getDeck().draw(5);
-		getPlayer2().getDeck().draw(5);
+		getPlayer1().getDeck().setAllCardToFaceUp();
+		getPlayer1().getHand().addTop(	getPlayer1().getDeck().draw(Game.START_CARD_IN_HAND) );
+		getPlayer2().getHand().addTop(	getPlayer2().getDeck().draw(Game.START_CARD_IN_HAND) );
 		
 		while ( winner == null ) {
 			

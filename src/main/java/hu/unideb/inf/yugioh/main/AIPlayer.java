@@ -80,26 +80,34 @@ public class AIPlayer extends Player {
 		for (Card card : getMonsterCardZone().getCards()) {
 			MonsterCard monster = (MonsterCard) card;
 			if (!monster.isDefensePosition()) {
-				for (Card ecard : Game.getMatch().getEnemy(this).getMonsterCardZone().getCards()) {
-					MonsterCard enemy = (MonsterCard) ecard;
-					if (Game.getMatch().getEnemy(this).getMonsterCardZone().size()==0) {
-						monster.attack(Game.getMatch().getEnemy(this));
-						break;
-					} else if (!enemy.isDefensePosition() && enemy.getAtk()<monster.getAtk()) {
-						monster.attack(enemy);
-						break;
-					} else if (enemy.isDefensePosition() && enemy.isFaceup() && enemy.getDef()<monster.getAtk()) {
-						monster.attack(enemy);
-						break;
-					} else if (enemy.isDefensePosition() && !enemy.isFaceup()) {
-						monster.attack(enemy);
-						break;
+				if (Game.getMatch().getEnemy(this).getMonsterCardZone().size()==0) {
+					monster.attack(Game.getMatch().getEnemy(this));
+				} else {
+					for (Card ecard : Game.getMatch().getEnemy(this).getMonsterCardZone().getCards()) {
+						MonsterCard enemy = (MonsterCard) ecard;
+						if (!enemy.isDefensePosition() && enemy.getAtk()<monster.getAtk()) {
+							monster.attack(enemy);
+							break;
+						} else if (enemy.isDefensePosition() && enemy.isFaceup() && enemy.getDef()<monster.getAtk()) {
+							monster.attack(enemy);
+							break;
+						} else if (enemy.isDefensePosition() && !enemy.isFaceup()) {
+							monster.attack(enemy);
+							break;
+						}
 					}
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * A második fő fázist végrehajtó metódus.
+	 * A Mesterséges intelligencia átugorja ezt a lépést, mert ha tudna új lapot rakni, már lerakta volna.
+	 */
+	@Override
+	public void mainPhase2() { }
+
 	/**
 	 * A vég fázist végrehajtó metódus.
 	 * Ha a kézben 6-nál több kártyalap van, a mesterséges intelligencia eldob annyi lapot, hogy 6 maradjon.
@@ -109,7 +117,9 @@ public class AIPlayer extends Player {
 		super.endPhase();
 		Game._wait();
 		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {
-			getGraveyard().addTop(getHand().draw());
+			Card card = getHand().draw();
+			getGraveyard().addTop(card);
+			Game.getGUI().addCardToGraveyard(card, card.getOwner());
 		}
 	}
 }

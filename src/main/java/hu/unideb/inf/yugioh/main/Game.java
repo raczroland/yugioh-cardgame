@@ -32,6 +32,11 @@ public class Game {
 	public static final int MAX_CARD_ON_FIELD = 5;
 	
 	/**
+	 * Konstans. Kezdéskor a kézben lévő lapok száma.
+	 */
+	public static final int START_CARD_IN_HAND = 5;
+	
+	/**
 	 * Az osztály példánya.
 	 */
 	private static Game instance = null;
@@ -138,7 +143,24 @@ public class Game {
 		loadedDeck = deck;
 	}
 	
-	
+	/**
+	 * Visszaadja az emberi játékost.
+	 * 
+	 * @return az emberi játékos
+	 */
+	public static Player getHuman() {
+		return human;
+	}
+
+	/**
+	 * Visszaadja a számítógépes játékot.
+	 * 
+	 * @return a számítógépes játékos
+	 */
+	public static Player getComputer() {
+		return computer;
+	}
+
 	/**
 	 * Új meccs létrehozása.
 	 */
@@ -154,7 +176,7 @@ public class Game {
 		human.getDeck().shuffle();
 		computer.getDeck().shuffle();
 		
-		worker = new GameWorker();
+		worker = new GameWorker();		
 		worker.execute();
 		
 	}
