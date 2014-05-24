@@ -3,6 +3,7 @@ package hu.unideb.inf.yugioh.gui;
 import hu.unideb.inf.yugioh.data.DataManager;
 import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Game;
+import hu.unideb.inf.yugioh.main.Generator;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,6 +42,10 @@ public class GameListener implements ActionListener, MouseListener {
 			case "deckDelete":
 				DataManager.deleteXML( (String)Game.getGUI().getDeckList().getSelectedValue() );
 				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
+				break;
+			case "deckRandom":
+				Game.setLoadedDeck( Generator.generateRandomDeck(Game.getHuman(), 40) );
+				Game.getGUI().showMessage("Új pakli generálva.");
 				break;
 		}
 		

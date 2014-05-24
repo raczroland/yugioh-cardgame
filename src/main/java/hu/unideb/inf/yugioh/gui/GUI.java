@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import java.awt.Font;
+import javax.swing.UIManager;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
@@ -224,6 +225,7 @@ public class GUI extends JFrame {
 		btnDeckRandom.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckRandom.setBounds(10, 11, 84, 23);
 		btnDeckRandom.setActionCommand("deckRandom");
+		btnDeckRandom.addActionListener(gameListener);
 		menu2Panel.add(btnDeckRandom);
 		
 		btnDeckLoaded = new JButton("Betöltés");
@@ -255,14 +257,14 @@ public class GUI extends JFrame {
 		
 		P2HandPanel = new JPanel();
 		P2HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		P2HandPanel.setBackground(Color.LIGHT_GRAY);
+		P2HandPanel.setBackground(UIManager.getColor("Button.background"));
 		P2HandPanel.setBounds(124, 11, 350, 60);
 		contentPane.add(P2HandPanel);
 		P2HandPanel.setLayout(new GridLayout(0, 6, 0, 0));
 		
 		P1HandPanel = new JPanel();
 		P1HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		P1HandPanel.setBackground(Color.LIGHT_GRAY);
+		P1HandPanel.setBackground(UIManager.getColor("Button.background"));
 		P1HandPanel.setBounds(340, 520, 350, 60);
 		contentPane.add(P1HandPanel);
 		P1HandPanel.setLayout(new GridLayout(0, 6, 0, 0));
@@ -470,17 +472,10 @@ public class GUI extends JFrame {
 			return false;
 		}
 		graveyard.removeAll();
-		/*if (card instanceof MonsterCard) {
-			CardPanel ip = createCardPanel("monstercard_small", card);
-			addComponentToPanel(graveyard, ip);
-			logger.info("Kártyalap hozzáadva a mezőhöz.");
-			return true;
-		} else if (card instanceof SpellCard) {
-			CardPanel ip = createCardPanel("spellcard_small", card);
-			addComponentToPanel(graveyard, ip);
-			logger.info("Kártyalap hozzáadva a mezőhöz.");
-			return true;
-		}*/
+		card.setFaceup(true);
+		if (card instanceof MonsterCard) {
+			((MonsterCard)card).setDefensePosition(false);
+		}
 		CardPanel ip = createCardPanel(card);
 		addComponentToPanel(graveyard, ip);
 		logger.info("Kártyalap hozzáadva a mezőhöz.");
@@ -504,22 +499,6 @@ public class GUI extends JFrame {
 			logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
 			return false;
 		}
-		/*if (card.isFaceup() && card instanceof MonsterCard) {
-			CardPanel ip = createCardPanel("monstercard_small", card);
-			addComponentToPanel(handPanel, ip);
-			logger.info("Kártyalap hozzáadva a kézbe.");
-			return true;
-		} else if (card.isFaceup() && card instanceof SpellCard) {
-			CardPanel ip = createCardPanel("spellcard_small", card);
-			addComponentToPanel(handPanel, ip);
-			logger.info("Kártyalap hozzáadva a kézbe.");
-			return true;
-		} else if (!card.isFaceup()) {
-			CardPanel ip = createCardPanel("cardbackground_small", card);
-			addComponentToPanel(handPanel, ip);
-			logger.info("Kártyalap hozzáadva a kézbe.");
-			return true;
-		}*/
 		CardPanel ip = createCardPanel(card);
 		addComponentToPanel(handPanel, ip);
 		logger.info("Kártyalap hozzáadva a kézbe.");
