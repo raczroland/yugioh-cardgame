@@ -23,8 +23,10 @@ public class GameListener implements ActionListener, MouseListener {
 				break;
 			case "giveup":
 				// TODO megírni
-				GUI.btnNew.setEnabled(true);
-				GUI.btnGiveup.setEnabled(false);
+				//GUI.btnNew.setEnabled(true);
+				//GUI.btnGiveup.setEnabled(false);
+				Game.getGUI().revalidate();
+				Game.getGUI().repaint();
 				break;
 		}
 		
@@ -36,7 +38,7 @@ public class GameListener implements ActionListener, MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		
-		if (e.getSource() instanceof ImagePanel) {
+		if (e.getSource() instanceof CardPanel) {
 			//((ImagePanel)e.getSource()).set
 		}
 		

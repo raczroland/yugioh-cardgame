@@ -15,6 +15,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Rácz Roland
  */
+/**
+ * @author Roland
+ *
+ */
 public class Game {
 
 	/**
@@ -47,6 +51,11 @@ public class Game {
 	 */
 	private static Match match;
 	
+    /**
+     * Az aktuális meccset "futtató" szál.
+     */
+    public static GameWorker worker;
+	
 	/**
 	 * Konstruktor az osztályhoz.
 	 */
@@ -65,6 +74,24 @@ public class Game {
 	}
 	
 	/**
+	 * Visszaadja a program grafikus felületét
+	 * 
+	 * @returna program grafikus felülete
+	 */
+	public static GUI getGUI() {
+		return visualizator;
+	}
+	
+	/**
+	 * Visszaadja az aktuális játékot "futtató" szálat.
+	 * 
+	 * @return az aktuális játékot "futtató" szál
+	 */
+	public static GameWorker getWorker() {
+		return worker;
+	}
+
+	/**
 	 * A program inicializálása.
 	 */
 	public static void init() {
@@ -74,18 +101,6 @@ public class Game {
 	public static Match getMatch() {
 		return match;
 	}
-	
-	
-	
-	public static SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-
-		@Override
-		protected Void doInBackground() throws Exception {
-			match.run();
-			return null;
-		}
-		
-	};
 	
 	
 	/**
@@ -100,9 +115,8 @@ public class Game {
 		visualizator.showLifepoints(human);
 		visualizator.showLifepoints(computer);
 		
+		worker = new GameWorker();
 		worker.execute();
-		
-		//match.run();
 	}
 	
 	/**

@@ -9,6 +9,7 @@ import hu.unideb.inf.yugioh.main.SpellCard;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +37,7 @@ import javax.swing.border.BevelBorder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.GridBagLayout;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
@@ -47,7 +49,7 @@ public class GUI extends JFrame {
 	/**
 	 * Naplózáshoz szükséges logger.
 	 */
-	protected static Logger logger = LoggerFactory.getLogger(Card.class);
+	protected static Logger logger = LoggerFactory.getLogger(GUI.class);
 
 	/**
 	 * SerialVersionUID.
@@ -91,14 +93,14 @@ public class GUI extends JFrame {
 	
 	private JLabel P1Lifepoints;
 	private JPanel P1GraveyardZone;
-	private ImagePanel P1Graveyard;
+	private CardPanel P1Graveyard;
 	private JPanel P1DeckZone;
-	private ImagePanel P1Deck;
+	private CardPanel P1Deck;
 	private JLabel P2Lifepoints;
 	private JPanel P2GraveyardZone;
-	private ImagePanel P2Graveyard;
+	private CardPanel P2Graveyard;
 	private JPanel P2DeckZone;
-	private ImagePanel P2Deck;
+	private CardPanel P2Deck;
 	
 	private JLabel viewCardTop;
 	private JLabel viewCardBottom;
@@ -162,21 +164,23 @@ public class GUI extends JFrame {
 		player2Panel.setLayout(null);
 		
 		P2SpellCardZonePanel = new JPanel();
+		P2SpellCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P2SpellCardZonePanel.setBounds(83, 11, 473, 78);
 		player2Panel.add(P2SpellCardZonePanel);
-		P2SpellCardZonePanel.setLayout(new GridLayout(1, 4, 0, 0));
+		P2SpellCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P2MonsterCardZonePanel = new JPanel();
+		P2MonsterCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P2MonsterCardZonePanel.setBounds(83, 100, 473, 79);
 		player2Panel.add(P2MonsterCardZonePanel);
-		P2MonsterCardZonePanel.setLayout(null);
+		P2MonsterCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1DeckZone = new JPanel();
 		P1DeckZone.setBounds(494, 101, 62, 78);
 		player1Panel.add(P1DeckZone);
 		P1DeckZone.setLayout(null);
 		
-		P1Deck = new ImagePanel("cardbackground_small", null);
+		P1Deck = new CardPanel("cardbackground_small", null);
 		P1Deck.setBounds(10, 11, 42, 59);
 		P1DeckZone.add(P1Deck);
 		
@@ -185,7 +189,7 @@ public class GUI extends JFrame {
 		player2Panel.add(P2DeckZone);
 		P2DeckZone.setLayout(null);
 		
-		P2Deck = new ImagePanel("cardbackground_small", null);
+		P2Deck = new CardPanel("cardbackground_small", null);
 		P2Deck.setBounds(10, 10, 42, 59);
 		P2DeckZone.add(P2Deck);
 		P2Deck.setLayout(null);
@@ -201,12 +205,16 @@ public class GUI extends JFrame {
 		player2MonsterCardZonePanel.add(testImage);*/
 		
 		P1MonsterCardZonePanel = new JPanel();
+		P1MonsterCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P1MonsterCardZonePanel.setBounds(10, 11, 474, 78);
 		player1Panel.add(P1MonsterCardZonePanel);
+		P1MonsterCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1SpellCardZonePanel = new JPanel();
+		P1SpellCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P1SpellCardZonePanel.setBounds(10, 100, 474, 79);
 		player1Panel.add(P1SpellCardZonePanel);
+		P1SpellCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1GraveyardZone = new JPanel();
 		P1GraveyardZone.setBounds(494, 11, 62, 78);
@@ -305,6 +313,7 @@ public class GUI extends JFrame {
 		}
 		
 		setVisible(true);
+		
 	}
 	
 	/**
@@ -363,6 +372,28 @@ public class GUI extends JFrame {
 	}
 	
 	/**
+	 * Hozzáadja az adott panelhez az adott komponenst.
+	 * 
+	 * @param panel a cél panel
+	 * @param component a hozzáadandó komponens
+	 */
+	public void addComponentToPanel(JPanel panel, Component component) {
+		panel.add(component);
+		Game.getWorker().refreshGUI();
+	}
+	
+	/**
+	 * Eltávolíttja az adott panelből az adott komponenst.
+	 * 
+	 * @param panel a cél panel
+	 * @param component az eltávolítandó komponens
+	 */
+	public void removeComponentFromPanel(JPanel panel, Component component) {
+		panel.remove(component);
+		Game.getWorker().refreshGUI();
+	}
+	
+	/**
 	 * Hozzáad egy adott kártyalapot reprezentáló képet az adott játékos kártya típusának megfelelő felületéhez.
 	 * 
 	 * @param card a reprezentálandó kártyalap
@@ -371,28 +402,30 @@ public class GUI extends JFrame {
 	 */
 	public boolean addCardToField(Card card, Player player) {
 		if (card instanceof MonsterCard) {
-			ImagePanel ip = new ImagePanel("monstercard_small", card);
+			CardPanel ip = new CardPanel("monstercard_small", card);
+			ip.setBounds(10, 11, 42, 59);
 			if (player == p1) {
-				P1MonsterCardZonePanel.add(ip);
+				addComponentToPanel(P1MonsterCardZonePanel, ip);
 			} else if (player == p2) {
-				P2MonsterCardZonePanel.add(ip);
+				addComponentToPanel(P2MonsterCardZonePanel, ip);
 			} else {
 				logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
 				return false;
 			}
-			logger.info("Kép hozzáadva.");
+			logger.info("Kép hozzáadva mezőhöz. (Szörnylap)");
 			return true;
 		} else if (card instanceof SpellCard) {
-			ImagePanel ip = new ImagePanel("spellcard_small", card);
+			CardPanel ip = new CardPanel("spellcard_small", card);
+			ip.setBounds(10, 11, 42, 59);
 			if (player == p1) {
-				P1SpellCardZonePanel.add(ip);
+				addComponentToPanel(P1SpellCardZonePanel, ip);
 			} else if (player == p2) {
-				P2SpellCardZonePanel.add(ip);
+				addComponentToPanel(P2SpellCardZonePanel, ip);
 			} else {
 				logger.error("A megadott játékos nincs hozzárendelve a kezelőfelülethez.");
 				return false;
 			}
-			logger.info("Kép hozzáadva.");
+			logger.info("Kép hozzáadva mezőhöz. (Varázslap)");
 			return true;
 		}
 		logger.error("A megadott kártya se nem szörny-, se nem varázslap.");
@@ -419,15 +452,15 @@ public class GUI extends JFrame {
 		}
 		graveyard.removeAll();
 		if (card instanceof MonsterCard) {
-			ImagePanel ip = new ImagePanel("monstercard_small", card);
+			CardPanel ip = new CardPanel("monstercard_small", card);
 			ip.setBounds(10, 11, 42, 59);
-			graveyard.add(ip);
+			addComponentToPanel(graveyard, ip);
 			logger.info("Kép hozzáadva.");
 			return true;
 		} else if (card instanceof SpellCard) {
-			ImagePanel ip = new ImagePanel("spellcard_small", card);
+			CardPanel ip = new CardPanel("spellcard_small", card);
 			ip.setBounds(10, 11, 42, 59);
-			graveyard.add(ip);
+			addComponentToPanel(graveyard, ip);
 			logger.info("Kép hozzáadva.");
 			return true;
 		}
@@ -457,8 +490,8 @@ public class GUI extends JFrame {
 			return false;
 		}
 		for (Component component : panel.getComponents()) {
-			if (component instanceof ImagePanel && ((ImagePanel)component).getLinkedObject()==card) {
-				panel.remove(component);
+			if (component instanceof CardPanel && ((CardPanel)component).getLinkedObject()==card) {
+				removeComponentFromPanel(panel, component);
 				logger.info("Kép eltávolítva.");
 				return true;
 			}
@@ -466,5 +499,4 @@ public class GUI extends JFrame {
 		logger.error("Nem sikerült az eltávolítás.");
 		return false;
 	}
-	
 }

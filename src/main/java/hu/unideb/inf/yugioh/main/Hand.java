@@ -27,7 +27,8 @@ public class Hand extends Deck {
 				card.setDefensePosition(false);
 			}
 			card.getOwner().getMonsterCardZone().addTop(card);
-			logger.info("Szörny megidézve. [" + card + "]");
+			Game.getGUI().addCardToField(card, card.getOwner());
+			logger.info("Szörny megidézve " + (defensePosition?"védelmi":"támadó") + " módban. [" + card + "]");
 			return true;
 		} else {
 			return false;
@@ -45,6 +46,7 @@ public class Hand extends Deck {
 	 */
 	public boolean summonMonsterCard(MonsterCard card, boolean defensePosition, MonsterCard tribute) {
 		if (card.getLevel()>=5 && card.getLevel()<=6 && card.getOwner().getMonsterCardZone().removeCard(tribute)) {
+			Game.getGUI().removeCardFromField(tribute, tribute.getOwner());
 			return summonMonsterCard(card, defensePosition);
 		} else {
 			return false;
@@ -63,6 +65,8 @@ public class Hand extends Deck {
 	 */
 	public boolean summonMonsterCard(MonsterCard card, boolean defensePosition, MonsterCard tribute1, MonsterCard tribute2) {
 		if (card.getLevel()>=7 && card.getOwner().getMonsterCardZone().removeCard(tribute1) && card.getOwner().getMonsterCardZone().removeCard(tribute2)) {
+			Game.getGUI().removeCardFromField(tribute1, tribute1.getOwner());
+			Game.getGUI().removeCardFromField(tribute2, tribute2.getOwner());
 			return summonMonsterCard(card, defensePosition);
 		} else {
 			return false;
