@@ -20,7 +20,7 @@ public class Generator {
 	 * 
 	 * @return véletlenszerű név
 	 */
-	private static String randomName() {
+	public static String randomName() {
 		String name = "";
 		String[] syllables2 = {
 				"ra", "ta", "za", "pa", "sa", "da", "ka", "la", "ga", "qa", "wa", "ma", "na", "va",
@@ -78,7 +78,7 @@ public class Generator {
 		int atk = (rand.nextInt(16)+5)*100;
 		int def = (rand.nextInt(16)+5)*100;
 		int level = ((atk+def)-1000)/1000+3;
-		return new MonsterCard(randomName(), "", false, randomType(), atk, def, level, false, player);
+		return new MonsterCard(randomName(), "-", false, randomType(), atk, def, level, false, player);
 	}
 	
 	/**

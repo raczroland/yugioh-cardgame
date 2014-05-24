@@ -1,5 +1,6 @@
 package hu.unideb.inf.yugioh.gui;
 
+import hu.unideb.inf.yugioh.data.DataManager;
 import hu.unideb.inf.yugioh.main.Game;
 
 import java.awt.event.ActionEvent;
@@ -27,6 +28,18 @@ public class GameListener implements ActionListener, MouseListener {
 				//GUI.btnGiveup.setEnabled(false);
 				Game.getGUI().revalidate();
 				Game.getGUI().repaint();
+				break;
+			case "deckSave":
+				DataManager.saveDeckToFile(Game.getLoadedDeck());
+				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
+				break;
+			case "deckLoaded":
+				Game.setLoadedDeck(DataManager.loadDeckFromFile( (String)Game.getGUI().getDeckList().getSelectedValue() ));
+				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
+				break;
+			case "deckDelete":
+				DataManager.deleteXML( (String)Game.getGUI().getDeckList().getSelectedValue() );
+				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
 				break;
 		}
 		

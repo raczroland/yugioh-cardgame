@@ -1,5 +1,6 @@
 package hu.unideb.inf.yugioh.gui;
 
+import hu.unideb.inf.yugioh.data.DataManager;
 import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Game;
 import hu.unideb.inf.yugioh.main.MonsterCard;
@@ -37,12 +38,20 @@ import javax.swing.border.BevelBorder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.GridBagLayout;
+
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
  * 
  * @author Rácz Roland
+ */
+/**
+ * @author Roland
+ *
  */
 public class GUI extends JFrame {
 
@@ -72,19 +81,14 @@ public class GUI extends JFrame {
 	static JButton btnExit;
 	
 	static JButton btnDeckRandom;
-	static JButton btnDeckDefault;
 	static JButton btnDeckLoaded;
 	static JButton btnDeckSave;
+	static JButton btnDeckDelete;
 	
 	static JPanel player2Panel;
 	static JPanel player1Panel;
 	static JLabel infoLabel;
 	static JPanel menu2Panel;
-	
-	/*private Vector<JPanel> player1MonsterCards;
-	private Vector<JPanel> player1SpellCards;
-	private Vector<JPanel> player2MonsterCards;
-	private Vector<JPanel> player2SpellCards;*/
 	
 	private JPanel P2SpellCardZonePanel;
 	private JPanel P2MonsterCardZonePanel;
@@ -105,6 +109,11 @@ public class GUI extends JFrame {
 	private JLabel viewCardTop;
 	private JLabel viewCardBottom;
 	
+	private JList deckList;
+
+	public JList getDeckList() {
+		return deckList;
+	}
 
 	/**
 	 * Konstruktor az osztályhoz.
@@ -127,7 +136,7 @@ public class GUI extends JFrame {
 		gameListener = new GameListener();
 		
 		menu1Panel = new JPanel();
-		menu1Panel.setBackground(Color.DARK_GRAY);
+		menu1Panel.setBackground(Color.GRAY);
 		menu1Panel.setBounds(10, 11, 104, 114);
 		contentPane.add(menu1Panel);
 		menu1Panel.setLayout(null);
@@ -199,11 +208,6 @@ public class GUI extends JFrame {
 		player2Panel.add(P2GraveyardZone);
 		P2GraveyardZone.setLayout(null);
 		
-		/*ImagePanel testImage = new ImagePanel("monstercard_small");
-		testImage.setBounds(10, 11, 100, 100);
-		testImage.addMouseListener(gameListener);
-		player2MonsterCardZonePanel.add(testImage);*/
-		
 		P1MonsterCardZonePanel = new JPanel();
 		P1MonsterCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P1MonsterCardZonePanel.setBounds(10, 11, 474, 78);
@@ -228,7 +232,7 @@ public class GUI extends JFrame {
 		
 		menu2Panel = new JPanel();
 		menu2Panel.setBackground(Color.GRAY);
-		menu2Panel.setBounds(10, 136, 104, 160);
+		menu2Panel.setBounds(10, 136, 104, 319);
 		contentPane.add(menu2Panel);
 		menu2Panel.setLayout(null);
 		
@@ -238,25 +242,28 @@ public class GUI extends JFrame {
 		btnDeckRandom.setActionCommand("deckRandom");
 		menu2Panel.add(btnDeckRandom);
 		
-		btnDeckDefault = new JButton("Alap");
-		btnDeckDefault.setBounds(10, 45, 84, 23);
-		btnDeckDefault.setActionCommand("deckDefault");
-		menu2Panel.add(btnDeckDefault);
-		
-		btnDeckLoaded = new JButton("Saját");
-		btnDeckLoaded.setBounds(10, 79, 84, 23);
+		btnDeckLoaded = new JButton("Betöltés");
+		btnDeckLoaded.setBounds(10, 217, 84, 23);
 		btnDeckLoaded.setActionCommand("deckLoaded");
+		btnDeckLoaded.addActionListener(gameListener);
 		menu2Panel.add(btnDeckLoaded);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 113, 84, 2);
-		menu2Panel.add(separator);
-		
 		btnDeckSave = new JButton("Mentés");
-		btnDeckSave.setEnabled(false);
-		btnDeckSave.setBounds(10, 126, 84, 23);
+		btnDeckSave.setBounds(10, 251, 84, 23);
 		btnDeckSave.setActionCommand("deckSave");
+		btnDeckSave.addActionListener(gameListener);
 		menu2Panel.add(btnDeckSave);
+		
+		deckList = new JList(DataManager.getSavedDecks());
+		deckList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		deckList.setBounds(10, 45, 84, 161);
+		menu2Panel.add(deckList);
+		
+		btnDeckDelete = new JButton("Törlés");
+		btnDeckDelete.setActionCommand("deckDelete");
+		btnDeckDelete.addActionListener(gameListener);
+		btnDeckDelete.setBounds(10, 285, 84, 23);
+		menu2Panel.add(btnDeckDelete);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.LIGHT_GRAY);
@@ -289,7 +296,7 @@ public class GUI extends JFrame {
 		JPanel menu3panel = new JPanel();
 		menu3panel.setLayout(null);
 		menu3panel.setBackground(Color.DARK_GRAY);
-		menu3panel.setBounds(10, 307, 104, 114);
+		menu3panel.setBounds(10, 466, 104, 114);
 		contentPane.add(menu3panel);
 		
 		JButton btnPhaseBattle = new JButton("Harci fázis");

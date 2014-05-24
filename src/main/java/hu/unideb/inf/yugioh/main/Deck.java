@@ -12,7 +12,7 @@ import java.util.Vector;
  * 
  * @author Rácz Roland
  */
-public class Deck {
+public class Deck implements Cloneable {
 
 	/**
 	 * A pakli osztályának loggere.
@@ -195,7 +195,15 @@ public class Deck {
 	public String toString() {
 		return "(Pakli) " + cards.size();
 	}
-	
-	
+
+	@Override
+	protected Object clone() {
+		try {
+			return (Deck)super.clone();
+		} catch (CloneNotSupportedException e) {
+			logger.error("Klónozás sikertelen!");
+			return null;
+		}
+	}
 
 }

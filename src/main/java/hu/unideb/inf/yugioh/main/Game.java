@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import hu.unideb.inf.yugioh.data.DataManager;
 import hu.unideb.inf.yugioh.gui.GUI;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class Game {
 	/**
 	 * Naplózáshoz szükséges logger.
 	 */
-	protected static Logger logger = LoggerFactory.getLogger(Card.class);
+	protected static Logger logger = LoggerFactory.getLogger(Game.class);
 	
 	/**
 	 * Konstans. A kör végén maximálisan kézben tarható kártyalapok száma. 
@@ -50,6 +51,21 @@ public class Game {
 	 * A játék aktuális, betöltödd meccse.
 	 */
 	private static Match match;
+	
+	/**
+	 * Az emberi játékos.
+	 */
+	private static Player human;
+	
+	/**
+	 * A számítógépes játékos.
+	 */
+	private static Player computer;
+	
+	/**
+	 * Aktuálisan betöltött pakli az emberi játékos számára.
+	 */
+	private static Deck loadedDeck;
 	
     /**
      * Az aktuális meccset "futtató" szál.
@@ -95,11 +111,37 @@ public class Game {
 	 * A program inicializálása.
 	 */
 	public static void init() {
+		human = new Player("Felhasználó");
+		computer = new AIPlayer("Számítógép");
+		loadedDeck = Generator.generateRandomDeck(human, 40);
 		visualizator = new GUI();
 	}
 	
+	/**
+	 * Visszaadja az aktuális meccset.
+	 * 
+	 * @return az aktuális meccs
+	 */
 	public static Match getMatch() {
 		return match;
+	}
+	
+	/**
+	 * Visszaadja a betöltött paklit.
+	 * 
+	 * @return az aktuálisan betöltött pakli
+	 */
+	public static Deck getLoadedDeck() {
+		return loadedDeck;
+	}
+	
+	/**
+	 * Beállítja a betöltött paklit.
+	 * 
+	 * @param deck a betöltött pakli
+	 */
+	public static void setLoadedDeck(Deck deck) {
+		loadedDeck = deck;
 	}
 	
 	
@@ -107,8 +149,8 @@ public class Game {
 	 * Új meccs létrehozása.
 	 */
 	public static void newMatch() {
-		Player human = new Player("Felhasználó");
-		Player computer = new AIPlayer("Számítógép");
+
+		human.setDeck((Deck)loadedDeck.clone());
 		match = new Match( human, computer );
 		
 		visualizator.setPlayers(human, computer);
@@ -117,6 +159,7 @@ public class Game {
 		
 		worker = new GameWorker();
 		worker.execute();
+		
 	}
 	
 	/**
@@ -138,6 +181,9 @@ public class Game {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		//Deck deck = DataManager.loadDeckFromFile("teszt.xml");
+		//System.out.println(deck);
 		
 		//Game game = Game.getInstance();
 		Game.init();

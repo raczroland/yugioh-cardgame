@@ -109,6 +109,15 @@ public class Player {
 	}
 	
 	/**
+	 * A játékos pakliját állítja be.
+	 * 
+	 * @param deck a játékos beállítandó paklija
+	 */
+	public void setDeck(Deck deck) {
+		this.deck = deck;
+	}
+	
+	/**
 	 * A játékos kezében lévő lapokat adja vissza.
 	 * 
 	 * @return a játékos kezében lévő lapok

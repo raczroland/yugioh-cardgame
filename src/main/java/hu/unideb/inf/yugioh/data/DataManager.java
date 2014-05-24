@@ -3,12 +3,15 @@ package hu.unideb.inf.yugioh.data;
 import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Deck;
 import hu.unideb.inf.yugioh.main.Effect;
+import hu.unideb.inf.yugioh.main.Generator;
 import hu.unideb.inf.yugioh.main.MonsterCard;
 import hu.unideb.inf.yugioh.main.SpellCard;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -47,7 +50,7 @@ public class DataManager {
 	/**
 	 * Naplózáshoz szükséges logger.
 	 */
-	private static Logger logger = LoggerFactory.getLogger(Card.class);
+	private static Logger logger = LoggerFactory.getLogger(DataManager.class);
 	
 	/**
 	 * Egy XML fájlból beolvassa az adatokat és egy paklit állít elő.
@@ -62,7 +65,9 @@ public class DataManager {
 		try {
 			
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-			InputStream in = DataManager.class.getClassLoader().getResourceAsStream(filename);
+			File dir =  new File(System.getProperty("user.home") + "\\yugiohcg");
+			InputStream in = new FileInputStream( dir.getPath() + "\\" + filename);
+			
 			XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 			
 			CardItem item = null;
@@ -149,8 +154,9 @@ public class DataManager {
 			}
 			
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			logger.error("", e);
+			logger.error("XML hiba.");
+		} catch (FileNotFoundException e) {
+			logger.error("A fájl nem található.");
 		}
 		
 		return new Deck(cards);
@@ -182,15 +188,24 @@ public class DataManager {
 		
 	}
 	
-	public static void saveDeckToFile(Deck deck, String filename) {
+	/**
+	 * Elmenti a paraméterként átadott paklit a felhasználó mappáján belül egy yugiohcg nevű mappában egy XML fájlba.
+	 * 
+	 * @param deck az elmentendő pakli
+	 */
+	public static void saveDeckToFile(Deck deck) {
 		try {
 			
+			Calendar calendar = Calendar.getInstance();
+			
 			XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-			OutputStream out;
-			out = new FileOutputStream(filename);
-
-			// TODO kijavítani
-			//OutputStream out = DataManager.class.getClassLoader().getResourceAsStream(filename);
+			
+			File dir =  new File(System.getProperty("user.home") + "\\yugiohcg");
+			dir.mkdir();
+			//DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmm");
+			//String filename = dateFormat.format(calendar.getTime());
+			String filename = Generator.randomName();
+			OutputStream out = new FileOutputStream( dir.getPath() + "\\" + filename + ".xml" );
 			
 			XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(out);
 			
@@ -206,8 +221,6 @@ public class DataManager {
 			StartElement deckStartElement = eventFactory.createStartElement("", "", "deck");
 			eventWriter.add(deckStartElement);
 			eventWriter.add(end);
-			
-			Calendar calendar = Calendar.getInstance();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			createNode(eventFactory, eventWriter, "dateCreated", dateFormat.format(calendar.getTime()), 1);
 			
@@ -261,14 +274,50 @@ public class DataManager {
 			eventWriter.add(endDocument);
 			eventWriter.close();
 			
+			out.close();
+			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("A fájl nem található.");
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("XML hiba: " + e.getLocalizedMessage());
+		} catch (IOException e) {
+			logger.error("IOException: " + e.getLocalizedMessage());
 		}
 		
+	}
+	
+	/**
+	 * Visszaadja az elmentett paklik XML fájljainak nevét.
+	 * 
+	 * @return az elmentett paklik XML fájljainak neve
+	 */
+	public static Vector<String> getSavedDecks() {
+		Vector<String> savedDecks = new Vector<String>();
+		File dir = new File(System.getProperty("user.home") + "\\yugiohcg");
+		File[] files = dir.listFiles();
+		for (File file : files) {
+			if (file.isFile() && file.getName().endsWith(".xml")) {
+				savedDecks.add(file.getName());
+			}
+		}
+		return savedDecks;
+	}
+	
+	/**
+	 * Törli az adott XML fájlt a felhasználó könyvtárából.
+	 * 
+	 * @param filename törlendő fájl neve
+	 * @return sikeres volt-e a törlés
+	 */
+	public static boolean deleteXML(String filename) {
+		File file = new File(System.getProperty("user.home") + "\\yugiohcg\\" + filename);
+		if (file.delete()) {
+			logger.info("A törlés sikeres.");
+			return true;
+		} else {
+			logger.error("A törlés sikertelen.");
+			return false;
+		}
 	}
 
 }
