@@ -37,6 +37,11 @@ public class Game {
 	public static final int START_CARD_IN_HAND = 5;
 	
 	/**
+	 * Konstans. Kezdéskor a játékosok életpontjainak száma.
+	 */
+	public static final int START_LIFEPOINTS = 8000;
+	
+	/**
 	 * Az osztály példánya.
 	 */
 	private static Game instance = null;
@@ -167,6 +172,8 @@ public class Game {
 	public static void newMatch() {
 
 		human.setDeck((Deck)loadedDeck.clone());
+		computer.setDeck(Generator.generateRandomDeck(computer, 40));
+		
 		match = new Match( human, computer );
 		
 		visualizator.setPlayers(human, computer);
@@ -184,8 +191,10 @@ public class Game {
 	/**
 	 * Üzenet megjelenítése a grafikus felületen.
 	 * 
+	 * @deprecated helyette a GUI saját üzenetmegjelenítője használható
 	 * @param msg a megjelenítendő üzenet
 	 */
+	@Deprecated
 	public static void showMessage(String msg) {
 		visualizator.showMessage(msg);
 	}

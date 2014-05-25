@@ -181,6 +181,13 @@ public class Deck implements Cloneable {
 	}
 	
 	/**
+	 * Eltávolítja az összes lapot a pakliból.
+	 */
+	public void removeAll() {
+		cards.removeAllElements();
+	}
+	
+	/**
 	 * Beállítja a pakli összes kártyalapjának a tulajdonosát.
 	 * 
 	 * @param player a kártyalapok tulajdonosa
