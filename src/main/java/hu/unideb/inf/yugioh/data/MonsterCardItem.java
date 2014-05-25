@@ -4,6 +4,8 @@ import hu.unideb.inf.yugioh.main.MonsterCard;
 
 /**
  * Egy szörnylap osztályának adatait reprezentáló osztály.
+ * A DataManager használja az XML fájlok létrehozásához és betöltéséhez.
+ * Egy MonsteCard osztályú objektumot reprezentál.
  * 
  * @author Rácz Roland
  */

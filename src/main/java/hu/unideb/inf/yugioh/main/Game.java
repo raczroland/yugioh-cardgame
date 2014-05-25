@@ -8,11 +8,13 @@ import org.slf4j.LoggerFactory;
 /**
  * A játékot reprezentáló osztály.
  * 
+ * A játék grafikus felülete innen érhető el a következő módon: <code>Game.getGUI()</code>.
+ * 
+ * A játék meccsét futtató szála a következő módon érhető el: <code>Game.GetWorker()</code>.
+ * 
+ * A program várakoztatása is innen érhető el: <code>Game._wait()</code>.
+ * 
  * @author Rácz Roland
- */
-/**
- * @author Roland
- *
  */
 public class Game {
 
@@ -208,7 +210,7 @@ public class Game {
 	
 	/**
 	 * Várakoztató metódus.
-	 * 800 milliszekundumig várakoztatja a program futását. 
+	 * 700 milliszekundumig várakoztatja a program futását. 
 	 */
 	public static void _wait() {
 		try {
@@ -225,9 +227,6 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 		
-		// TODO Auto-generated method stub
-		
-		//Game.init();
 		Game.getInstance();
 
 	}

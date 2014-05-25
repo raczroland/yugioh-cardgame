@@ -5,6 +5,7 @@ import java.util.Collections;
 /**
  * Számítógépes játékost reprezentáló osztály.
  * Tartalmazza a számítógépes játékos mesterséges intelligenciáját.
+ * Felülírja a Player osztály minden Phase típusú metódusát.
  * 
  * @author Rácz Roland
  */

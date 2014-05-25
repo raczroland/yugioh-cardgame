@@ -863,6 +863,7 @@ public class GUI extends JFrame {
 	
 	/**
 	 * Visszaállítja a felhasználói felületet az alapértelmezettre.
+	 * Meccs befejezésekor használandó.
 	 */
 	public void resetGUI() {
 		btnNew.setEnabled(true);

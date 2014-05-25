@@ -2,11 +2,9 @@ package hu.unideb.inf.yugioh.data;
 
 import static org.junit.Assert.*;
 import hu.unideb.inf.yugioh.main.Effect;
-import hu.unideb.inf.yugioh.main.MonsterCard;
 import hu.unideb.inf.yugioh.main.Player;
 import hu.unideb.inf.yugioh.main.SpellCard;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -2,6 +2,7 @@ package hu.unideb.inf.yugioh.data;
 
 /**
  * Egy kártyalap osztályának adatait reprezentáló osztály.
+ * A DataManager használja az XML fájlok létrehozásához és betöltéséhez.
  * 
  * @author Rácz Roland
  */

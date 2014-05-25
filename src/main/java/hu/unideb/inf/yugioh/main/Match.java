@@ -10,10 +10,6 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Rácz Roland
  */
-/**
- * @author Roland
- *
- */
 public class Match {
 
 	/**
@@ -168,10 +164,12 @@ public class Match {
 		logger.info("A játék elindítva.");
 		Game.getGUI().showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
 		
+		// Inicializálás:
 		getPlayer1().getDeck().setAllCardToFaceUp();
 		getPlayer1().getHand().addTop(	getPlayer1().getDeck().draw(Game.START_CARD_IN_HAND) );
 		getPlayer2().getHand().addTop(	getPlayer2().getDeck().draw(Game.START_CARD_IN_HAND) );
 		
+		// Játékvezérlő ciklus:
 		while ( winner == null && !giveup ) {
 			
 			getNextPlayer().drawPhase();
@@ -184,9 +182,11 @@ public class Match {
 			
 		}
 		
+		// GUI visszaállítása:
 		Game.getGUI().resetGUI();
 		Game.getWorker().refreshGUI();
 		
+		// Győztes kiírása:
 		Game.getGUI().showMessage("Játék vége. A győztes játékos: " + getWinner());
 		logger.info("Játék vége. Győztes: " + winner);
 		

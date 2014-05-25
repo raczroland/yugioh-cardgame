@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Kártyalap megjelenítését megvalósító panel.
+ * Megjelenít egy betöltött képet.
  * 
  * @author Rácz Roland
  */

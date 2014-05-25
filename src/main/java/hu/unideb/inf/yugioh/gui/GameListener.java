@@ -24,34 +24,50 @@ public class GameListener implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
+		
+			// Kilépés:
 			case "exit":
 				System.exit(0);
 				break;
+				
+			// Új meccs kezdése:
 			case "new":
 				Game.newMatch();
 				GUI.btnNew.setEnabled(false);
 				GUI.btnGiveup.setEnabled(true);
 				break;
+				
+			// Aktuális meccs feladása:
 			case "giveup":
 				Game.getMatch().setGiveup(true);
 				Game.getMatch().setWinner(Game.getComputer());
 				break;
+				
+			// Aktuálisan betöltött pakli mentése fájlba:
 			case "deckSave":
 				DataManager.saveDeckToFile(Game.getLoadedDeck());
 				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
 				break;
+			
+			// Kiválasztott pakli betöltése:
 			case "deckLoaded":
 				Game.setLoadedDeck(DataManager.loadDeckFromFile( (String)Game.getGUI().getDeckList().getSelectedValue() ));
 				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
 				break;
+				
+			// Kiválasztott pakli törlése:
 			case "deckDelete":
 				DataManager.deleteXML( (String)Game.getGUI().getDeckList().getSelectedValue() );
 				Game.getGUI().getDeckList().setListData( DataManager.getSavedDecks() );
 				break;
+			
+			// Véletlenszerű pakli generálása és betöltése:
 			case "deckRandom":
 				Game.setLoadedDeck( Generator.generateRandomDeck(Game.getHuman(), 40) );
 				Game.getGUI().showMessage("Új pakli generálva.");
 				break;
+				
+			// Ugrás a következő fázisra:
 			case "nextPhase":
 				Game.getGUI().setNextFlag(true);
 				Game.getGUI().setHandEventEnabled(false);
@@ -72,6 +88,7 @@ public class GameListener implements ActionListener, MouseListener {
 			
 			if (Game.getGUI().isHandEventEnabled()) {
 				
+				// Kártyalap kiválasztása a kézből:
 				if (Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
 					Game.getGUI().setHandEventEnabled(false);
@@ -80,7 +97,8 @@ public class GameListener implements ActionListener, MouseListener {
 				
 			}
 			if (Game.getGUI().isHumanMonsterEventEnabled()) {
-				
+
+				// Kártyalap kiválasztása a felhasználó mezőjéről:
 				if (Game.getHuman().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
 					Game.getGUI().setHumanMonsterEventEnabled(false);
@@ -88,7 +106,8 @@ public class GameListener implements ActionListener, MouseListener {
 				
 			}
 			if (Game.getGUI().isComputerMonsterEventEnabled()) {
-				
+
+				// Kártyalap kiválastása az ellenfél mezőjéről:
 				if (Game.getComputer().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
 					Game.getGUI().setComputerMonsterEventEnabled(false);
@@ -105,11 +124,13 @@ public class GameListener implements ActionListener, MouseListener {
 		
 		if (e.getSource() instanceof CardPanel) {
 			
+			// Kártyalap adatainak megjelenítése:
 			Card card = (Card) ((CardPanel)e.getSource()).getLinkedObject();
 			if (card.isFaceup()) {
 				Game.getGUI().showCard( card );
 			}
 			
+			// Kurzor állítása:
 			CardPanel cp = (CardPanel) e.getSource();
 			if (Game.getGUI().isHandEventEnabled() && Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
 				cp.setCursor(new Cursor(Cursor.HAND_CURSOR));				
@@ -128,6 +149,7 @@ public class GameListener implements ActionListener, MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
+		// Kurzor állítása:
 		if (e.getSource() instanceof CardPanel) {
 			
 			CardPanel cp = (CardPanel) e.getSource();

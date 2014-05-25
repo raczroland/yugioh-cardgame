@@ -7,9 +7,11 @@ import javax.swing.SwingWorker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Egy aktuális meccset "futtató" szál osztálya.
+ * 
+ * Egy meccs szálának mindig külön szálon kell futnia.
+ * A grafikus felület a <code>refreshGUI()</code> metódussal frissíthető.
  * 
  * @author Rácz Roland
  */
@@ -47,7 +49,5 @@ public class GameWorker extends SwingWorker<Void, Void> {
 		super.done();
 		logger.info("Játék szála befejezve.");
 	}
-	
-	
 	
 };

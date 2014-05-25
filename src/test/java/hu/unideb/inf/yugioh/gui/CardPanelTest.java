@@ -8,8 +8,16 @@ import hu.unideb.inf.yugioh.main.SpellCard;
 
 import org.junit.Test;
 
+/**
+ * Egy CardPanel osztályt tesztelő osztály.
+ * 
+ * @author Rácz Roland
+ */
 public class CardPanelTest {
 
+	/**
+	 * Teszteli a CardPanel konstruktorát minden lehetséges módon.
+	 */
 	@Test
 	public void testCardPanel() {
 		

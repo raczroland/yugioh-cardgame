@@ -1,3 +1,4 @@
+package hu.unideb.inf.yugioh.maintest;
 import static org.junit.Assert.*;
 import hu.unideb.inf.yugioh.main.Effect;
 import hu.unideb.inf.yugioh.main.Game;

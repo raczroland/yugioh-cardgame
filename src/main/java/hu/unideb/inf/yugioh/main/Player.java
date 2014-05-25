@@ -11,10 +11,6 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Rácz Roland
  */
-/**
- * @author Roland
- *
- */
 public class Player {
 
 	/**

@@ -5,6 +5,8 @@ import hu.unideb.inf.yugioh.main.SpellCard;
 
 /**
  * Egy varázslap osztályának adatait reprezentáló osztály.
+ * A DataManager használja az XML fájlok létrehozásához és betöltéséhez.
+ * Egy SpellCard osztályú objektumot reprezentál.
  * 
  * @author Rácz Roland
  */

@@ -25,6 +25,7 @@ public class Generator {
 	
 	/**
 	 * Egy véletlenszerű nevet ad vissza.
+	 * Egy néhány szótagból álló sztringet állít elő.
 	 * 
 	 * @return véletlenszerű név
 	 */
@@ -87,8 +88,8 @@ public class Generator {
 	 * @return véletlenszerű szörnylap
 	 */
 	public static MonsterCard generateRandomMonsterCard(Player player) {
-		int atk = (rand.nextInt(16)+5)*100;
-		int def = (rand.nextInt(16)+5)*100;
+		int atk = (rand.nextInt(21)+5)*100;
+		int def = (rand.nextInt(21)+5)*100;
 		int level = ((atk+def)-1000)/1000+3;
 		MonsterCard ret = new MonsterCard(randomName(), "-", false, randomType(), atk, def, level, false, player);
 		logger.info("Szörnylap kigenerálva: " + ret);
