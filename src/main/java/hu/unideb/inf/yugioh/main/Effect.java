@@ -10,6 +10,11 @@ package hu.unideb.inf.yugioh.main;
  *
  */
 public class Effect {
+	
+	/**
+	 * Azon hatások típusának tömbje, melyek egy szörnyre vonatkoznak.
+	 */
+	public static final String[] MONSTER_EFFECTS = { "incAtk", "incDef", "incAtkDef", "decAtk", "decDef", "decAtkDef" };
 
 	/**
 	 * A hatás típusa.
@@ -29,7 +34,7 @@ public class Effect {
 	/**
 	 * A hatás második segédváltozója.
 	 */
-	private int val2;	
+	private int val2;
 	
 	/**
 	 * Visszaadja a hatás típusát.
@@ -66,7 +71,16 @@ public class Effect {
 	public int getVal2() {
 		return val2;
 	}
-
+	
+	/**
+	 * Konstruktor az osztályhoz.
+	 * Létrehoz egy hatást kettő darab segédváltozóval.
+	 * 
+	 * @param type a hatás típusa
+	 * @param targetClass a célpont osztályának neve
+	 * @param val1 első segédváltozó
+	 * @param val1 második segédváltozó
+	 */
 	public Effect(String type, String targetClass, int val1, int val2) {
 		this.type = type;
 		this.targetClass = targetClass;
@@ -74,6 +88,14 @@ public class Effect {
 		this.val2 = val2;
 	}
 	
+	/**
+	 * Konstruktor az osztályhoz.
+	 * Létrehoz egy hatást egy darab segédváltozóval.
+	 * 
+	 * @param type a hatás típusa
+	 * @param targetClass a célpont osztályának neve
+	 * @param val1 segédváltozó
+	 */
 	public Effect(String type, String targetClass, int val1) {
 		this.type = type;
 		this.targetClass = targetClass;
@@ -81,6 +103,13 @@ public class Effect {
 		this.val2 = 0;
 	}
 	
+	/**
+	 * Konstruktor az osztályhoz.
+	 * Létrehoz egy hatást segédváltozók nélkül.
+	 * 
+	 * @param type a hatás típusa
+	 * @param targetClass a célpont osztályának neve
+	 */
 	public Effect(String type, String targetClass) {
 		this.type = type;
 		this.targetClass = targetClass;
@@ -98,32 +127,47 @@ public class Effect {
 		switch (type) {
 			case "incAtk":
 				((MonsterCard)obj).addAtk(val1);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "decAtk":
 				((MonsterCard)obj).subAtk(val1);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "incDef":
 				((MonsterCard)obj).addDef(val1);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "decDef":
 				((MonsterCard)obj).subDef(val1);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "incAtkDef":
 				((MonsterCard)obj).addAtk(val1);
 				((MonsterCard)obj).addDef(val2);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "decAtkDef":
 				((MonsterCard)obj).subAtk(val1);
 				((MonsterCard)obj).subDef(val2);
+				Game.getGUI().removeCardFromField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
+				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "draw":
-				((Player)obj).getHand().addTop(((Player)obj).getDeck().draw(val1));
-				break;
-			case "dmg":
-				((Player)obj).subLifepoints(val1);
+				//((Player)obj).getHand().addTop(((Player)obj).getDeck().draw(val1));
+				Card[] cards = ((Player)obj).getDeck().draw(val1);
+				for (Card card : cards) {
+					card.setFaceup(true);
+				}
+				((Player)obj).getHand().addTop(cards);
 				break;
 			case "heal":
 				((Player)obj).addLifepoints(val1);
+				Game.getGUI().showLifepoints((Player)obj);
 				break;
 		}
 		

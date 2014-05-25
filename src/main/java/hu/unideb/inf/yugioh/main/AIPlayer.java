@@ -30,6 +30,16 @@ public class AIPlayer extends Player {
 		Card card = getDeck().draw();
 		getHand().addTop(card);
 	}
+	
+	/**
+	 * Előkészítő fázist végrehajtó metódus.
+	 * A mesterséges intelligencia átugorja ezt a fázist.
+	 */
+	@Override
+	public void standbyPhase() {
+		logger.info(this + ": előkészítő fázis");
+		Game.showMessage(getName() + ": előkészítő fázis");
+	}
 
 	/**
 	 * A fő fázist végrehajtó metódus.
@@ -119,4 +129,5 @@ public class AIPlayer extends Player {
 			Game.getGUI().addCardToGraveyard(card, card.getOwner());
 		}
 	}
+	
 }

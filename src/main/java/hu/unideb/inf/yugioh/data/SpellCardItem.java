@@ -29,26 +29,6 @@ class SpellCardItem extends CardItem {
 	 * A varázslap hatásának második segédváltozója.
 	 */
 	private int effectVal2 = 0;
-
-	/**
-	 * A varázslap hatása megszűnésének típusa.
-	 */
-	private String uneffectType;
-
-	/**
-	 * A varázslap hatása megszűnése célpontja osztályának neve.
-	 */
-	private String uneffectTargetClass;
-	
-	/**
-	 * A varázslap hatása megszűnésének első segédváltozója.
-	 */
-	private int uneffectVal1 = 0;
-	
-	/**
-	 * A varázslap hatása megszűnésének második segédváltozója.
-	 */
-	private int uneffectVal2 = 0;
 	
 	/**
 	 * Visszaadja a varázslap hatásának típusát.
@@ -123,78 +103,6 @@ class SpellCardItem extends CardItem {
 	}
 	
 	/**
-	 * Visszaadja a varázslap hatása megszűnésének típusát.
-	 * 
-	 * @return a varázslap hatása megszűnésének típusa
-	 */
-	public String getUneffectType() {
-		return uneffectType;
-	}
-	
-	/**
-	 * Beállítja a varázslap hatása megszűnésének típusát.
-	 * 
-	 * @param uneffectType a varázslap hatása megszűnésének típusa
-	 */
-	public void setUneffectType(String uneffectType) {
-		this.uneffectType = uneffectType;
-	}
-
-	/**
-	 * Visszaadja a varázslap hatása megszűnése célpontja osztályának a nevét.
-	 * 
-	 * @return a varázslap hatása megszűnése célpontja osztályának neve
-	 */
-	public String getUneffectTargetClass() {
-		return uneffectTargetClass;
-	}
-
-	/**
-	 * Beállítja a varázslap hatása megszűnése célpontja osztályának a nevét.
-	 * 
-	 * @param uneffectTargetClass a varázslap hatása megszűnése célpontja osztályának neve
-	 */
-	public void setUneffectTargetClass(String uneffectTargetClass) {
-		this.uneffectTargetClass = uneffectTargetClass;
-	}
-
-	/**
-	 * Visszaadja a varázslap hatása megszűnésének első segédváltozóját.
-	 * 
-	 * @return a varázslap hatása megszűnésének első segédváltozója
-	 */
-	public int getUneffectVal1() {
-		return uneffectVal1;
-	}
-
-	/**
-	 * Beállítja a varázslap hatása megszűnésének első segédváltozóját.
-	 * 
-	 * @param uneffectVal1 a varázslap hatása megszűnésének első segédváltozója
-	 */
-	public void setUneffectVal1(int uneffectVal1) {
-		this.uneffectVal1 = uneffectVal1;
-	}
-
-	/**
-	 * Visszaadja a varázslap hatása megszűnésének második segédváltozóját.
-	 * 
-	 * @return a varázslap hatása megszűnésének második segédváltozója
-	 */
-	public int getUneffectVal2() {
-		return uneffectVal2;
-	}
-
-	/**
-	 * Beállítja a varázslap hatása megszűnésének második segédváltozóját.
-	 * 
-	 * @param uneffectVal2 a varázslap hatása megszűnésének második segédváltozója
-	 */
-	public void setUneffectVal2(int uneffectVal2) {
-		this.uneffectVal2 = uneffectVal2;
-	}
-	
-	/**
 	 * Konstruktor az osztályhoz.
 	 */
 	public SpellCardItem() { }
@@ -212,10 +120,6 @@ class SpellCardItem extends CardItem {
 		this.effectTargetClass = card.getEffect().getTargetClass();
 		this.effectVal1 = card.getEffect().getVal1();
 		this.effectVal2 = card.getEffect().getVal2();
-		this.uneffectType = card.getUneffect().getType();
-		this.uneffectTargetClass = card.getUneffect().getTargetClass();
-		this.uneffectVal1 = card.getUneffect().getVal1();
-		this.uneffectVal2 = card.getUneffect().getVal2();
 	}
 	
 	/**
@@ -226,8 +130,7 @@ class SpellCardItem extends CardItem {
 	public SpellCard asSpellCard() {
 		// TODO megírni jól
 		Effect effect = new Effect(getEffectType(), getEffectTargetClass(), getEffectVal1(), getEffectVal2());
-		Effect uneffect = null;
-		return new SpellCard(getName(), getDescription(), false, null, effect, uneffect);
+		return new SpellCard(getName(), getDescription(), false, null, effect);
 	}
 	
 }

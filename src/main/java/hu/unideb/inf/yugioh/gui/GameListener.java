@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.SwingUtilities;
+
 /**
  * A játék felhasználói interakcióit kezelő osztálya.
  * 
@@ -50,12 +52,19 @@ public class GameListener implements ActionListener, MouseListener {
 				Game.setLoadedDeck( Generator.generateRandomDeck(Game.getHuman(), 40) );
 				Game.getGUI().showMessage("Új pakli generálva.");
 				break;
+			case "nextPhase":
+				Game.getGUI().setNextFlag(true);
+				Game.getGUI().setHandEventEnabled(false);
+				Game.getGUI().setHumanMonsterEventEnabled(false);
+				Game.getGUI().setComputerMonsterEventEnabled(false);
+				break;
 		}
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
 	
 		if (e.getSource() instanceof CardPanel) {
 			
@@ -66,6 +75,7 @@ public class GameListener implements ActionListener, MouseListener {
 				if (Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
 					Game.getGUI().setHandEventEnabled(false);
+					Game.getGUI().setRightClick(SwingUtilities.isRightMouseButton(e));
 				} 
 				
 			}

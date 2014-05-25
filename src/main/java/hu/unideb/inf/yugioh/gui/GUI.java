@@ -35,6 +35,10 @@ import javax.swing.UIManager;
  * 
  * @author Rácz Roland
  */
+/**
+ * @author Roland
+ *
+ */
 public class GUI extends JFrame {
 
 	/**
@@ -53,17 +57,17 @@ public class GUI extends JFrame {
 	private GameListener gameListener;
 	
 	/**
-	 * Engedélyezve van-e a HandEvent.
+	 * Flag. Engedélyezve van-e a HandEvent.
 	 */
 	private boolean handEventEnabled;
 	
 	/**
-	 * Engedélyezve van-e a HumanMonsterEvent.
+	 * Flag. Engedélyezve van-e a HumanMonsterEvent.
 	 */
 	private boolean humanMonsterEventEnabled;
 	
 	/**
-	 * Engedélyezve van-e a ComputerMonsterEvent.
+	 * Flag. Engedélyezve van-e a ComputerMonsterEvent.
 	 */
 	private boolean computerMonsterEventEnabled;
 	
@@ -71,6 +75,16 @@ public class GUI extends JFrame {
 	 * Ebbe a változóba töltődik egy PhaseEvent objektuma.
 	 */
 	private Card eventObject;
+	
+	/**
+	 * Flag. Fázis befejezését jelölő változó.
+	 */
+	private boolean nextFlag;
+	
+	/**
+	 * Flag. Jelzi, hogy jobb egér gomb volt-e nyomva egy kártyalap kiválasztásakor.
+	 */
+	private boolean rightClick;
 	
 	private Player p1;
 	private Player p2;
@@ -82,15 +96,16 @@ public class GUI extends JFrame {
 	static JButton btnGiveup;
 	static JButton btnExit;
 	
-	static JButton btnDeckRandom;
-	static JButton btnDeckLoaded;
-	static JButton btnDeckSave;
-	static JButton btnDeckDelete;
+	private JButton btnDeckRandom;
+	private JButton btnDeckLoaded;
+	private JButton btnDeckSave;
+	private JButton btnDeckDelete;
+	private JButton btnNextPhase;
 	
-	static JPanel player2Panel;
-	static JPanel player1Panel;
-	static JLabel infoLabel;
-	static JPanel menu2Panel;
+	private JPanel player2Panel;
+	private JPanel player1Panel;
+	private JLabel infoLabel;
+	private JPanel menu2Panel;
 	
 	private JPanel P2SpellCardZonePanel;
 	private JPanel P2MonsterCardZonePanel;
@@ -140,6 +155,9 @@ public class GUI extends JFrame {
 		humanMonsterEventEnabled = false;
 		computerMonsterEventEnabled = false;
 		eventObject = null;
+		
+		nextFlag = false;
+		rightClick = false;
 		
 		menu1Panel = new JPanel();
 		menu1Panel.setBackground(Color.GRAY);
@@ -198,7 +216,7 @@ public class GUI extends JFrame {
 		player1Panel.add(P1DeckZone);
 		P1DeckZone.setLayout(null);
 		
-		P1Deck = new CardPanel(new SpellCard("", "", false, null, null, null));
+		P1Deck = new CardPanel(new SpellCard("", "", false, null, null));
 		P1Deck.setBounds(10, 11, 42, 59);
 		P1DeckZone.add(P1Deck);
 		
@@ -207,7 +225,7 @@ public class GUI extends JFrame {
 		player2Panel.add(P2DeckZone);
 		P2DeckZone.setLayout(null);
 		
-		P2Deck = new CardPanel(new SpellCard("", "", false, null, null, null));
+		P2Deck = new CardPanel(new SpellCard("", "", false, null, null));
 		P2Deck.setBounds(10, 10, 42, 59);
 		P2DeckZone.add(P2Deck);
 		P2Deck.setLayout(null);
@@ -318,17 +336,13 @@ public class GUI extends JFrame {
 		menu3panel.setBounds(10, 466, 104, 114);
 		contentPane.add(menu3panel);
 		
-		JButton btnPhaseBattle = new JButton("Harci fázis");
-		btnPhaseBattle.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPhaseBattle.setEnabled(false);
-		btnPhaseBattle.setBounds(10, 11, 84, 23);
-		menu3panel.add(btnPhaseBattle);
-		
-		JButton btnPhaseEnd = new JButton("Vég fázis");
-		btnPhaseEnd.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPhaseEnd.setEnabled(false);
-		btnPhaseEnd.setBounds(10, 45, 84, 23);
-		menu3panel.add(btnPhaseEnd);
+		btnNextPhase = new JButton("Következő");
+		btnNextPhase.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnNextPhase.setEnabled(false);
+		btnNextPhase.setBounds(10, 11, 84, 50);
+		btnNextPhase.setActionCommand("nextPhase");
+		btnNextPhase.addActionListener(gameListener);
+		menu3panel.add(btnNextPhase);
 		
 		//player1MonsterCardZone = new Vector<JPanel>(5);
 		for (int i = 0; i < 5; i++) {
@@ -420,6 +434,51 @@ public class GUI extends JFrame {
 	 */
 	public void setEventObject(Card eventObject) {
 		this.eventObject = eventObject;
+	}
+
+	/**
+	 * Visszaadja az aktuális fázis befejezését jelölő változót.
+	 * 
+	 * @return az aktuális fázis befejezését jelölő változó
+	 */
+	public boolean isNextFlag() {
+		return nextFlag;
+	}
+
+	/**
+	 * Beállítja az aktuális fázis befejezését jelölő változót.
+	 * 
+	 * @param nextFlag az aktuális fázis befejezését jelölő változó
+	 */
+	public void setNextFlag(boolean nextFlag) {
+		this.nextFlag = nextFlag;
+	}
+	
+	/**
+	 * Visszaadja, hogy a jobb egérgomb volt-e lenyomva a kártyalap kiválastásakor.
+	 *  
+	 * @return jobb egérgomb volt-e lenyomva a kártyalap kiválastásakor
+	 */
+	public boolean isRightClick() {
+		return rightClick;
+	}
+	
+	/**
+	 * Beállítja, hogy a jobb egérgomb volt-e lenyomva a kártyalap kiválastásakor.
+	 *  
+	 * @param rightClick jobb egérgomb volt-e lenyomva a kártyalap kiválastásakor
+	 */
+	public void setRightClick(boolean rightClick) {
+		this.rightClick = rightClick;
+	}
+
+	/**
+	 * Beállítja a következő fázisra ugró gombot elérhetővé.
+	 * 
+	 * @param enabled elérhető legyen-e
+	 */
+	public void enableNextPhaseButton(boolean enabled) {
+		btnNextPhase.setEnabled(enabled);
 	}
 
 	/**
@@ -677,5 +736,4 @@ public class GUI extends JFrame {
 		computerMonsterEventEnabled = false;
 		eventObject = null;
 	}
-	
 }

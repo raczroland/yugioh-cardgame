@@ -1,5 +1,6 @@
 package hu.unideb.inf.yugioh.main;
 
+import java.util.Arrays;
 import java.util.Vector;
 
 import org.slf4j.Logger;
@@ -72,6 +73,15 @@ public class Player {
 	 */
 	public int getLifepoints() {
 		return lifepoints;
+	}
+	
+	/**
+	 * A játékos életpontjainak számát állítja be.
+	 * 
+	 * @param lifepoints a játékos életpontjainak száma 
+	 */
+	public void setLifepoints(int lifepoints) {
+		this.lifepoints = lifepoints;
 	}
 	
 	/**
@@ -203,7 +213,7 @@ public class Player {
 		Game.getGUI().setHandEventEnabled(handEvent);
 		Game.getGUI().setHumanMonsterEventEnabled(humanMonsterEvent);
 		Game.getGUI().setComputerMonsterEventEnabled(computerMonsterEvent);
-		while (Game.getGUI().getEventObject()==null) {
+		while (Game.getGUI().getEventObject()==null && !Game.getGUI().isNextFlag()) {
 			Game._wait();
 		}
 		Game.getGUI().setHandEventEnabled(false);
@@ -226,6 +236,16 @@ public class Player {
 	}
 	
 	/**
+	 * Előkészítő fázist végrehajtó metódus.
+	 */
+	public void standbyPhase() {
+		logger.info(this + ": előkészítő fázis");
+		Game.showMessage(getName() + ": előkészítő fázis");
+		Game.getGUI().enableNextPhaseButton(true);
+		//Game.getWorker().refreshGUI();
+	}
+	
+	/**
 	 * A fő fázist végrehajtó metódus.
 	 * Várakozik a játékos lépésére.
 	 */
@@ -233,21 +253,86 @@ public class Player {
 		logger.info(this + ": fő fázis");
 		Game.showMessage(getName() + ": fő fázis");
 		
-		Card card = requestCard(true, true, false);
-		
-		if (hand.getCards().contains(card) && card instanceof MonsterCard) {
-			hand.summonMonsterCard((MonsterCard)card, false);
-			// TODO áldozás...
-		} else if (monsterCardZone.getCards().contains(card)) {
-			MonsterCard mc = (MonsterCard) card;
-			if (mc.isDefensePosition()) {
-				mc.setDefensePosition(false);
-			} else {
-				mc.setDefensePosition(true);
+		boolean summoned = false;
+		while (!Game.getGUI().isNextFlag()) {
+	
+			Card card = requestCard(true, true, false);
+			
+			if (!summoned && hand.getCards().contains(card) && card instanceof MonsterCard) {
+				
+				MonsterCard mc = (MonsterCard) card;
+				
+				if (mc.getLevel()<5) {
+					hand.summonMonsterCard(mc, Game.getGUI().isRightClick());
+					summoned = true;
+				} else if (mc.getLevel()<7 && mc.getOwner().getMonsterCardZone().size()>=1) {
+					Game.getGUI().showMessage("Válassz egy áldozati szörnyet!");
+					MonsterCard tmc = (MonsterCard) requestCard(false, true, false);
+					if (tmc != null) {
+						hand.summonMonsterCard(mc, Game.getGUI().isRightClick(), tmc);
+						summoned = true;
+					}
+				} else if (mc.getOwner().getMonsterCardZone().size()>=2) {
+					Game.getGUI().showMessage("Válassz két áldozati szörnyet!");
+					MonsterCard tmc1 = (MonsterCard) requestCard(false, true, false);
+					if (tmc1 != null) {
+						MonsterCard tmc2 = (MonsterCard) requestCard(false, true, false);
+						if (tmc2 != null) {
+							hand.summonMonsterCard(mc, Game.getGUI().isRightClick(), tmc1, tmc2);
+							summoned = true;
+						}
+					}
+				}
+				
+			} else if (monsterCardZone.getCards().contains(card)) {
+				
+				MonsterCard mc = (MonsterCard) card;
+				if (mc.isDefensePosition()) {
+					mc.setDefensePosition(false);
+					mc.setFaceup(true);
+				} else {
+					mc.setDefensePosition(true);
+				}
+				Game.getGUI().removeCardFromField(mc, mc.getOwner());
+				Game.getGUI().addCardToField(mc, mc.getOwner());
+				
+			} else if (hand.getCards().contains(card) && card instanceof SpellCard) {
+				
+				SpellCard sc = (SpellCard) card;
+				sc.getOwner().getHand().removeCard(sc);
+				sc.getOwner().getSpellCardZone().addTop(sc);
+				Game.getGUI().removeCardFromHand(sc, sc.getOwner());
+				Game.getGUI().addCardToField(sc, sc.getOwner());
+				
+				// TODO hatás...
+				
+				if (Arrays.asList(Effect.MONSTER_EFFECTS).contains(sc.getEffect().getType())) {
+
+					Game.getGUI().showMessage("Válaszd ki a varázslap célpontját!");
+					MonsterCard tmc = (MonsterCard) requestCard(false, true, true);
+					if (tmc!=null) {
+						
+						sc.activate(tmc);
+						
+					}
+					
+				} else {
+					
+					sc.activate();
+					Game._wait();
+					
+				}
+
+				sc.getOwner().getSpellCardZone().removeCard(sc);
+				sc.getOwner().getGraveyard().addTop(sc);
+				Game.getGUI().removeCardFromField(sc, sc.getOwner());
+				Game.getGUI().addCardToGraveyard(sc, sc.getOwner());
+				
 			}
-			Game.getGUI().removeCardFromField(mc, mc.getOwner());
-			Game.getGUI().addCardToField(mc, mc.getOwner());
+			
 		}
+		
+		Game.getGUI().setNextFlag(false);
 		
 		// TODO varázslaphoz is!!!
 		//System.out.println(card);
@@ -260,28 +345,34 @@ public class Player {
 		logger.info(this + ": harci fázis");
 		Game.showMessage(getName() + ": harci fázis");
 		
-		if (monsterCardZone.size()>0) {
+		Vector<MonsterCard> attacked = new Vector<MonsterCard>(); 
 		
-			MonsterCard mc = (MonsterCard) requestCard(false, true, false);
+		while (!Game.getGUI().isNextFlag()) {
+		
+			if (monsterCardZone.size()>0) {
 			
-			if (!mc.isDefensePosition()) {
-			
-				if (Game.getComputer().getMonsterCardZone().size()>0) {
-					
-					MonsterCard emc = (MonsterCard) requestCard(false, false, true);
-					
-					mc.attack(emc);
-					
-				} else {
-					mc.attack(Game.getComputer());
-				}
+				MonsterCard mc = (MonsterCard) requestCard(false, true, false);
 				
+				if (mc!=null && !attacked.contains(mc) && !mc.isDefensePosition()) {
+				
+					if (Game.getComputer().getMonsterCardZone().size()>0) {
+						Game.getGUI().showMessage("Válassz egy célpontot!");
+						MonsterCard emc = (MonsterCard) requestCard(false, false, true);
+						mc.attack(emc);
+						attacked.add(mc);
+					} else {
+						mc.attack(Game.getComputer());
+						attacked.add(mc);
+					}
+					
+				}
+			
 			}
-		
-		} else {
-			Game._wait();
+			
 		}
 		
+		Game.getGUI().setNextFlag(false);
+		Game.getGUI().enableNextPhaseButton(false);
 	}
 	
 	/**

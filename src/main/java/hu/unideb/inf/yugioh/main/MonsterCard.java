@@ -182,7 +182,10 @@ public class MonsterCard extends Card {
 		}
 		if (enemy.isDefensePosition()) {
 			if (enemy.getDef() > this.getAtk()) {
+				this.setFaceup(true);
 				this.getOwner().subLifepoints(enemy.getDef()-this.getAtk());
+				Game.getGUI().removeCardFromField(enemy, enemy.getOwner());
+				Game.getGUI().addCardToField(enemy, enemy.getOwner());
 			} else if (enemy.getDef() < this.getAtk()) {
 				enemy.destroy();
 				Game.getGUI().removeCardFromField(enemy, enemy.getOwner());

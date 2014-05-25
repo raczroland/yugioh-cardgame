@@ -190,8 +190,7 @@ public class DataManager {
 			eventWriter.add(end);
 			
 		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("XML hiba: " + e.getLocalizedMessage());
 		}
 		
 	}
@@ -210,8 +209,6 @@ public class DataManager {
 			
 			File dir =  new File(System.getProperty("user.home") + "/yugiohcg");
 			dir.mkdir();
-			//DateFormat dateFormat = new SimpleDateFormat("yyMMdd_HHmm");
-			//String filename = dateFormat.format(calendar.getTime());
 			String filename = Generator.randomName();
 			OutputStream out = new FileOutputStream( dir.getPath() + "/" + filename + ".xml" );
 			
@@ -261,15 +258,6 @@ public class DataManager {
 					createNode(eventFactory, eventWriter, "effectTargetClass", ((SpellCard)card).getEffect().getTargetClass(), 2);
 					createNode(eventFactory, eventWriter, "effectVal1", Integer.toString(((SpellCard)card).getEffect().getVal1()), 2);
 					createNode(eventFactory, eventWriter, "effectVal2", Integer.toString(((SpellCard)card).getEffect().getVal2()), 2);
-					
-					if (((SpellCard)card).getUneffect()!=null) {
-
-						createNode(eventFactory, eventWriter, "uneffectType", ((SpellCard)card).getUneffect().getType(), 2);
-						createNode(eventFactory, eventWriter, "uneffectTargetClass", ((SpellCard)card).getUneffect().getTargetClass(), 2);
-						createNode(eventFactory, eventWriter, "uneffectVal1", Integer.toString(((SpellCard)card).getUneffect().getVal1()), 2);
-						createNode(eventFactory, eventWriter, "uneffectVal2", Integer.toString(((SpellCard)card).getUneffect().getVal2()), 2);
-						
-					}
 					
 				}
 

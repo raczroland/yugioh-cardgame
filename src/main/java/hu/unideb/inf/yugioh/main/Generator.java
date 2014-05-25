@@ -89,43 +89,35 @@ public class Generator {
 	 */
 	public static SpellCard generateRandomSpellCard(Player player) {
 		Effect[] effects = {
-				new Effect("incAtk", "MonsterCard", 400),
+				new Effect("incAtk", "MonsterCard", 300),
 				new Effect("incAtk", "MonsterCard", 500),
-				new Effect("incDef", "MonsterCard", 400),
+				new Effect("decAtk", "MonsterCard", 400),
+				new Effect("incDef", "MonsterCard", 300),
 				new Effect("incDef", "MonsterCard", 500),
+				new Effect("decDef", "MonsterCard", 400),
 				new Effect("incAtkDef", "MonsterCard", 200, 200),
 				new Effect("incAtkDef", "MonsterCard", 300, 300),
+				new Effect("decAtkDef", "MonsterCard", 200, 200),
 				new Effect("draw", "Player", 2),
-				new Effect("dmg", "Player", 500),
 				new Effect("heal", "Player", 500),
 				new Effect("heal", "Player", 1000)
 		};
-		Effect[] uneffects = {
-				new Effect("decAtk", "MonsterCard", 400),
-				new Effect("decAtk", "MonsterCard", 500),
-				new Effect("decDef", "MonsterCard", 400),
-				new Effect("decDef", "MonsterCard", 500),
-				new Effect("decAtkDef", "MonsterCard", 200, 200),
-				new Effect("decAtkDef", "MonsterCard", 300, 300),
-				null,
-				null,
-				null,
-				null
-		};
 		String[] descriptions = {
-				"Megnöveli egy szörny támadópontjait 400-zal.",
+				"Megnöveli egy szörny támadópontjait 300-zal.",
 				"Megnöveli egy szörny támadópontjait 500-zal.",
-				"Megnöveli egy szörny védelmi pontjait 400-zal.",
+				"Csökkenti egy szörny támadópontjait 400-zal.",
+				"Megnöveli egy szörny védelmi pontjait 300-zal.",
 				"Megnöveli egy szörny védelmi pontjait 500-zal.",
+				"Csökkenti egy szörny védelmi pontjait 400-zal.",
 				"Megnöveli egy szörny támadó- és védelmi pontjait 200-zal.",
 				"Megnöveli egy szörny támadó- és védelmi pontjait 300-zal.",
+				"Csökkenti egy szörny támadó- és védelmi pontjait 300-zal.",
 				"Húzhatsz 2 lapot a kezedbe a paklidból.",
-				"500 pontos sebzést okoz az ellenfél életpontjain.",
 				"500 életpontot szerzel.",
 				"1000 életpontot szerzel.",
 		};
 		int index = rand.nextInt(effects.length);
-		return new SpellCard(randomName(), descriptions[index], false, player, effects[index], uneffects[index]);
+		return new SpellCard(randomName(), descriptions[index], false, player, effects[index]);
 	}
 	
 	/**

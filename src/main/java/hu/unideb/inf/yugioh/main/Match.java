@@ -149,6 +149,14 @@ public class Match {
 			this.nextPlayer = player2;
 		}
 		this.winner = null;
+		this.player1.setLifepoints(Game.START_LIFEPOINTS);
+		this.player1.getHand().removeAll();
+		this.player1.getMonsterCardZone().removeAll();
+		this.player1.getSpellCardZone().removeAll();
+		this.player2.setLifepoints(Game.START_LIFEPOINTS);
+		this.player2.getHand().removeAll();
+		this.player2.getMonsterCardZone().removeAll();
+		this.player2.getSpellCardZone().removeAll();
 		logger.info("Meccs létrehozva. [" + this + "]");
 	}
 	
@@ -158,7 +166,7 @@ public class Match {
 	public void run() {
 
 		logger.info("A játék elkezdődött.");
-		Game.showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
+		Game.getGUI().showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
 		
 		getPlayer1().getDeck().setAllCardToFaceUp();
 		getPlayer1().getHand().addTop(	getPlayer1().getDeck().draw(Game.START_CARD_IN_HAND) );
@@ -167,6 +175,7 @@ public class Match {
 		while ( winner == null && !giveup ) {
 			
 			getNextPlayer().drawPhase();
+			getNextPlayer().standbyPhase();
 			getNextPlayer().mainPhase();
 			getNextPlayer().battlePhase();
 			getNextPlayer().endPhase();
@@ -178,7 +187,7 @@ public class Match {
 		Game.getGUI().resetGUI();
 		Game.getWorker().refreshGUI();
 		
-		Game.showMessage("Játék vége. A győztes játékos: " + getWinner());
+		Game.getGUI().showMessage("Játék vége. A győztes játékos: " + getWinner());
 		logger.info("Játék vége. Győztes: " + winner);
 		
 	}
