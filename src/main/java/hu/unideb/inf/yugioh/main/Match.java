@@ -19,7 +19,7 @@ public class Match {
 	/**
 	 * Naplózáshoz szükséges logger.
 	 */
-	protected static Logger logger = LoggerFactory.getLogger(Card.class);
+	protected static Logger logger = LoggerFactory.getLogger(Match.class);
 	
 	/**
 	 * Véletlen számokat előállító objektum.
@@ -165,7 +165,7 @@ public class Match {
 	 */
 	public void run() {
 
-		logger.info("A játék elkezdődött.");
+		logger.info("A játék elindítva.");
 		Game.getGUI().showMessage("A játék megkezdődött. A kezdő játékos: " + getNextPlayer());
 		
 		getPlayer1().getDeck().setAllCardToFaceUp();

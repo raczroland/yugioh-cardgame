@@ -1,5 +1,8 @@
 package hu.unideb.inf.yugioh.main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Egy hatást reprezentáló osztály.
  * 
@@ -10,6 +13,11 @@ package hu.unideb.inf.yugioh.main;
  *
  */
 public class Effect {
+	
+	/**
+	 * Naplózáshoz szükséges logger.
+	 */
+	protected static Logger logger = LoggerFactory.getLogger(Effect.class);
 	
 	/**
 	 * Azon hatások típusának tömbje, melyek egy szörnyre vonatkoznak.
@@ -86,6 +94,7 @@ public class Effect {
 		this.targetClass = targetClass;
 		this.val1 = val1;
 		this.val2 = val2;
+		logger.info("Hatás létrehozva: " + this);
 	}
 	
 	/**
@@ -101,6 +110,7 @@ public class Effect {
 		this.targetClass = targetClass;
 		this.val1 = val1;
 		this.val2 = 0;
+		logger.info("Hatás létrehozva: " + this);
 	}
 	
 	/**
@@ -115,6 +125,7 @@ public class Effect {
 		this.targetClass = targetClass;
 		this.val1 = 0;
 		this.val2 = 0;
+		logger.info("Hatás létrehozva: " + this);
 	}
 
 	/**
@@ -123,6 +134,8 @@ public class Effect {
 	 * @param obj a célobjektum
 	 */
 	public void run(Object obj) {
+		
+		logger.info("Hatás elindítása: " + this);
 		
 		switch (type) {
 			case "incAtk":
@@ -170,6 +183,13 @@ public class Effect {
 				break;
 		}
 		
+		logger.info("Hatás befejezve.");
+		
+	}
+
+	@Override
+	public String toString() {
+		return "(Effect) " + type + ": " + val1 + ", " + val2 + ", " + targetClass;
 	}
 	
 }

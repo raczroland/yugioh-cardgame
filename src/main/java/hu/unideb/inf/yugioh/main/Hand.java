@@ -59,6 +59,7 @@ public class Hand extends Deck {
 			card.getOwner().getGraveyard().addTop(tribute);
 			Game.getGUI().removeCardFromField(tribute, tribute.getOwner());
 			Game.getGUI().addCardToGraveyard(tribute, tribute.getOwner());
+			logger.info("Szörnylap feláldozva: " + tribute);
 			return summonMonsterCard(card, defensePosition);
 		} else {
 			return false;
@@ -83,6 +84,7 @@ public class Hand extends Deck {
 			Game.getGUI().addCardToGraveyard(tribute1, tribute1.getOwner());
 			Game.getGUI().removeCardFromField(tribute2, tribute2.getOwner());
 			Game.getGUI().addCardToGraveyard(tribute2, tribute2.getOwner());
+			logger.info("Szörnylapok feláldozva: " + tribute1 + ", " + tribute2);
 			return summonMonsterCard(card, defensePosition);
 		} else {
 			return false;

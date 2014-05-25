@@ -119,6 +119,7 @@ public class Game {
 		computer = new AIPlayer("Számítógép");
 		loadedDeck = Generator.generateRandomDeck(human, 40);
 		visualizator = new GUI();
+		logger.info("Játék inicializálva.");
 	}
 	
 	/**
@@ -170,6 +171,8 @@ public class Game {
 	 * Új meccs létrehozása.
 	 */
 	public static void newMatch() {
+		
+		logger.info("Új meccs létrehozása.");
 
 		human.setDeck((Deck)loadedDeck.clone());
 		computer.setDeck(Generator.generateRandomDeck(computer, 40));
@@ -185,6 +188,8 @@ public class Game {
 		
 		worker = new GameWorker();		
 		worker.execute();
+		
+		logger.info("Új meccs létrehozva és elindítva.");
 		
 	}
 	

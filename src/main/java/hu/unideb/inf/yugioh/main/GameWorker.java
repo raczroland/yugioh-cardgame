@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Egy aktuális meccset "futtató" szál osztálya.
@@ -11,10 +14,16 @@ import javax.swing.SwingWorker;
  * @author Rácz Roland
  */
 public class GameWorker extends SwingWorker<Void, Void> {
+	
+	/**
+	 * Naplózáshoz szükséges logger.
+	 */
+	protected static Logger logger = LoggerFactory.getLogger(GameWorker.class);
 
 	@Override
 	protected Void doInBackground() throws Exception {
 		Game.getMatch().run();
+		logger.info("Meccs szála elindítva.");
 		return null;
 	}
 
@@ -30,6 +39,15 @@ public class GameWorker extends SwingWorker<Void, Void> {
 	 */
 	public void refreshGUI() {
 		process(null);
+		logger.info("GUI frissítve.");
 	}
+
+	@Override
+	protected void done() {
+		super.done();
+		logger.info("Játék szála befejezve.");
+	}
+	
+	
 	
 };

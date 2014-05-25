@@ -99,7 +99,6 @@ public abstract class Card implements Comparable<Card> {
 	 * @param owner a kártyalap tulajdonosa
 	 */
 	public Card(String name, String description, boolean faceup, Player owner) {
-		super();
 		this.name = name;
 		this.description = description;
 		this.faceup = faceup;

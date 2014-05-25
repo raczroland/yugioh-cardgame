@@ -44,6 +44,7 @@ public class SpellCard extends Card {
 	 * @return sikeres volt-e az aktiválás
 	 */
 	public boolean activate() {
+		logger.info("Varázslap aktiválása: " + this);
 		if (!Arrays.asList(Effect.MONSTER_EFFECTS).contains(getEffect().getType())) {
 			getEffect().run(getOwner());
 			return true;
@@ -60,6 +61,7 @@ public class SpellCard extends Card {
 	 * @return sikeres volt-e az aktiválás
 	 */
 	public boolean activate(MonsterCard mc) {
+		logger.info("Varázslap aktiválása: " + this + " >>> " + mc);
 		if (Arrays.asList(Effect.MONSTER_EFFECTS).contains(getEffect().getType())) {
 			getEffect().run(mc);
 			return true;
@@ -71,7 +73,7 @@ public class SpellCard extends Card {
 
 	@Override
 	public String toString() {
-		return "(Varázslap) " + getName() + ": {" + getDescription() + "}";
+		return "(Varázslap) " + getName() + ": {" + getDescription() + "}, {" + getEffect() + "}";
 	}
 
 	@Override

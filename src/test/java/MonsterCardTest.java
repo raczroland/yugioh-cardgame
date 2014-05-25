@@ -41,7 +41,6 @@ public class MonsterCardTest {
 		testPlayer1 = new Player("Player1");
 		testPlayer2 = new Player("Player2");
 		card = new MonsterCard("Sötét varázsló", "minta leírás", true, "sötét", 2500, 2100, 7, true, testPlayer1);
-		enemy = new MonsterCard("Kékszemű hósárkány", "minta leírás", true, "szél", 3000, 2500, 8, false, testPlayer2);
 	}
 	
 	@Test
@@ -61,8 +60,9 @@ public class MonsterCardTest {
 	}
 	
 	@Test
-	public void testOwner() {
-		assertEquals(testPlayer1, card.getOwner());
+	public void testSetGetOwner() {
+		card.setOwner(testPlayer2);
+		assertEquals(testPlayer2, card.getOwner());
 	}
 	
 	@Test
@@ -123,8 +123,10 @@ public class MonsterCardTest {
 	
 	@Test
 	public void testAttack() {
+		enemy = new MonsterCard("Kékszemű hósárkány", "minta leírás", true, "szél", 3000, 2500, 8, false, testPlayer2);
+		assertNotNull(enemy);
 		// TODO megírni
-		card.attack(enemy);
+		//card.attack(enemy);
 	}
 
 }

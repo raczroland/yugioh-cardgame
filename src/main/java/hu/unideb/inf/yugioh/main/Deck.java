@@ -63,6 +63,7 @@ public class Deck implements Cloneable {
 			logger.info("Kártyalap kihúzva: " + cards.get(0) + ", új méret: " + (cards.size()-1));
 			return cards.remove(0);
 		} else {
+			logger.info("Elfogytak a kártyalapok a pakliból. " + this);
 			Game.getMatch().setWinner(
 				Game.getMatch().getNextPlayer()==Game.getMatch().getPlayer1() ? Game.getMatch().getPlayer2() : Game.getMatch().getPlayer1()
 			);
@@ -95,6 +96,7 @@ public class Deck implements Cloneable {
 	 * @param card a pakli aljára helyezendő kártyalap
 	 */
 	public void addBottom(Card card) {
+		logger.info("Kártyalap hozzáadva a pakli aljára: " + card);
 		cards.add(card);
 	}
 
@@ -115,6 +117,7 @@ public class Deck implements Cloneable {
 	 * @param card a pakli tetejére helyezendő kártyalap
 	 */
 	public void addTop(Card card) {
+		logger.info("Kártyalap hozzáadva a pakli tetejére: " + card);
 		cards.add(0, card);
 	}
 	
@@ -183,6 +186,7 @@ public class Deck implements Cloneable {
 	 */
 	public void removeAll() {
 		cards.removeAllElements();
+		logger.info("Minden kártyalap törölve: " + this);
 	}
 	
 	/**
@@ -194,6 +198,7 @@ public class Deck implements Cloneable {
 		for (Card card : cards) {
 			card.setOwner(player);
 		}
+		logger.info("Minden kártyalap tulajdonosa átállítva: " + this + " , " + player);
 	}
 	
 	/**
@@ -203,6 +208,7 @@ public class Deck implements Cloneable {
 		for (Card card : cards) {
 			card.setFaceup(true);
 		}
+		logger.info("Minden kártyalap felfordítva: " + this);
 	}
 
 	@Override
@@ -213,6 +219,7 @@ public class Deck implements Cloneable {
 	@Override
 	protected Object clone() {
 		try {
+			logger.info("Klónozás sikeres.");
 			return (Deck)super.clone();
 		} catch (CloneNotSupportedException e) {
 			logger.error("Klónozás sikertelen!");

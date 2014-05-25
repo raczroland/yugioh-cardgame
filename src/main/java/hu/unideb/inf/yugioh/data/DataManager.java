@@ -153,11 +153,11 @@ public class DataManager {
 		} catch (XMLStreamException e) {
 			logger.error("XML hiba.");
 		} catch (FileNotFoundException e) {
-			logger.error("A fájl nem található.");
+			logger.error("A fájl nem található: " + filename);
 		}
 		
 		Game.getGUI().showMessage("Pakli betöltve: " + filename);
-		logger.info("Pakli betöltve.");
+		logger.info("Pakli betöltve: " + filename);
 		return new Deck(cards);
 		
 	}
@@ -190,7 +190,7 @@ public class DataManager {
 			eventWriter.add(end);
 			
 		} catch (XMLStreamException e) {
-			logger.error("XML hiba: " + e.getLocalizedMessage());
+			logger.error("XML hiba.");
 		}
 		
 	}
@@ -278,9 +278,9 @@ public class DataManager {
 		} catch (FileNotFoundException e) {
 			logger.error("A fájl nem található.");
 		} catch (XMLStreamException e) {
-			logger.error("XML hiba: " + e.getLocalizedMessage());
+			logger.error("XML hiba.");
 		} catch (IOException e) {
-			logger.error("IOException: " + e.getLocalizedMessage());
+			logger.error("IOException.");
 		}
 		
 	}

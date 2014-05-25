@@ -20,7 +20,7 @@ public class Player {
 	/**
 	 * Naplózáshoz szükséges logger.
 	 */
-	protected static Logger logger = LoggerFactory.getLogger(Card.class);
+	protected static Logger logger = LoggerFactory.getLogger(Player.class);
 	
 	/**
 	 * A játékos neve.
@@ -219,6 +219,7 @@ public class Player {
 		Game.getGUI().setComputerMonsterEventEnabled(false);
 		Card card = (Card) Game.getGUI().getEventObject();
 		Game.getGUI().setEventObject(null);
+		logger.info("Kiválasztott kártyalap: " + card);
 		return card;
 	}
 	
@@ -226,7 +227,7 @@ public class Player {
 	 * Húzási fázist végrehajtó metódus.
 	 */
 	public void drawPhase() {
-		logger.info(this + ": húzási fázis");
+		logger.info(this + ": húzási fázis elindítva");
 		Game.getGUI().showMessage(getName() + ": húzási fázis");
 		Card card = getDeck().draw();
 		card.setFaceup(true);
@@ -237,7 +238,7 @@ public class Player {
 	 * Előkészítő fázist végrehajtó metódus.
 	 */
 	public void standbyPhase() {
-		logger.info(this + ": előkészítő fázis");
+		logger.info(this + ": előkészítő fázis elindítva");
 		Game.getGUI().showMessage(getName() + ": előkészítő fázis");
 		Game.getGUI().enableNextPhaseButton(true);
 	}
@@ -247,29 +248,39 @@ public class Player {
 	 * Várakozik a játékos lépésére.
 	 */
 	public void mainPhase() {
-		logger.info(this + ": fő fázis");
+		logger.info(this + ": fő fázis elindítva");
 		Game.getGUI().showMessage(getName() + ": fő fázis");
 		
-		boolean summoned = false;
+		boolean summoned = false; // volt-e már idézve ebben a körben?
+		
 		while (!Game.getGUI().isNextFlag()) {
 	
 			Card card = requestCard(true, true, false);
 			
+			// ha idézni szeretnénk:
 			if (!summoned && hand.getCards().contains(card) && card instanceof MonsterCard) {
 				
 				MonsterCard mc = (MonsterCard) card;
 				
+				// nem kell áldozni:
 				if (mc.getLevel()<5) {
+					
 					hand.summonMonsterCard(mc, Game.getGUI().isRightClick());
 					summoned = true;
+					
+				// egy áldozat: 
 				} else if (mc.getLevel()<7 && mc.getOwner().getMonsterCardZone().size()>=1) {
+					
 					Game.getGUI().showMessage("Válassz egy áldozati szörnyet!");
 					MonsterCard tmc = (MonsterCard) requestCard(false, true, false);
 					if (tmc != null) {
 						hand.summonMonsterCard(mc, Game.getGUI().isRightClick(), tmc);
 						summoned = true;
 					}
+					
+				// két áldozat:
 				} else if (mc.getOwner().getMonsterCardZone().size()>=2) {
+					
 					Game.getGUI().showMessage("Válassz két áldozati szörnyet!");
 					MonsterCard tmc1 = (MonsterCard) requestCard(false, true, false);
 					if (tmc1 != null) {
@@ -279,8 +290,10 @@ public class Player {
 							summoned = true;
 						}
 					}
+					
 				}
 				
+			// ha állást szeretnénk változtatni:
 			} else if (monsterCardZone.getCards().contains(card)) {
 				
 				MonsterCard mc = (MonsterCard) card;
@@ -292,7 +305,8 @@ public class Player {
 				}
 				Game.getGUI().removeCardFromField(mc, mc.getOwner());
 				Game.getGUI().addCardToField(mc, mc.getOwner());
-				
+			
+			// ha varázslapot akarunk használni:
 			} else if (hand.getCards().contains(card) && card instanceof SpellCard) {
 				
 				SpellCard sc = (SpellCard) card;
@@ -317,6 +331,8 @@ public class Player {
 				Game.getGUI().removeCardFromField(sc, sc.getOwner());
 				Game.getGUI().addCardToGraveyard(sc, sc.getOwner());
 				
+			} else {
+				logger.warn("Ismeretlen cél a kiválasztott kártyalaphoz.");
 			}
 			
 		}
@@ -329,10 +345,10 @@ public class Player {
 	 * A harci fázist végrehajtó metódus.
 	 */
 	public void battlePhase() {
-		logger.info(this + ": harci fázis");
+		logger.info(this + ": harci fázis elindítva");
 		Game.getGUI().showMessage(getName() + ": harci fázis");
 		
-		Vector<MonsterCard> attacked = new Vector<MonsterCard>(); 
+		Vector<MonsterCard> attacked = new Vector<MonsterCard>(); // már tamadó szörnylapok
 		
 		while (!Game.getGUI().isNextFlag()) {
 		
@@ -352,6 +368,8 @@ public class Player {
 						attacked.add(mc);
 					}
 					
+				} else {
+					logger.warn("Már tamadott a szörnylap vagy védelmi állásban van.");
 				}
 			
 			}
@@ -364,9 +382,10 @@ public class Player {
 	
 	/**
 	 * Vég fázist végrehajtó metódus.
+	 * El kell dobni annyi lapot, hogy maximum csak 6 maradjon.
 	 */
 	public void endPhase() {
-		logger.info(this + ": vég fázis");
+		logger.info(this + ": vég fázis elindítva");
 		Game.getGUI().showMessage(getName() + ": kör vége");
 
 		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {

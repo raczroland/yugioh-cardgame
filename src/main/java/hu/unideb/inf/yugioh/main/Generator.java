@@ -3,12 +3,20 @@ package hu.unideb.inf.yugioh.main;
 import java.util.Random;
 import java.util.Vector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A játékhoz szükséges véletlenszerű objektumokat előállító statikus osztály.
  * 
  * @author Rácz Roland
  */
 public class Generator {
+	
+	/**
+	 * Naplózáshoz szükséges logger.
+	 */
+	protected static Logger logger = LoggerFactory.getLogger(Generator.class);
 	
 	/**
 	 * Véletlen számokat előállító objektum.
@@ -55,7 +63,9 @@ public class Generator {
 			name += syllables3[ rand.nextInt(syllables2.length) ];
 			name += syllables3[ rand.nextInt(syllables3.length) ];
 		}
-		return name.substring(0, 1).toUpperCase() + name.substring(1);
+		String retname = name.substring(0, 1).toUpperCase() + name.substring(1);
+		logger.info("Név kigenerálva: " + retname);
+		return retname;
 	}
 	
 	/**
@@ -65,7 +75,9 @@ public class Generator {
 	 */
 	private static String randomType() {
 		String[] types = { "fény", "sötét", "víz", "tűz", "levegő", "föld" };
-		return types[ rand.nextInt(types.length) ];
+		String ret = types[ rand.nextInt(types.length) ];
+		logger.info("Típus kigenerálva: " + ret);
+		return ret;
 	}
 	
 	/**
@@ -78,7 +90,9 @@ public class Generator {
 		int atk = (rand.nextInt(16)+5)*100;
 		int def = (rand.nextInt(16)+5)*100;
 		int level = ((atk+def)-1000)/1000+3;
-		return new MonsterCard(randomName(), "-", false, randomType(), atk, def, level, false, player);
+		MonsterCard ret = new MonsterCard(randomName(), "-", false, randomType(), atk, def, level, false, player);
+		logger.info("Szörnylap kigenerálva: " + ret);
+		return ret;
 	}
 	
 	/**
@@ -117,7 +131,9 @@ public class Generator {
 				"1000 életpontot szerzel.",
 		};
 		int index = rand.nextInt(effects.length);
-		return new SpellCard(randomName(), descriptions[index], false, player, effects[index]);
+		SpellCard ret = new SpellCard(randomName(), descriptions[index], false, player, effects[index]);
+		logger.info("Varázslap kigenerálva: " + ret);
+		return ret;
 	}
 	
 	/**
@@ -136,7 +152,9 @@ public class Generator {
 		for (int i = 0; i < size-numOfMonstercards; i++) {
 			cards.add( generateRandomSpellCard(player) );
 		}
-		return new Deck(cards);
+		Deck ret = new Deck(cards);
+		logger.info("Pakli kigenerálva: " + ret);
+		return ret;
 	}
 
 }

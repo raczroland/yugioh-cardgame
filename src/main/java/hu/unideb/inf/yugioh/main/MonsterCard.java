@@ -159,8 +159,7 @@ public class MonsterCard extends Card {
 	 * @param defensePosition védelmi állásban van-e a szörny
 	 * @param owner a szörny tulajdonosa
 	 */
-	public MonsterCard(String name, String description,
-			boolean faceup, String type, int atk, int def,
+	public MonsterCard(String name, String description, boolean faceup, String type, int atk, int def,
 			int level, boolean defensePosition, Player owner) {
 		super(name, description, faceup, owner);
 		this.type = type;
@@ -177,6 +176,7 @@ public class MonsterCard extends Card {
 	 * @param enemy a megtámadott szörny
 	 */
 	public void attack(MonsterCard enemy) {
+		logger.info("Támadás elindítva. " + this + " >>> " + enemy);
 		if (!enemy.isFaceup()) {
 			enemy.setFaceup(true);
 		}
@@ -219,6 +219,7 @@ public class MonsterCard extends Card {
 	 * @param player a megtámadott játékos
 	 */
 	public void attack(Player player) {
+		logger.info("Támadás elindítva. " + this + " >>> " + player);
 		player.subLifepoints(getAtk());
 	}
 
