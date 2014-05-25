@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deck>
+	<dateCreated>2014-05-25 18:34:28</dateCreated>
+	<card type="monster">
+		<name>Gepereg</name>
+		<description>-</description>
+		<atk>1000</atk>
+		<def>1100</def>
+		<type>víz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Nutekor</name>
+		<description>-</description>
+		<atk>600</atk>
+		<def>500</def>
+		<type>levegő</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Paduvon</name>
+		<description>-</description>
+		<atk>1300</atk>
+		<def>1700</def>
+		<type>föld</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Vevwo</name>
+		<description>-</description>
+		<atk>1200</atk>
+		<def>1300</def>
+		<type>föld</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Mukpat</name>
+		<description>-</description>
+		<atk>1100</atk>
+		<def>1700</def>
+		<type>föld</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Kalre</name>
+		<description>-</description>
+		<atk>600</atk>
+		<def>1500</def>
+		<type>föld</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Golugvia</name>
+		<description>-</description>
+		<atk>1500</atk>
+		<def>600</def>
+		<type>levegő</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Legva</name>
+		<description>-</description>
+		<atk>700</atk>
+		<def>2000</def>
+		<type>víz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Ruvget</name>
+		<description>-</description>
+		<atk>2000</atk>
+		<def>1300</def>
+		<type>víz</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Madomgun</name>
+		<description>-</description>
+		<atk>1500</atk>
+		<def>1400</def>
+		<type>sötét</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Qunqe</name>
+		<description>-</description>
+		<atk>2000</atk>
+		<def>800</def>
+		<type>sötét</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Vudom</name>
+		<description>-</description>
+		<atk>800</atk>
+		<def>1800</def>
+		<type>levegő</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Takunpat</name>
+		<description>-</description>
+		<atk>1000</atk>
+		<def>2000</def>
+		<type>föld</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Minkal</name>
+		<description>-</description>
+		<atk>1700</atk>
+		<def>1900</def>
+		<type>levegő</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Megavvar</name>
+		<description>-</description>
+		<atk>1600</atk>
+		<def>500</def>
+		<type>víz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Nowwio</name>
+		<description>-</description>
+		<atk>1400</atk>
+		<def>1800</def>
+		<type>sötét</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Ruvme</name>
+		<description>-</description>
+		<atk>900</atk>
+		<def>1400</def>
+		<type>fény</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Qonses</name>
+		<description>-</description>
+		<atk>900</atk>
+		<def>600</def>
+		<type>tűz</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Gimon</name>
+		<description>-</description>
+		<atk>1900</atk>
+		<def>1900</def>
+		<type>sötét</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Nowat</name>
+		<description>-</description>
+		<atk>800</atk>
+		<def>1300</def>
+		<type>víz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Tusun</name>
+		<description>-</description>
+		<atk>1300</atk>
+		<def>1100</def>
+		<type>levegő</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Wuzuk</name>
+		<description>-</description>
+		<atk>1800</atk>
+		<def>1600</def>
+		<type>föld</type>
+		<level>5</level>
+	</card>
+	<card type="monster">
+		<name>Legget</name>
+		<description>-</description>
+		<atk>900</atk>
+		<def>900</def>
+		<type>föld</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Zacqa</name>
+		<description>-</description>
+		<atk>1300</atk>
+		<def>500</def>
+		<type>tűz</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Veqel</name>
+		<description>-</description>
+		<atk>700</atk>
+		<def>2000</def>
+		<type>víz</type>
+		<level>4</level>
+	</card>
+	<card type="monster">
+		<name>Manre</name>
+		<description>-</description>
+		<atk>1100</atk>
+		<def>800</def>
+		<type>fény</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Sango</name>
+		<description>-</description>
+		<atk>600</atk>
+		<def>1300</def>
+		<type>sötét</type>
+		<level>3</level>
+	</card>
+	<card type="monster">
+		<name>Nuwivev</name>
+		<description>-</description>
+		<atk>1700</atk>
+		<def>1600</def>
+		<type>föld</type>
+		<level>5</level>
+	</card>
+	<card type="spell">
+		<name>Regiwul</name>
+		<description>Csökkenti egy szörny támadó- és védelmi pontjait 300-zal.</description>
+		<effectType>decAtkDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>200</effectVal1>
+		<effectVal2>200</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Wattu</name>
+		<description>1000 életpontot szerzel.</description>
+		<effectType>heal</effectType>
+		<effectTargetClass>Player</effectTargetClass>
+		<effectVal1>1000</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Qelwio</name>
+		<description>Csökkenti egy szörny támadó- és védelmi pontjait 300-zal.</description>
+		<effectType>decAtkDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>200</effectVal1>
+		<effectVal2>200</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Mizukdom</name>
+		<description>Húzhatsz 2 lapot a kezedbe a paklidból.</description>
+		<effectType>draw</effectType>
+		<effectTargetClass>Player</effectTargetClass>
+		<effectVal1>2</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Zavev</name>
+		<description>Megnöveli egy szörny védelmi pontjait 300-zal.</description>
+		<effectType>incDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>300</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Wulvon</name>
+		<description>Megnöveli egy szörny támadópontjait 300-zal.</description>
+		<effectType>incAtk</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>300</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Qolaowio</name>
+		<description>Csökkenti egy szörny támadópontjait 400-zal.</description>
+		<effectType>decAtk</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>400</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Voses</name>
+		<description>Megnöveli egy szörny védelmi pontjait 500-zal.</description>
+		<effectType>incDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>500</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Setonea</name>
+		<description>Csökkenti egy szörny támadó- és védelmi pontjait 300-zal.</description>
+		<effectType>decAtkDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>200</effectVal1>
+		<effectVal2>200</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Gavgu</name>
+		<description>Megnöveli egy szörny támadópontjait 500-zal.</description>
+		<effectType>incAtk</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>500</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Diqil</name>
+		<description>Megnöveli egy szörny támadó- és védelmi pontjait 300-zal.</description>
+		<effectType>incAtkDef</effectType>
+		<effectTargetClass>MonsterCard</effectTargetClass>
+		<effectVal1>300</effectVal1>
+		<effectVal2>300</effectVal2>
+	</card>
+	<card type="spell">
+		<name>Gonra</name>
+		<description>1000 életpontot szerzel.</description>
+		<effectType>heal</effectType>
+		<effectTargetClass>Player</effectTargetClass>
+		<effectVal1>1000</effectVal1>
+		<effectVal2>0</effectVal2>
+	</card>
+</deck>

@@ -79,7 +79,9 @@ public class Game {
 	/**
 	 * Konstruktor az osztályhoz.
 	 */
-	protected Game() { }
+	protected Game() {
+		init();
+	}
 	
 	/**
 	 * Az osztály példányának lekérése.
@@ -225,7 +227,8 @@ public class Game {
 		
 		// TODO Auto-generated method stub
 		
-		Game.init();		
+		//Game.init();
+		Game.getInstance();
 
 	}
 

@@ -1,8 +1,12 @@
+
+
 import static org.junit.Assert.*;
+import hu.unideb.inf.yugioh.main.Game;
 import hu.unideb.inf.yugioh.main.MonsterCard;
 import hu.unideb.inf.yugioh.main.Player;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
@@ -13,15 +17,11 @@ import org.junit.Test;
  */
 public class MonsterCardTest {
 	
-	/**
-	 * Első teszt játékos.
-	 */
-	private Player testPlayer1;
-	
-	/**
-	 * Második teszt játékos.
-	 */
-	private Player testPlayer2;
+	@BeforeClass
+	public static void setupTest() {
+		Game.getInstance();
+		Game.newMatch();
+	}
 	
 	/**
 	 * Tesztelendő szörnylap.
@@ -38,9 +38,7 @@ public class MonsterCardTest {
 	 */
 	@Before
 	public void init() {
-		testPlayer1 = new Player("Player1");
-		testPlayer2 = new Player("Player2");
-		card = new MonsterCard("Sötét varázsló", "minta leírás", true, "sötét", 2500, 2100, 7, true, testPlayer1);
+		card = new MonsterCard("Sötét varázsló", "minta leírás", true, "sötét", 2500, 2100, 7, true, Game.getHuman());
 	}
 	
 	@Test
@@ -61,8 +59,8 @@ public class MonsterCardTest {
 	
 	@Test
 	public void testSetGetOwner() {
-		card.setOwner(testPlayer2);
-		assertEquals(testPlayer2, card.getOwner());
+		card.setOwner(Game.getComputer());
+		assertEquals(Game.getComputer(), card.getOwner());
 	}
 	
 	@Test
@@ -121,12 +119,12 @@ public class MonsterCardTest {
 		assertEquals(false, card.isDefensePosition());
 	}
 	
-	@Test
+	/*@Test
 	public void testAttack() {
-		enemy = new MonsterCard("Kékszemű hósárkány", "minta leírás", true, "szél", 3000, 2500, 8, false, testPlayer2);
+		enemy = new MonsterCard("Kékszemű hósárkány", "minta leírás", true, "szél", 3000, 2500, 8, false, Game.getComputer());
 		assertNotNull(enemy);
 		// TODO megírni
 		//card.attack(enemy);
-	}
+	}*/
 
 }

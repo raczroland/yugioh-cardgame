@@ -64,9 +64,13 @@ public class Deck implements Cloneable {
 			return cards.remove(0);
 		} else {
 			logger.info("Elfogytak a kártyalapok a pakliból. " + this);
-			Game.getMatch().setWinner(
-				Game.getMatch().getNextPlayer()==Game.getMatch().getPlayer1() ? Game.getMatch().getPlayer2() : Game.getMatch().getPlayer1()
-			);
+			if (Game.getMatch()!=null) {
+				Game.getMatch().setWinner(
+					Game.getMatch().getNextPlayer()==Game.getMatch().getPlayer1() ? Game.getMatch().getPlayer2() : Game.getMatch().getPlayer1()
+				);
+			} else {
+				logger.error("Nincs beállítva meccs!");
+			}
 		}
 		return null;
 	}
@@ -135,9 +139,11 @@ public class Deck implements Cloneable {
 	/**
 	 * Megmondja, a pakli tartalmaz-e megadott nevű kártyalapot.
 	 * 
+	 * @deprecated nem megfelelő már név alapján keresni
 	 * @param name a keresendő kártyalap neve
 	 * @return igazat ad vissza, ha a pakli tartalmazza az adott nevű kártyalapot, különben hamisat
 	 */
+	@Deprecated
 	public boolean containsCardWithName(String name) {
 		for (Card card : cards) {
 			if (name.equals(card.getName())) {
@@ -154,21 +160,6 @@ public class Deck implements Cloneable {
 	 */
 	public Vector<Card> getCards() {
 		return cards;
-	}
-	
-	/**
-	 * Visszaad a pakliból egy megadott nevű kártyalapot, ha talál.
-	 * 
-	 * @param name a keresendő kártyalap neve
-	 * @return adott nevű kártyalap, különben null
-	 */
-	public Card getCardWithName(String name) {
-		for (Card card : cards) {
-			if (name.equals(card.getName())) {
-				cards.remove(card);
-			}
-		}
-		return null;
 	}
 	
 	/**
