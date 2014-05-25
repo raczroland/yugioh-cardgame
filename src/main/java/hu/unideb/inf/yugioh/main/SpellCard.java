@@ -70,15 +70,6 @@ public class SpellCard extends Card {
 	}
 
 	@Override
-	public void destroy() {
-		// TODO kijavítani:
-		getOwner().getSpellCardZone().removeCard(this);
-		getOwner().getGraveyard().addTop(this);
-		logger.info("Card destroyed.");
-		logger.info("Varázslap elpusztítva. [" + this + "]");
-	}
-
-	@Override
 	public String toString() {
 		return "(Varázslap) " + getName() + ": {" + getDescription() + "}";
 	}

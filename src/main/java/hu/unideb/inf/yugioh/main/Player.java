@@ -178,8 +178,7 @@ public class Player {
 		this.hand = new Hand(new Vector<Card>());
 		this.monsterCardZone = new MonsterCardZone();
 		this.spellCardZone = new SpellCardZone();
-		logger.info("Játékos létrehozva: " + this);
-		// TODO megírni jól
+		logger.info("Játékos létrehozva: " + this); 
 	}
 
 	/**
@@ -198,7 +197,6 @@ public class Player {
 		this.monsterCardZone = new MonsterCardZone();
 		this.spellCardZone = new SpellCardZone();
 		logger.info("Játékos létrehozva megadott paklival: " + this);
-		// TODO megírni jól
 	}
 	
 	/**
@@ -229,7 +227,7 @@ public class Player {
 	 */
 	public void drawPhase() {
 		logger.info(this + ": húzási fázis");
-		Game.showMessage(getName() + ": húzási fázis");
+		Game.getGUI().showMessage(getName() + ": húzási fázis");
 		Card card = getDeck().draw();
 		card.setFaceup(true);
 		getHand().addTop(card);
@@ -240,9 +238,8 @@ public class Player {
 	 */
 	public void standbyPhase() {
 		logger.info(this + ": előkészítő fázis");
-		Game.showMessage(getName() + ": előkészítő fázis");
+		Game.getGUI().showMessage(getName() + ": előkészítő fázis");
 		Game.getGUI().enableNextPhaseButton(true);
-		//Game.getWorker().refreshGUI();
 	}
 	
 	/**
@@ -251,7 +248,7 @@ public class Player {
 	 */
 	public void mainPhase() {
 		logger.info(this + ": fő fázis");
-		Game.showMessage(getName() + ": fő fázis");
+		Game.getGUI().showMessage(getName() + ": fő fázis");
 		
 		boolean summoned = false;
 		while (!Game.getGUI().isNextFlag()) {
@@ -304,23 +301,15 @@ public class Player {
 				Game.getGUI().removeCardFromHand(sc, sc.getOwner());
 				Game.getGUI().addCardToField(sc, sc.getOwner());
 				
-				// TODO hatás...
-				
 				if (Arrays.asList(Effect.MONSTER_EFFECTS).contains(sc.getEffect().getType())) {
-
 					Game.getGUI().showMessage("Válaszd ki a varázslap célpontját!");
 					MonsterCard tmc = (MonsterCard) requestCard(false, true, true);
 					if (tmc!=null) {
-						
 						sc.activate(tmc);
-						
 					}
-					
 				} else {
-					
 					sc.activate();
 					Game._wait();
-					
 				}
 
 				sc.getOwner().getSpellCardZone().removeCard(sc);
@@ -334,8 +323,6 @@ public class Player {
 		
 		Game.getGUI().setNextFlag(false);
 		
-		// TODO varázslaphoz is!!!
-		//System.out.println(card);
 	}
 	
 	/**
@@ -343,7 +330,7 @@ public class Player {
 	 */
 	public void battlePhase() {
 		logger.info(this + ": harci fázis");
-		Game.showMessage(getName() + ": harci fázis");
+		Game.getGUI().showMessage(getName() + ": harci fázis");
 		
 		Vector<MonsterCard> attacked = new Vector<MonsterCard>(); 
 		
@@ -380,11 +367,11 @@ public class Player {
 	 */
 	public void endPhase() {
 		logger.info(this + ": vég fázis");
-		Game.showMessage(getName() + ": kör vége");
+		Game.getGUI().showMessage(getName() + ": kör vége");
 
 		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {
 			
-			Game.showMessage("Túl sok kártyalap van a kezedben. Dobj el egyet.");
+			Game.getGUI().showMessage("Túl sok kártyalap van a kezedben. Dobj el egyet.");
 			
 			Card card = requestCard(true, false, false);
 			

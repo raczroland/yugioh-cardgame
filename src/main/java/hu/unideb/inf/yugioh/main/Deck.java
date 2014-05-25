@@ -30,8 +30,6 @@ public class Deck implements Cloneable {
 	 * @param cards kátyalapokat tartalmazó vektor
 	 */
 	public Deck(Vector<Card> cards) {
-		// TODO jól megírni
-		super();
 		this.cards = cards;
 		logger.info("Pakli létrehozva. [" + this + "]");
 	}

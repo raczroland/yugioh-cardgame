@@ -105,10 +105,5 @@ public abstract class Card implements Comparable<Card> {
 		this.faceup = faceup;
 		this.owner = owner;
 	}
-	
-	/**
-	 * Elpusztítja az adott kártyalapot, majd az adott játékos temetőjébe kerül.
-	 */
-	public abstract void destroy();
 
 }

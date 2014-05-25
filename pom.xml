@@ -15,9 +15,6 @@
 			<email>swrr.hu@gmail.com</email>
 		</developer>
 	</developers>
-	<description>
-  	Yu-Gi-Oh! kártyajáték.
-  </description>
 
 	<dependencies>
 		<dependency>
@@ -96,4 +93,7 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<description>A Yu-Gi-Oh! gyüjtögetős kártyajátékon alapuló, JAVA-ban írt játék.</description>
+	<name>yugioh-cardgame</name>
+	<url>https://github.com/raczroland/yugioh-cardgame</url>
 </project>

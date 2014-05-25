@@ -89,31 +89,10 @@ public class Hand extends Deck {
 		}
 	}
 
-	/**
-	 * Lerakja és aktiválja a játékos egy adott varázslapját.
-	 * 
-	 * @param card a lerakandó és aktiválandó varázslap
-	 */
-	public void activateSpellCard(SpellCard card) {
-		removeCard(card);
-		card.setFaceup(true);
-		card.getOwner().getSpellCardZone().addTop(card);
-		// TODO kijavítani:
-		//card.getEffect().run();
-	}
-
 	@Override
 	public void addTop(Card card) {
 		super.addTop(card);
 		Game.getGUI().addCardToHand(card, card.getOwner());
 	}
-
-	/*@Override
-	public void addTop(Card[] cards) {
-		super.addTop(cards);
-		for (Card card : cards) {
-			Game.getGUI().addCardToHand(card, card.getOwner());
-		}
-	}*/
 
 }

@@ -217,31 +217,10 @@ public class Game {
 	 * @param args parancssori argumentumok
 	 */
 	public static void main(String[] args) {
+		
 		// TODO Auto-generated method stub
 		
-		//Deck deck = DataManager.loadDeckFromFile("teszt.xml");
-		//System.out.println(deck);
-		
-		//Game game = Game.getInstance();
-		
-		//System.out.println( System.getProperty("user.home") );
-		
-		Game.init();
-		
-		/*Player player = new Player("tesztJátékos");
-		Deck teszt = Generator.generateRandomDeck(player, 10);
-		/*teszt.shuffle();
-		for (Card card : teszt.draw(10)) {
-			System.out.println(card.toString());
-		}*/
-		//DataManager.saveDeckToFile(teszt, "tesztPakli.xml");
-		
-		/*Deck teszt = DataManager.loadDeckFromFile("cards.xml");
-		for (Card card : teszt.draw(2)) {
-			System.out.println(card.toString());
-		}*/
-		
-		
+		Game.init();		
 
 	}
 

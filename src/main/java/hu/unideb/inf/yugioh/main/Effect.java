@@ -79,7 +79,7 @@ public class Effect {
 	 * @param type a hatás típusa
 	 * @param targetClass a célpont osztályának neve
 	 * @param val1 első segédváltozó
-	 * @param val1 második segédváltozó
+	 * @param val2 második segédváltozó
 	 */
 	public Effect(String type, String targetClass, int val1, int val2) {
 		this.type = type;

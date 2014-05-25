@@ -128,7 +128,6 @@ class SpellCardItem extends CardItem {
 	 * @return az előállított varázslap
 	 */
 	public SpellCard asSpellCard() {
-		// TODO megírni jól
 		Effect effect = new Effect(getEffectType(), getEffectTargetClass(), getEffectVal1(), getEffectVal2());
 		return new SpellCard(getName(), getDescription(), false, null, effect);
 	}

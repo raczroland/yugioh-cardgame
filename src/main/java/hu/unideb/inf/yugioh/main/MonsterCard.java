@@ -222,7 +222,9 @@ public class MonsterCard extends Card {
 		player.subLifepoints(getAtk());
 	}
 
-	@Override
+	/**
+	 * Elpusztítja ezt a szörnylapot.
+	 */
 	public void destroy() {
 		this.getOwner().getMonsterCardZone().removeCard(this);
 		this.getOwner().getGraveyard().addTop(this);

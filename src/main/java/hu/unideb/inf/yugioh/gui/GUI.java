@@ -86,48 +86,176 @@ public class GUI extends JFrame {
 	 */
 	private boolean rightClick;
 	
+	/**
+	 * Első játékos.
+	 */
 	private Player p1;
+	
+	/**
+	 * Második játékos.
+	 */
 	private Player p2;
 	
+	/**
+	 * Fő panel.
+	 */
 	private JPanel contentPane;
+	
+	/**
+	 * Első menü panelja.
+	 */
 	private JPanel menu1Panel;
 	
+	/**
+	 * Új játékot indító gomb.
+	 */
 	static JButton btnNew;
+	
+	/**
+	 * Játékot feladó gomb.
+	 */
 	static JButton btnGiveup;
+	
+	/**
+	 * Kilépő gomb.
+	 */
 	static JButton btnExit;
 	
+	/**
+	 * Véletlenszerű pakli generáló és betöltő gomb.
+	 */
 	private JButton btnDeckRandom;
+	
+	/**
+	 * Mentett pakli betöltő gomb.
+	 */
+	
 	private JButton btnDeckLoaded;
+	/**
+	 * Betöltött pakli mentő gomb.
+	 */
 	private JButton btnDeckSave;
+	
+	/**
+	 * Mentett pakli törlő gomb.
+	 */
 	private JButton btnDeckDelete;
+	
+	/**
+	 * Következő fázisra ugró gomb.
+	 */
 	private JButton btnNextPhase;
 	
+	/**
+	 * Második játékos fő panelja.
+	 */
 	private JPanel player2Panel;
+	
+	/**
+	 * Első játékos fő panelja.
+	 */
 	private JPanel player1Panel;
+	
+	/**
+	 * Üzenetsáv.
+	 */
 	private JLabel infoLabel;
+	
+	/**
+	 * Második menü panelja.
+	 */
 	private JPanel menu2Panel;
 	
+	/**
+	 * A második játékos varázslapjainak tároló panelja.
+	 */
 	private JPanel P2SpellCardZonePanel;
+	
+	/**
+	 * A második játékos szörnylapjainak tároló panelja.
+	 */
 	private JPanel P2MonsterCardZonePanel;
+	
+	/**
+	 * Az első játékos szörnylapjainak tároló panelja.
+	 */
 	private JPanel P1MonsterCardZonePanel;
+	
+	/**
+	 * Az első játékos varázslapjainak tároló panelja.
+	 */
 	private JPanel P1SpellCardZonePanel;
+	
+	/**
+	 * Az első játékos kezében lévő lapjait tároló panel.
+	 */
 	private JPanel P1HandPanel;
+	
+	/**
+	 * A második játékos kezében lévő lapjait tároló panel.
+	 */
 	private JPanel P2HandPanel;
 	
+	/**
+	 * Az első játékos életpontjait megjelenítő címke.
+	 */
 	private JLabel P1Lifepoints;
+	
+	/**
+	 * Az első játékos temetőjét reprezentáló panel.
+	 */
 	private JPanel P1GraveyardZone;
+	
+	/**
+	 * Az első játékos pakliját tároló panel.
+	 */
 	private JPanel P1DeckZone;
+	
+	/**
+	 * Az első játékos reprezentáló tároló panel.
+	 */
 	private CardPanel P1Deck;
+	
+	/**
+	 * A második játékos életpontjait megjelenítő címke.
+	 */
 	private JLabel P2Lifepoints;
+	
+	/**
+	 * A második játékos temetőjét reprezentáló panel.
+	 */
 	private JPanel P2GraveyardZone;
+	
+	/**
+	 * A második játékos pakliját tároló panel.
+	 */
 	private JPanel P2DeckZone;
+	
+	/**
+	 * A második játékos reprezentáló tároló panel.
+	 */
 	private CardPanel P2Deck;
 	
+	/**
+	 * Felső nézet címke.
+	 */
 	private JLabel viewCardTop;
+	
+	/**
+	 * Alsó nézet címke.
+	 */
 	private JLabel viewCardBottom;
 	
+	/**
+	 * Az elmentett paklik fájljainak listája.
+	 */
 	private JList<String> deckList;
 
+	/**
+	 * Visszaadja az elmentett paklik fájljainak listáját.
+	 * 
+	 * @return az elmentett paklik fájljainak listája
+	 */
 	public JList<String> getDeckList() {
 		return deckList;
 	}

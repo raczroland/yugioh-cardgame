@@ -26,7 +26,7 @@ public class AIPlayer extends Player {
 	@Override
 	public void drawPhase() {
 		logger.info(this + ": húzási fázis");
-		Game.showMessage(getName() + ": húzási fázis");
+		Game.getGUI().showMessage(getName() + ": húzási fázis");
 		Card card = getDeck().draw();
 		getHand().addTop(card);
 	}
@@ -38,7 +38,7 @@ public class AIPlayer extends Player {
 	@Override
 	public void standbyPhase() {
 		logger.info(this + ": előkészítő fázis");
-		Game.showMessage(getName() + ": előkészítő fázis");
+		Game.getGUI().showMessage(getName() + ": előkészítő fázis");
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class AIPlayer extends Player {
 	@Override
 	public void mainPhase() {
 		logger.info(this + ": fő fázis");
-		Game.showMessage(getName() + ": fő fázis");
+		Game.getGUI().showMessage(getName() + ": fő fázis");
 		Game._wait();
 		Hand hand = getHand();
 		Collections.sort(hand.getCards());
@@ -87,7 +87,7 @@ public class AIPlayer extends Player {
 	@Override
 	public void battlePhase() {
 		logger.info(this + ": harci fázis");
-		Game.showMessage(getName() + ": harci fázis");
+		Game.getGUI().showMessage(getName() + ": harci fázis");
 		Game._wait();
 		for (Card card : getMonsterCardZone().getCards()) {
 			MonsterCard monster = (MonsterCard) card;
@@ -120,7 +120,7 @@ public class AIPlayer extends Player {
 	@Override
 	public void endPhase() {
 		logger.info(this + ": vég fázis");
-		Game.showMessage(getName() + ": kör vége");
+		Game.getGUI().showMessage(getName() + ": kör vége");
 		Game._wait();
 		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {
 			Card card = getHand().draw();
