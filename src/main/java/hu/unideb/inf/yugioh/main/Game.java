@@ -196,7 +196,7 @@ public class Game {
 	 */
 	public static void _wait() {
 		try {
-		    Thread.sleep(800);
+		    Thread.sleep(700);
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}

@@ -53,14 +53,19 @@ public class GUI extends JFrame {
 	private GameListener gameListener;
 	
 	/**
-	 * Engedélyezve van-e a MainPhaseEvent.
+	 * Engedélyezve van-e a HandEvent.
 	 */
-	private boolean MPEventEnabled;
+	private boolean handEventEnabled;
 	
 	/**
-	 * Engedélyezve van-e a BattlesPhaseEvent.
+	 * Engedélyezve van-e a HumanMonsterEvent.
 	 */
-	private boolean BPEventEnabled;
+	private boolean humanMonsterEventEnabled;
+	
+	/**
+	 * Engedélyezve van-e a ComputerMonsterEvent.
+	 */
+	private boolean computerMonsterEventEnabled;
 	
 	/**
 	 * Ebbe a változóba töltődik egy PhaseEvent objektuma.
@@ -131,8 +136,9 @@ public class GUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		gameListener = new GameListener();
-		MPEventEnabled = false;
-		BPEventEnabled = false;
+		handEventEnabled = false;
+		humanMonsterEventEnabled = false;
+		computerMonsterEventEnabled = false;
 		eventObject = null;
 		
 		menu1Panel = new JPanel();
@@ -276,34 +282,34 @@ public class GUI extends JFrame {
 		P2HandPanel = new JPanel();
 		P2HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		P2HandPanel.setBackground(UIManager.getColor("Button.background"));
-		P2HandPanel.setBounds(124, 11, 350, 60);
+		P2HandPanel.setBounds(124, 11, 404, 60);
 		contentPane.add(P2HandPanel);
-		P2HandPanel.setLayout(new GridLayout(0, 6, 0, 0));
+		P2HandPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
 		P1HandPanel = new JPanel();
 		P1HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		P1HandPanel.setBackground(UIManager.getColor("Button.background"));
-		P1HandPanel.setBounds(340, 520, 350, 60);
+		P1HandPanel.setBounds(277, 520, 413, 60);
 		contentPane.add(P1HandPanel);
-		P1HandPanel.setLayout(new GridLayout(0, 6, 0, 0));
+		P1HandPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
 		P1Lifepoints = new JLabel("Életpontok száma: -");
-		P1Lifepoints.setBounds(124, 520, 206, 14);
+		P1Lifepoints.setBounds(124, 520, 143, 14);
 		contentPane.add(P1Lifepoints);
 		
 		P2Lifepoints = new JLabel("Életpontok száma: -");
-		P2Lifepoints.setBounds(484, 11, 206, 14);
+		P2Lifepoints.setBounds(538, 11, 152, 14);
 		contentPane.add(P2Lifepoints);
 		
 		viewCardTop = new JLabel("-");
 		viewCardTop.setForeground(Color.GRAY);
-		viewCardTop.setBounds(124, 543, 206, 14);
+		viewCardTop.setBounds(124, 543, 143, 14);
 		contentPane.add(viewCardTop);
 		
 		viewCardBottom = new JLabel("-");
 		viewCardBottom.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		viewCardBottom.setForeground(Color.GRAY);
-		viewCardBottom.setBounds(124, 566, 206, 14);
+		viewCardBottom.setBounds(124, 566, 143, 14);
 		contentPane.add(viewCardBottom);
 		
 		JPanel menu3panel = new JPanel();
@@ -318,16 +324,10 @@ public class GUI extends JFrame {
 		btnPhaseBattle.setBounds(10, 11, 84, 23);
 		menu3panel.add(btnPhaseBattle);
 		
-		JButton btnPhaseMain2 = new JButton("Fő fázis 2.");
-		btnPhaseMain2.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnPhaseMain2.setEnabled(false);
-		btnPhaseMain2.setBounds(10, 45, 84, 23);
-		menu3panel.add(btnPhaseMain2);
-		
 		JButton btnPhaseEnd = new JButton("Vég fázis");
 		btnPhaseEnd.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnPhaseEnd.setEnabled(false);
-		btnPhaseEnd.setBounds(10, 79, 84, 23);
+		btnPhaseEnd.setBounds(10, 45, 84, 23);
 		menu3panel.add(btnPhaseEnd);
 		
 		//player1MonsterCardZone = new Vector<JPanel>(5);
@@ -351,39 +351,57 @@ public class GUI extends JFrame {
 	}
 	
 	/**
-	 * Visszaadja, hogy engedélyezve van-e a MainPhaseEvent.
+	 * Visszaadja, hogy engedélyezve van-e a HandEvent.
 	 * 
-	 * @return engedélyezve van-e a MainPhaseEvent
+	 * @return engedélyezve van-e a HandEvent
 	 */
-	public boolean isMPEventEnabled() {
-		return MPEventEnabled;
+	public boolean isHandEventEnabled() {
+		return handEventEnabled;
 	}
 
 	/**
-	 * Beállítja a MainPhaseEventet.
+	 * Beállítja a HandEventet.
 	 * 
-	 * @param mPEventEnabled beállítandó érték
+	 * @param handEventEnabled beállítandó érték
 	 */
-	public void setMPEventEnabled(boolean mPEventEnabled) {
-		MPEventEnabled = mPEventEnabled;
+	public void setHandEventEnabled(boolean handEventEnabled) {
+		this.handEventEnabled = handEventEnabled;
 	}
 	
 	/**
-	 * Visszaadja, hogy engedélyezve van-e a BattlePhaseEvent.
+	 * Visszaadja, hogy engedélyezve van-e a humanMonsterEvent.
 	 * 
-	 * @return engedélyezve van-e a BattlePhaseEvent
+	 * @return engedélyezve van-e a humanMonsterEvent
 	 */
-	public boolean isBPEventEnabled() {
-		return BPEventEnabled;
+	public boolean isHumanMonsterEventEnabled() {
+		return humanMonsterEventEnabled;
 	}
 
 	/**
-	 * Beállítja a BattlePhaseEventet.
+	 * Beállítja a humanMonsterEventet.
 	 * 
-	 * @param bPEventEnabled beállítandó érték
+	 * @param humanMonsterEventEnabled beállítandó érték
 	 */
-	public void setBPEventEnabled(boolean bPEventEnabled) {
-		BPEventEnabled = bPEventEnabled;
+	public void setHumanMonsterEventEnabled(boolean humanMonsterEventEnabled) {
+		this.humanMonsterEventEnabled = humanMonsterEventEnabled;
+	}
+	
+	/**
+	 * Visszaadja, hogy engedélyezve van-e az computerMonsterEvent.
+	 * 
+	 * @return engedélyezve van-e az computerMonsterEvent
+	 */
+	public boolean isComputerMonsterEventEnabled() {
+		return computerMonsterEventEnabled;
+	}
+
+	/**
+	 * Beállítja a computerMonsterEventet.
+	 * 
+	 * @param computerMonsterEventEnabled beállítandó érték
+	 */
+	public void setComputerMonsterEventEnabled(boolean computerMonsterEventEnabled) {
+		this.computerMonsterEventEnabled = computerMonsterEventEnabled;
 	}
 
 	/**
@@ -634,6 +652,30 @@ public class GUI extends JFrame {
 		}
 		logger.error("Nem sikerült az eltávolítás a kézből.");
 		return false;
+	}
+	
+	/**
+	 * Visszaállítja a felhasználói felületet az alapértelmezettre.
+	 */
+	public void resetGUI() {
+		btnNew.setEnabled(true);
+		btnGiveup.setEnabled(false);
+		P1HandPanel.removeAll();
+		P1GraveyardZone.removeAll();
+		P1MonsterCardZonePanel.removeAll();
+		P1SpellCardZonePanel.removeAll();
+		P1Lifepoints.setText("Életpontok száma: -");
+		P2HandPanel.removeAll();
+		P2GraveyardZone.removeAll();
+		P2MonsterCardZonePanel.removeAll();
+		P2SpellCardZonePanel.removeAll();
+		P2Lifepoints.setText("Életpontok száma: -");
+		viewCardTop.setText("-");
+		viewCardBottom.setText("-");
+		handEventEnabled = false;
+		humanMonsterEventEnabled = false;
+		computerMonsterEventEnabled = false;
+		eventObject = null;
 	}
 	
 }

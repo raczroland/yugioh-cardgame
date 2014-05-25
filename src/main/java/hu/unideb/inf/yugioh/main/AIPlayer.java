@@ -32,13 +32,13 @@ public class AIPlayer extends Player {
 	}
 
 	/**
-	 * Az első fő fázist végrehajtó metódus.
+	 * A fő fázist végrehajtó metódus.
 	 * A mesterséges intelligencia megpróbál megidézni egy szörnykártyát.
 	 */
 	@Override
-	public void mainPhase1() {
-		logger.info(this + ": első fő fázis");
-		Game.showMessage(getName() + ": 1. fő fázis");
+	public void mainPhase() {
+		logger.info(this + ": fő fázis");
+		Game.showMessage(getName() + ": fő fázis");
 		Game._wait();
 		Hand hand = getHand();
 		Collections.sort(hand.getCards());
@@ -76,7 +76,8 @@ public class AIPlayer extends Player {
 	 */
 	@Override
 	public void battlePhase() {
-		super.battlePhase();
+		logger.info(this + ": harci fázis");
+		Game.showMessage(getName() + ": harci fázis");
 		Game._wait();
 		for (Card card : getMonsterCardZone().getCards()) {
 			MonsterCard monster = (MonsterCard) card;
@@ -103,23 +104,18 @@ public class AIPlayer extends Player {
 	}
 
 	/**
-	 * A második fő fázist végrehajtó metódus.
-	 * A Mesterséges intelligencia átugorja ezt a lépést, mert ha tudna új lapot rakni, már lerakta volna.
-	 */
-	@Override
-	public void mainPhase2() { }
-
-	/**
 	 * A vég fázist végrehajtó metódus.
 	 * Ha a kézben 6-nál több kártyalap van, a mesterséges intelligencia eldob annyi lapot, hogy 6 maradjon.
 	 */
 	@Override
 	public void endPhase() {
-		super.endPhase();
+		logger.info(this + ": vég fázis");
+		Game.showMessage(getName() + ": kör vége");
 		Game._wait();
 		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {
 			Card card = getHand().draw();
 			getGraveyard().addTop(card);
+			Game.getGUI().removeCardFromHand(card, card.getOwner());
 			Game.getGUI().addCardToGraveyard(card, card.getOwner());
 		}
 	}

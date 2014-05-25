@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Rácz Roland
  */
+/**
+ * @author Roland
+ *
+ */
 public class Match {
 
 	/**
@@ -41,6 +45,11 @@ public class Match {
 	 * A győztes játékos.
 	 */
 	private Player winner;
+	
+	/**
+	 * Fel van-e adva a játék.
+	 */
+	private boolean giveup;
 
 	/**
 	 * Visszaadja az első játékost.
@@ -98,6 +107,24 @@ public class Match {
 	}
 	
 	/**
+	 * Visszaadja, hogy fel van-e adva a meccs.
+	 * 
+	 * @return fel van-e adva a meccs
+	 */
+	public boolean isGiveup() {
+		return giveup;
+	}
+
+	/**
+	 * Beállítja, hogy fel van-e adva a meccs.
+	 * 
+	 * @param giveup fel van-e adva a meccs
+	 */
+	public void setGiveup(boolean giveup) {
+		this.giveup = giveup;
+	}
+
+	/**
 	 * Visszatér a paraméterként átadott játékos ellenfelével.
 	 * 
 	 * @param player az adott játékos
@@ -137,17 +164,19 @@ public class Match {
 		getPlayer1().getHand().addTop(	getPlayer1().getDeck().draw(Game.START_CARD_IN_HAND) );
 		getPlayer2().getHand().addTop(	getPlayer2().getDeck().draw(Game.START_CARD_IN_HAND) );
 		
-		while ( winner == null ) {
+		while ( winner == null && !giveup ) {
 			
 			getNextPlayer().drawPhase();
-			getNextPlayer().mainPhase1();
+			getNextPlayer().mainPhase();
 			getNextPlayer().battlePhase();
-			getNextPlayer().mainPhase2();
 			getNextPlayer().endPhase();
 			
 			switchNextPlayer();
 			
 		}
+		
+		Game.getGUI().resetGUI();
+		Game.getWorker().refreshGUI();
 		
 		Game.showMessage("Játék vége. A győztes játékos: " + getWinner());
 		logger.info("Játék vége. Győztes: " + winner);

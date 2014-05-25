@@ -5,6 +5,7 @@ import hu.unideb.inf.yugioh.main.Card;
 import hu.unideb.inf.yugioh.main.Game;
 import hu.unideb.inf.yugioh.main.Generator;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -30,11 +31,8 @@ public class GameListener implements ActionListener, MouseListener {
 				GUI.btnGiveup.setEnabled(true);
 				break;
 			case "giveup":
-				// TODO megírni
-				//GUI.btnNew.setEnabled(true);
-				//GUI.btnGiveup.setEnabled(false);
-				Game.getGUI().revalidate();
-				Game.getGUI().repaint();
+				Game.getMatch().setGiveup(true);
+				Game.getMatch().setWinner(Game.getComputer());
 				break;
 			case "deckSave":
 				DataManager.saveDeckToFile(Game.getLoadedDeck());
@@ -63,14 +61,27 @@ public class GameListener implements ActionListener, MouseListener {
 			
 			CardPanel cp = (CardPanel) e.getSource();
 			
-			if (Game.getGUI().isMPEventEnabled()) {
+			if (Game.getGUI().isHandEventEnabled()) {
 				
 				if (Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
-					Game.getGUI().setMPEventEnabled(false);
-				} else if (Game.getHuman().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
+					Game.getGUI().setHandEventEnabled(false);
+				} 
+				
+			}
+			if (Game.getGUI().isHumanMonsterEventEnabled()) {
+				
+				if (Game.getHuman().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
 					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
-					Game.getGUI().setMPEventEnabled(false);
+					Game.getGUI().setHumanMonsterEventEnabled(false);
+				}
+				
+			}
+			if (Game.getGUI().isComputerMonsterEventEnabled()) {
+				
+				if (Game.getComputer().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
+					Game.getGUI().setEventObject((Card)cp.getLinkedObject());
+					Game.getGUI().setComputerMonsterEventEnabled(false);
 				}
 				
 			}
@@ -83,17 +94,36 @@ public class GameListener implements ActionListener, MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		
 		if (e.getSource() instanceof CardPanel) {
+			
 			Card card = (Card) ((CardPanel)e.getSource()).getLinkedObject();
 			if (card.isFaceup()) {
 				Game.getGUI().showCard( card );
 			}
+			
+			CardPanel cp = (CardPanel) e.getSource();
+			if (Game.getGUI().isHandEventEnabled() && Game.getHuman().getHand().getCards().contains((Card)cp.getLinkedObject())) {
+				cp.setCursor(new Cursor(Cursor.HAND_CURSOR));				
+			}
+			if (Game.getGUI().isHumanMonsterEventEnabled() && Game.getHuman().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
+				cp.setCursor(new Cursor(Cursor.HAND_CURSOR));				
+			}
+			if (Game.getGUI().isComputerMonsterEventEnabled() && Game.getComputer().getMonsterCardZone().getCards().contains((Card)cp.getLinkedObject())) {
+				cp.setCursor(new Cursor(Cursor.HAND_CURSOR));				
+			}
+			
 		}
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		if (e.getSource() instanceof CardPanel) {
+			
+			CardPanel cp = (CardPanel) e.getSource();
+			cp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
+			
+		}
 		
 	}
 

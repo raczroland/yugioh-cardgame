@@ -185,17 +185,27 @@ public class MonsterCard extends Card {
 				this.getOwner().subLifepoints(enemy.getDef()-this.getAtk());
 			} else if (enemy.getDef() < this.getAtk()) {
 				enemy.destroy();
+				Game.getGUI().removeCardFromField(enemy, enemy.getOwner());
+				Game.getGUI().addCardToGraveyard(enemy, enemy.getOwner());
 			}
 		} else {
 			if (enemy.getAtk() > this.getAtk()) {
 				this.getOwner().subLifepoints(enemy.getAtk()-this.getAtk());
 				this.destroy();
+				Game.getGUI().removeCardFromField(this, this.getOwner());
+				Game.getGUI().addCardToGraveyard(this, this.getOwner());
 			} else if(enemy.getAtk() < this.getAtk()) {
 				enemy.getOwner().subLifepoints(this.getAtk()-enemy.getAtk());
 				enemy.destroy();
+				Game.getGUI().removeCardFromField(enemy, enemy.getOwner());
+				Game.getGUI().addCardToGraveyard(enemy, enemy.getOwner());
 			} else {
 				enemy.destroy();
+				Game.getGUI().removeCardFromField(enemy, enemy.getOwner());
+				Game.getGUI().addCardToGraveyard(enemy, enemy.getOwner());
 				this.destroy();
+				Game.getGUI().removeCardFromField(this, this.getOwner());
+				Game.getGUI().addCardToGraveyard(this, this.getOwner());
 			}
 		}
 	}

@@ -192,6 +192,29 @@ public class Player {
 	}
 	
 	/**
+	 * Egy kiválasztott kártyalapot vár a felhasználó felülettől.
+	 * 
+	 * @param handEvent várakozzon-e kézben lévő lapra
+	 * @param humanMonsterEvent várakozzon-e az emberi játékos megidézett szörnylapjaira
+	 * @param computerMonsterEvent várakozzon-e a számítógépes játékos megidézett szörnylapjaira
+	 * @return a kiválasztott kártyalap
+	 */
+	private Card requestCard(boolean handEvent, boolean humanMonsterEvent, boolean computerMonsterEvent) {
+		Game.getGUI().setHandEventEnabled(handEvent);
+		Game.getGUI().setHumanMonsterEventEnabled(humanMonsterEvent);
+		Game.getGUI().setComputerMonsterEventEnabled(computerMonsterEvent);
+		while (Game.getGUI().getEventObject()==null) {
+			Game._wait();
+		}
+		Game.getGUI().setHandEventEnabled(false);
+		Game.getGUI().setHumanMonsterEventEnabled(false);
+		Game.getGUI().setComputerMonsterEventEnabled(false);
+		Card card = (Card) Game.getGUI().getEventObject();
+		Game.getGUI().setEventObject(null);
+		return card;
+	}
+	
+	/**
 	 * Húzási fázist végrehajtó metódus.
 	 */
 	public void drawPhase() {
@@ -203,23 +226,29 @@ public class Player {
 	}
 	
 	/**
-	 * Az első fő fázist végrehajtó metódus.
+	 * A fő fázist végrehajtó metódus.
 	 * Várakozik a játékos lépésére.
 	 */
-	public void mainPhase1() {
-		logger.info(this + ": első fő fázis");
-		Game.showMessage(getName() + ": 1. fő fázis");
+	public void mainPhase() {
+		logger.info(this + ": fő fázis");
+		Game.showMessage(getName() + ": fő fázis");
 		
-		Game.getGUI().setMPEventEnabled(true);
-		while (Game.getGUI().getEventObject()==null) {
-			Game._wait();
-		}
-		Card card = (Card) Game.getGUI().getEventObject();
-		Game.getGUI().setEventObject(null);
+		Card card = requestCard(true, true, false);
 		
 		if (hand.getCards().contains(card) && card instanceof MonsterCard) {
 			hand.summonMonsterCard((MonsterCard)card, false);
+			// TODO áldozás...
+		} else if (monsterCardZone.getCards().contains(card)) {
+			MonsterCard mc = (MonsterCard) card;
+			if (mc.isDefensePosition()) {
+				mc.setDefensePosition(false);
+			} else {
+				mc.setDefensePosition(true);
+			}
+			Game.getGUI().removeCardFromField(mc, mc.getOwner());
+			Game.getGUI().addCardToField(mc, mc.getOwner());
 		}
+		
 		// TODO varázslaphoz is!!!
 		//System.out.println(card);
 	}
@@ -231,14 +260,27 @@ public class Player {
 		logger.info(this + ": harci fázis");
 		Game.showMessage(getName() + ": harci fázis");
 		
-	}
-	
-	/**
-	 * A második fő fázist végrehajtó metódus.
-	 */
-	public void mainPhase2() {
-		logger.info(this + ": második fő fázis");
-		Game.showMessage(getName() + ": 2. fő fázis");
+		if (monsterCardZone.size()>0) {
+		
+			MonsterCard mc = (MonsterCard) requestCard(false, true, false);
+			
+			if (!mc.isDefensePosition()) {
+			
+				if (Game.getComputer().getMonsterCardZone().size()>0) {
+					
+					MonsterCard emc = (MonsterCard) requestCard(false, false, true);
+					
+					mc.attack(emc);
+					
+				} else {
+					mc.attack(Game.getComputer());
+				}
+				
+			}
+		
+		} else {
+			Game._wait();
+		}
 		
 	}
 	
@@ -248,6 +290,21 @@ public class Player {
 	public void endPhase() {
 		logger.info(this + ": vég fázis");
 		Game.showMessage(getName() + ": kör vége");
+
+		while ( getHand().size() > Game.MAX_CARD_IN_HAND ) {
+			
+			Game.showMessage("Túl sok kártyalap van a kezedben. Dobj el egyet.");
+			
+			Card card = requestCard(true, false, false);
+			
+			getHand().removeCard(card);
+			getGraveyard().addTop(card);
+			
+			Game.getGUI().removeCardFromHand(card, card.getOwner());
+			Game.getGUI().addCardToGraveyard(card, card.getOwner());
+			
+		}
+		
 	}
 
 	@Override
