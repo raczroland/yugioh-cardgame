@@ -39,8 +39,8 @@ Előkészítő szakasz, amely jelenleg nem bír funkcionalitással.
 
 Ebben a fázisban az aktuális játékos a következő lehetőség közül válaszhat tetszőleges mennyiségben egymásután, amíg az lehetséges:
 
-1. Kézben lévő szörnylap **leidézés**e a játékos mezőjére. A szörnylap támadó (*bal kattintás*) és védelmi (*jobb kattintás*) módban is leidézhető. Utóbbi esetben a kártya lefordítva kerül a mezőre és az ellenfél nem láthatja, milyen kártya az. Ha az idézendő szörnylap szintje 5-ös vagy 6-os, szükséges egy darab szörnylapot feláldozni a mezőről és a játékos temetőjébe küldeni. Ha az idézendő szörnylap szintje 7-es vagy nagyobb, kettő áldozatra van szükség. Egy körben egy játékos legfeljebb egy szörnylapot idézhet meg.
-2. Kézben lévő varázslap lerakása a játékos mezőjére, **aktiválás**a (egyedi hatásának érvényesítése), majd temetőbe rakása. Egy játékos egy körben korlátlan számú varázslapot aktiválhat.
+1. Kézben lévő szörnylap **leidézése** a játékos mezőjére. A szörnylap támadó (*bal kattintás*) és védelmi (*jobb kattintás*) módban is leidézhető. Utóbbi esetben a kártya lefordítva kerül a mezőre és az ellenfél nem láthatja, milyen kártya az. Ha az idézendő szörnylap szintje 5-ös vagy 6-os, szükséges egy darab szörnylapot feláldozni a mezőről és a játékos temetőjébe küldeni. Ha az idézendő szörnylap szintje 7-es vagy nagyobb, kettő áldozatra van szükség. Egy körben egy játékos legfeljebb egy szörnylapot idézhet meg.
+2. Kézben lévő varázslap lerakása a játékos mezőjére, **aktiválása** (egyedi hatásának érvényesítése), majd temetőbe rakása. Egy játékos egy körben korlátlan számú varázslapot aktiválhat.
 3. A játékos saját mezőjén lévő szörnyek támadóból védelmi, védelmiből támadó állásba fordítása. Amennyiben le van fordítva, a kártyalap felfordul.
 
 #### Harci fázis (BattlePhase)
