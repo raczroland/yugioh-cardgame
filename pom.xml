@@ -6,6 +6,10 @@
 	<groupId>hu.unideb.inf</groupId>
 	<artifactId>yugioh</artifactId>
 	<version>0.1</version>
+	
+	<description>A Yu-Gi-Oh! gyüjtögetős kártyajátékon alapuló, JAVA-ban írt játék.</description>
+	<name>yugioh-cardgame</name>
+	<url>https://github.com/raczroland/yugioh-cardgame</url>
 
 	<!-- Project Informations -->
 	<developers>
@@ -15,7 +19,16 @@
 			<email>swrr.hu@gmail.com</email>
 		</developer>
 	</developers>
+	
+	<!-- Properties -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
 
+	<!-- Dependencies -->
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -33,12 +46,8 @@
 			<version>1.7.7</version>
 		</dependency>
 	</dependencies>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-	</properties>
+	
+	<!-- Build -->
 	<build>
 		<plugins>
 			<plugin>
@@ -61,6 +70,8 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- Reporting -->
 	<reporting>
 		<plugins>
 			<plugin>
@@ -93,7 +104,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	<description>A Yu-Gi-Oh! gyüjtögetős kártyajátékon alapuló, JAVA-ban írt játék.</description>
-	<name>yugioh-cardgame</name>
-	<url>https://github.com/raczroland/yugioh-cardgame</url>
+	
 </project>

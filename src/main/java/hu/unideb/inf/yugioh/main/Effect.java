@@ -158,7 +158,6 @@ public class Effect {
 				Game.getGUI().addCardToField((MonsterCard)obj, ((MonsterCard)obj).getOwner());
 				break;
 			case "draw":
-				//((Player)obj).getHand().addTop(((Player)obj).getDeck().draw(val1));
 				Card[] cards = ((Player)obj).getDeck().draw(val1);
 				for (Card card : cards) {
 					card.setFaceup(true);

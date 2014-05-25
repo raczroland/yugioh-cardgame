@@ -29,6 +29,7 @@ import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import java.awt.Font;
 import javax.swing.UIManager;
+import java.awt.SystemColor;
 
 /**
  * A játék grafikus interfészét megvalósító osztálya.
@@ -274,6 +275,7 @@ public class GUI extends JFrame {
 		setBounds(100, 100, 718, 633);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(248, 248, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -294,6 +296,7 @@ public class GUI extends JFrame {
 		menu1Panel.setLayout(null);
 		
 		btnNew = new JButton("Új");
+		btnNew.setToolTipText("Új játék indítása");
 		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNew.setBounds(9, 11, 87, 23);
 		btnNew.setActionCommand("new");
@@ -301,6 +304,7 @@ public class GUI extends JFrame {
 		menu1Panel.add(btnNew);
 		
 		btnGiveup = new JButton("Feladás");
+		btnGiveup.setToolTipText("Játék feladása");
 		btnGiveup.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnGiveup.setBounds(9, 45, 87, 23);
 		btnGiveup.setEnabled(false);
@@ -309,6 +313,7 @@ public class GUI extends JFrame {
 		menu1Panel.add(btnGiveup);
 		
 		btnExit = new JButton("Kilépés");
+		btnExit.setToolTipText("Kilépés a programból");
 		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnExit.setBounds(9, 79, 87, 23);
 		btnExit.setActionCommand("exit");
@@ -316,30 +321,36 @@ public class GUI extends JFrame {
 		menu1Panel.add(btnExit);
 		
 		player1Panel = new JPanel();
-		player1Panel.setBackground(Color.LIGHT_GRAY);
+		player1Panel.setBackground(new Color(144, 238, 144));
 		player1Panel.setBounds(124, 319, 566, 190);
 		contentPane.add(player1Panel);
 		player1Panel.setLayout(null);
 		
 		player2Panel = new JPanel();
-		player2Panel.setBackground(Color.LIGHT_GRAY);
+		player2Panel.setBackground(new Color(244, 164, 96));
 		player2Panel.setBounds(124, 82, 566, 190);
 		contentPane.add(player2Panel);
 		player2Panel.setLayout(null);
 		
 		P2SpellCardZonePanel = new JPanel();
+		P2SpellCardZonePanel.setBackground(new Color(255, 250, 240));
+		P2SpellCardZonePanel.setToolTipText("Varázslapok");
 		P2SpellCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P2SpellCardZonePanel.setBounds(83, 11, 473, 78);
 		player2Panel.add(P2SpellCardZonePanel);
 		P2SpellCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P2MonsterCardZonePanel = new JPanel();
+		P2MonsterCardZonePanel.setBackground(new Color(255, 250, 240));
+		P2MonsterCardZonePanel.setToolTipText("Megidézett szörnyek");
 		P2MonsterCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P2MonsterCardZonePanel.setBounds(83, 100, 473, 79);
 		player2Panel.add(P2MonsterCardZonePanel);
 		P2MonsterCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1DeckZone = new JPanel();
+		P1DeckZone.setBackground(new Color(240, 255, 255));
+		P1DeckZone.setToolTipText("Pakli");
 		P1DeckZone.setBounds(494, 101, 62, 78);
 		player1Panel.add(P1DeckZone);
 		P1DeckZone.setLayout(null);
@@ -349,6 +360,8 @@ public class GUI extends JFrame {
 		P1DeckZone.add(P1Deck);
 		
 		P2DeckZone = new JPanel();
+		P2DeckZone.setBackground(new Color(255, 250, 240));
+		P2DeckZone.setToolTipText("Pakli");
 		P2DeckZone.setBounds(10, 11, 63, 78);
 		player2Panel.add(P2DeckZone);
 		P2DeckZone.setLayout(null);
@@ -359,23 +372,31 @@ public class GUI extends JFrame {
 		P2Deck.setLayout(null);
 		
 		P2GraveyardZone = new JPanel();
+		P2GraveyardZone.setBackground(new Color(255, 250, 240));
+		P2GraveyardZone.setToolTipText("Temető");
 		P2GraveyardZone.setBounds(10, 100, 63, 78);
 		player2Panel.add(P2GraveyardZone);
 		P2GraveyardZone.setLayout(null);
 		
 		P1MonsterCardZonePanel = new JPanel();
+		P1MonsterCardZonePanel.setBackground(new Color(240, 255, 255));
+		P1MonsterCardZonePanel.setToolTipText("Megidézett szörnyek");
 		P1MonsterCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		P1MonsterCardZonePanel.setBounds(10, 11, 474, 78);
 		player1Panel.add(P1MonsterCardZonePanel);
 		P1MonsterCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1SpellCardZonePanel = new JPanel();
+		P1SpellCardZonePanel.setBackground(new Color(240, 255, 255));
+		P1SpellCardZonePanel.setToolTipText("Varázslapok");
 		P1SpellCardZonePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		P1SpellCardZonePanel.setBounds(10, 100, 474, 79);
+		P1SpellCardZonePanel.setBounds(10, 101, 474, 79);
 		player1Panel.add(P1SpellCardZonePanel);
 		P1SpellCardZonePanel.setLayout(new GridLayout(0, 7, 0, 0));
 		
 		P1GraveyardZone = new JPanel();
+		P1GraveyardZone.setBackground(new Color(240, 255, 255));
+		P1GraveyardZone.setToolTipText("Temető");
 		P1GraveyardZone.setBounds(494, 11, 62, 78);
 		player1Panel.add(P1GraveyardZone);
 		P1GraveyardZone.setLayout(null);
@@ -387,11 +408,12 @@ public class GUI extends JFrame {
 		
 		menu2Panel = new JPanel();
 		menu2Panel.setBackground(Color.GRAY);
-		menu2Panel.setBounds(10, 136, 104, 319);
+		menu2Panel.setBounds(10, 136, 104, 296);
 		contentPane.add(menu2Panel);
 		menu2Panel.setLayout(null);
 		
 		btnDeckRandom = new JButton("Véletlen");
+		btnDeckRandom.setToolTipText("Véletlen pakli generálása és betöltése");
 		btnDeckRandom.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckRandom.setBounds(10, 11, 84, 23);
 		btnDeckRandom.setActionCommand("deckRandom");
@@ -399,83 +421,81 @@ public class GUI extends JFrame {
 		menu2Panel.add(btnDeckRandom);
 		
 		btnDeckLoaded = new JButton("Betöltés");
+		btnDeckLoaded.setToolTipText("Pakli betöltése");
 		btnDeckLoaded.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnDeckLoaded.setBounds(10, 217, 84, 23);
+		btnDeckLoaded.setBounds(10, 194, 84, 23);
 		btnDeckLoaded.setActionCommand("deckLoaded");
 		btnDeckLoaded.addActionListener(gameListener);
 		menu2Panel.add(btnDeckLoaded);
 		
 		btnDeckSave = new JButton("Mentés");
+		btnDeckSave.setToolTipText("Betöltött pakli mentése");
 		btnDeckSave.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		btnDeckSave.setBounds(10, 251, 84, 23);
+		btnDeckSave.setBounds(10, 228, 84, 23);
 		btnDeckSave.setActionCommand("deckSave");
 		btnDeckSave.addActionListener(gameListener);
 		menu2Panel.add(btnDeckSave);
 		
 		deckList = new JList<String>(DataManager.getSavedDecks());
+		deckList.setToolTipText("Mentett paklik listája");
 		deckList.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		deckList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		deckList.setBounds(10, 45, 84, 161);
+		deckList.setBounds(10, 45, 84, 138);
 		menu2Panel.add(deckList);
 		
 		btnDeckDelete = new JButton("Törlés");
+		btnDeckDelete.setToolTipText("Mentett pakli törlése");
 		btnDeckDelete.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnDeckDelete.setActionCommand("deckDelete");
 		btnDeckDelete.addActionListener(gameListener);
-		btnDeckDelete.setBounds(10, 285, 84, 23);
+		btnDeckDelete.setBounds(10, 262, 84, 23);
 		menu2Panel.add(btnDeckDelete);
 		
 		P2HandPanel = new JPanel();
 		P2HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		P2HandPanel.setBackground(UIManager.getColor("Button.background"));
+		P2HandPanel.setBackground(new Color(248, 248, 255));
 		P2HandPanel.setBounds(124, 11, 404, 60);
 		contentPane.add(P2HandPanel);
 		P2HandPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
 		P1HandPanel = new JPanel();
 		P1HandPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
-		P1HandPanel.setBackground(UIManager.getColor("Button.background"));
+		P1HandPanel.setBackground(new Color(248, 248, 255));
 		P1HandPanel.setBounds(277, 520, 413, 60);
 		contentPane.add(P1HandPanel);
 		P1HandPanel.setLayout(new GridLayout(0, 8, 0, 0));
 		
 		P1Lifepoints = new JLabel("Életpontok száma: -");
+		P1Lifepoints.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		P1Lifepoints.setBounds(124, 520, 143, 14);
 		contentPane.add(P1Lifepoints);
 		
 		P2Lifepoints = new JLabel("Életpontok száma: -");
+		P2Lifepoints.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		P2Lifepoints.setBounds(538, 11, 152, 14);
 		contentPane.add(P2Lifepoints);
 		
 		viewCardTop = new JLabel("-");
-		viewCardTop.setForeground(Color.GRAY);
-		viewCardTop.setBounds(124, 543, 143, 14);
+		viewCardTop.setBackground(UIManager.getColor("Button.background"));
+		viewCardTop.setForeground(SystemColor.textHighlight);
+		viewCardTop.setBounds(10, 543, 257, 14);
 		contentPane.add(viewCardTop);
 		
 		viewCardBottom = new JLabel("-");
 		viewCardBottom.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		viewCardBottom.setForeground(Color.GRAY);
-		viewCardBottom.setBounds(124, 566, 143, 14);
+		viewCardBottom.setForeground(SystemColor.textHighlight);
+		viewCardBottom.setBounds(10, 566, 257, 14);
 		contentPane.add(viewCardBottom);
 		
-		JPanel menu3panel = new JPanel();
-		menu3panel.setLayout(null);
-		menu3panel.setBackground(Color.DARK_GRAY);
-		menu3panel.setBounds(10, 466, 104, 114);
-		contentPane.add(menu3panel);
-		
 		btnNextPhase = new JButton("Következő");
+		btnNextPhase.setBounds(10, 443, 104, 66);
+		contentPane.add(btnNextPhase);
+		btnNextPhase.setBackground(UIManager.getColor("Button.background"));
+		btnNextPhase.setToolTipText("Ugrás következő fázisra");
 		btnNextPhase.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnNextPhase.setEnabled(false);
-		btnNextPhase.setBounds(10, 11, 84, 50);
 		btnNextPhase.setActionCommand("nextPhase");
 		btnNextPhase.addActionListener(gameListener);
-		menu3panel.add(btnNextPhase);
-		
-		//player1MonsterCardZone = new Vector<JPanel>(5);
-		for (int i = 0; i < 5; i++) {
-			//player1MonsterCardZone.add(arg0)
-		}
 		
 		setVisible(true);
 		
